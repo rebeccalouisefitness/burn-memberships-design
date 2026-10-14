@@ -359,7 +359,7 @@
       var P = PRICES[resultTier];
       var lis = QUIZ_FEATS[resultTier].map(function (f) { return '<li>' + esc(f[0]) + tagHtml(f[1]) + '</li>'; }).join('');
       body.innerHTML = '<div class="muted" style="font-size:13px">Your result</div><h2 tabindex="-1" data-qz-h>Your BURN is ' + esc(P.name) + '</h2>' +
-        '<div class="qz-res"><div class="tn">' + esc(P.name) + '</div>' +
+        '<div class="qz-res">' +
         '<div class="price"><span class="amt">' + money(P[billing]) + '</span><span class="per">' + perTxt(billing) + '</span>' +
         (billing === 'annual' ? '<span class="save">Save ' + P.save + '%</span>' : '') + '</div>' +
         '<div class="muted" style="font-size:13px">' + (billing === 'annual' ? 'Billed once a year' : 'or ' + money(P.annual) + ' a year (save ' + P.save + '%)') + '</div>' +

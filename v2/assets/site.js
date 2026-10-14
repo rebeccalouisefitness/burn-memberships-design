@@ -90,7 +90,7 @@
       en.forEach(function (x) {
         if (x.isIntersecting && !seen) { seen = true; track('pricing_view', { source: 'home_pricing_section' }); po.disconnect(); }
       });
-    }, { threshold: 0.35 });
+    }, { threshold: 0, rootMargin: '0px 0px -35% 0px' }); // threshold-on-height never fired on phones: the stacked tiers are taller than the screen
     po.observe(pricing);
   }
 

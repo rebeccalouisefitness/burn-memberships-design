@@ -302,7 +302,7 @@
       if (a.stage === 'pregnant' || a.stage === 'postpartum') return g + 'Rebecca’s Luna Bloom pregnancy and postpartum programs are part of BURN COMPLETE, together with everything in BURN+.';
       return g + 'BURN COMPLETE is your most personalised BURN experience. My BURN plan and AI support chat come to COMPLETE members first.';
     }
-    if (tier === 'burnplus') return g + 'BURN+ builds your daily practice around the workouts: a gratitude journal, the Daily Read, your stats and a schedule for your week.';
+    if (tier === 'burnplus') return g + 'BURN+ builds a daily practice around your workouts. Your gratitude journal is ready now, and the Daily Read, your stats and scheduling with live classes are on the way.';
     return g + 'BURN gives you 40+ programs, a new challenge every month, recipes and the community. Everything you need to start.';
   }
   var QUIZ_FEATS = {

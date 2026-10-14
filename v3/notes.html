@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Notes for Rebecca: BURN website v3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=3">
+<style>@media (max-width:640px){main.notes table{display:block;overflow-x:auto;max-width:100%}}</style>
+</head>
+<body data-page="notes">
+<header class="site">
+  <div class="wrap">
+    <a class="logo" href="index.html" aria-label="BURN by Rebecca Louise, home"><img src="img/burn-logo.png" alt="BURN by Rebecca Louise" height="22"></a>
+    <nav class="main" aria-label="Main"><a href="index.html">Home</a><a href="workouts.html">Workouts</a><a href="membership.html">Memberships</a><a href="about.html">About</a></nav>
+    <div class="hdr-right"><a class="btn sm" href="index.html#pricing" data-join="nav">Join Now</a><button class="burger" aria-label="Menu" aria-expanded="false"><span></span></button></div>
+  </div>
+  <div class="mnav"><a href="index.html">Home</a><a href="workouts.html">Workouts</a><a href="membership.html">Memberships</a><a href="about.html">About</a></div>
+</header>
+<main class="notes"><div class="wrap narrow" style="padding:48px 24px 96px">
+<div class="kick">Not part of the website &middot; internal notes</div>
+<h1 style="font-size:52px;margin-top:10px">Notes for Rebecca: v3</h1>
+<p class="lede" style="margin-top:12px">Design only. Nothing is live on rebecca-louise.com, nothing was created in Stripe, RevenueCat, Kajabi or Supabase, and no money moves. v2 is untouched at <a class="link" href="../v2/">/v2/</a>. All internal notes live on this page only; the public pages have no banners, &ldquo;confirm&rdquo; pills or placeholders.</p>
+
+<h2>Pages</h2>
+<ul>
+<li><a class="link" href="index.html">Home</a> (9 sections, down from 11): Hero &middot; Inside the app + Your fitness, your way &middot; Why BURN? Move. Nourish. Thrive. &middot; Find your perfect workout + Monthly challenges &middot; Real results &middot; Meet Rebecca &middot; Membership (quiz, toggle, nutrition add-on) &middot; FAQ &middot; Final call to action.</li>
+<li><a class="link" href="membership.html">Memberships</a> (cards, comparison table built exactly from your list, nutrition add-on, FAQ), <a class="link" href="workouts.html">Workouts</a>, <a class="link" href="about.html">About</a>.</li>
+<li>Join flow: <a class="link" href="join.html?tier=burnplus&amp;billing=annual">Create your account</a> &rarr; demo checkout &rarr; <a class="link" href="thank-you.html?tier=burncomplete&amp;billing=annual&amp;email=you%40example.com">Thank you</a> &rarr; <a class="link" href="download.html">Download</a>. Tier and Monthly/Annual travel through the whole flow in the link, and the right price shows on every step.</li>
+<li>Quiz: <a class="link" href="index.html#find-your-burn">Find your BURN</a> (opens straight away from that link).</li>
+</ul>
+
+<h2>Your feedback, and what changed</h2>
+<p>Your exact words for this round weren&rsquo;t in the queue, so items 1 to 9 are the brief I was given. The two quotes are yours, from your handwritten list.</p>
+<ol>
+<li><b>Hero:</b> big full-width photo of you first, &ldquo;Your Strongest Self Starts Here.&rdquo;, subhead and Join Now on top of it. On a 390px phone Join Now and the quiz link are on the first screen. App screenshots sit straight under the hero. Photo: the white beach-fence shoot from your about page (landscape on computers, portrait on phones). The pool photo was left out because of the logo on the mat.</li>
+<li><b>Find your BURN quiz:</b> 5 taps (goal, guidance, daily practice, numbers, pregnant/postpartum). Pregnant/postpartum or &ldquo;a plan made for me&rdquo; &rarr; BURN COMPLETE. Schedule/live classes, daily practice or stats &rarr; BURN+. Otherwise BURN. The result shows the tier, the price (monthly or annual) and why, with a Join button. You can open it near the top, above the pricing, on Memberships and in the footer. It has Back, Start again, keyboard support and Esc to close.</li>
+<li><b>Shorter page:</b> Why BURN + Move&middot;Nourish&middot;Thrive are one section. Workouts + Monthly challenges are one. The plan preview + Inside the app are one. Nourish says recipes are in every membership and points to the nutrition add-on, so it doesn&rsquo;t suggest nutrition is in a tier.</li>
+<li><b>Plan preview</b> kept, labelled &ldquo;My BURN plan &middot; BURN COMPLETE&rdquo; with a Coming tag, and it ends with &ldquo;Join BURN COMPLETE&rdquo;.</li>
+<li><b>COMPLETE</b> = &ldquo;Your most personalised BURN experience.&rdquo; It leads with My BURN plan, AI support chat and points for the store. Luna Bloom pregnancy &amp; postpartum is one line, not the headline. The card is flagged &ldquo;Most personalised&rdquo;, not &ldquo;Most popular&rdquo;, because there&rsquo;s no member data for popularity.</li>
+<li><b>Reviews:</b> 3 strongest App Store reviews (word for word), plus &ldquo;Read more reviews&rdquo; for the other 3. Before/after photos are left out completely until members give permission.</li>
+<li><b>Clean-up:</b> no internal notes on public pages. The Monthly/Annual toggle is back with real prices. Store badges say &ldquo;Coming soon to the App Store and Google Play&rdquo; and link to the download page. TestFlight is left out because there&rsquo;s no public link. Certifications are dropped because none are verified. The v2 &ldquo;pill wider than badge&rdquo; issue is gone, along with the pills.</li>
+<li><b>Membership page:</b> comparison table built exactly from your list, with New and Coming tags, and the nutrition add-on underneath. FAQ answers match your list.</li>
+<li><b>Join flow</b> is the same as v2: account &rarr; checkout &rarr; thank-you (&ldquo;Download BURN on your phone and sign in with [email]&rdquo;, QR on computers only) &rarr; download. Annual and monthly now carry through every step.</li>
+</ol>
+<blockquote>&ldquo;we make it all 1 thing&rdquo;</blockquote><p>(Schedule your workout includes joining a live class: one line in BURN+.)</p>
+
+<h2>Sources of truth</h2>
+<table><tr><th>What</th><th>Source</th></tr>
+<tr><td>Prices</td><td>(A) <a class="link" href="https://burn-membership-tiers-oct8.netlify.app/">burn-membership-tiers-oct8.netlify.app</a>: BURN $7.99/mo or $83.99/yr (save 12%); BURN+ $17.99/mo or $167.99/yr (save 22%); BURN COMPLETE $27.99/mo or $224.99/yr (save 33%).</td></tr>
+<tr><td>Features per tier</td><td>(B) your latest handwritten list. It overrides the Oct 8 page&rsquo;s feature lists.</td></tr>
+<tr><td>Nutrition add-on wording</td><td>Oct 8 page: &ldquo;Your own nutrition plan, built with a coach. Add it to any membership.&rdquo; No price is shown there, so the site doesn&rsquo;t show one either.</td></tr>
+</table>
+
+<h2>What&rsquo;s marked &ldquo;Coming&rdquo;, and why</h2>
+<p>I checked each feature, read-only, in the app code (<code>~/burn-publish</code>, branches purchase-flow and testflight-build, 14 Oct). Anything not usable in the app today gets a small Coming tag. Nothing unbuilt is shown as available.</p>
+<table><tr><th>Feature (tier)</th><th>Status in the app</th></tr>
+<tr><td>Step tracking (BURN)</td><td>Not built. No HealthKit package, and the Progress card says &ldquo;Not connected yet&rdquo;.</td></tr>
+<tr><td>Progress photos (BURN, &ldquo;New&rdquo; on your list)</td><td>Mock only. The tiles just toggle, with no camera or storage. Shown as Coming rather than New.</td></tr>
+<tr><td>Your own playlists (BURN+)</td><td>Half built. You can create a playlist, but nothing can be added to it.</td></tr>
+<tr><td>Daily Read (BURN+)</td><td>The screen exists, but its only link is switched off and there are just 3 reads.</td></tr>
+<tr><td>Activity tracking stats (BURN+)</td><td>Weekly bars and move minutes are hard-coded.</td></tr>
+<tr><td>Progress &amp; achievements (BURN+)</td><td>Achievements are hard-coded as earned.</td></tr>
+<tr><td>Cycle-aware training (BURN+)</td><td>Not built. There&rsquo;s a note card only.</td></tr>
+<tr><td>Schedule your workout + live class (BURN+)</td><td>The class booking backend is built, but no screen in the app links to it. The live card on Move is placeholder.</td></tr>
+<tr><td>My BURN plan (COMPLETE)</td><td>Not built. Onboarding saves the goal, but not training days or session length.</td></tr>
+<tr><td>AI support chat (COMPLETE)</td><td>Not built.</td></tr>
+<tr><td>Points for the store (COMPLETE)</td><td>Not built.</td></tr>
+<tr><td>Nutrition add-on</td><td>Partial. The protein goal isn&rsquo;t saved and inventory is hard-coded.</td></tr>
+</table>
+<p><b>Available today:</b> Favourites, Community chat (Home icon), Monthly challenges + calendar, 40 programs, Recipes, Thrive library, Monthly guide (September only so far), Search &amp; filter, Daily quote, Gratitude journal, Luna Bloom pregnancy &amp; postpartum.</p>
+
+<h2>Prices: App Store annual products vs the website</h2>
+<p><b>The figures match.</b> The App Store products (group 22455004) are <code>burn_monthly</code>, <code>burn_annual</code>, <code>burnplus_monthly</code>, <code>burnplus_annual</code>, <code>burncomplete_monthly</code> and <code>burncomplete_annual</code>. The app&rsquo;s paywall and <code>docs/APPLE-PRICE-POINTS.md</code> both show $83.99 / $167.99 / $224.99 a year, the same as the website. $224.99 is a real Apple price point ($227.99 doesn&rsquo;t exist).</p>
+<p>The prices actually set in App Store Connect were not read in this round; the doc says they match. One older memory note says COMPLETE annual &ldquo;works out at $19.99 a month&rdquo;. That is out of date: $224.99 &divide; 12 = $18.75, and the page shows no per-month figure for annual plans.</p>
+<p><b>Stripe tier mapping:</b> <code>tier.ts</code> already maps the annual keys (<code>burn_annual</code>, <code>burnplus_annual</code>, <code>burncomplete_annual</code>), behind the same flag, which stays OFF. I added tests for the annual keys (87/87 pass) and committed them on purchase-flow and testflight-build. Nothing is deployed and nothing was created in Stripe.</p>
+
+<h2>Click tracking</h2>
+<p>On this preview <b>nothing is sent to Google or Meta</b>. Tags only load on rebecca-louise.com, and only once BURN&rsquo;s own GA4 and Pixel IDs are filled in. Here, every event goes to the browser console and to this counter. Add <code>?debug=1</code> to any page to see a small counter while you click.</p>
+<div class="counter" data-debug style="margin:16px 0"><div><span class="muted">join_now_click</span><b data-count="join_now_click">0</b></div><div><span class="muted">pricing_view</span><b data-count="pricing_view">0</b></div><div><span class="muted">quiz_start</span><b data-count="quiz_start">0</b></div><div><span class="muted">quiz_complete</span><b data-count="quiz_complete">0</b></div><div><span class="muted">quiz_result_join_click</span><b data-count="quiz_result_join_click">0</b></div><div><span class="muted">account_created</span><b data-count="account_created">0</b></div><div><span class="muted">registration_complete</span><b data-count="registration_complete">0</b></div></div>
+<div class="evlog" data-evlog></div>
+<p style="margin-top:10px"><button class="btn sm ghost" data-reset>Reset counter</button></p>
+<table><tr><th>Site event</th><th>GA4</th><th>Meta</th></tr>
+<tr><td><code>join_now_click</code> (location, tier, billing)</td><td><code>join_now_click</code></td><td><code>InitiateCheckout</code> (value = the monthly or annual price when a tier was clicked)</td></tr>
+<tr><td><code>pricing_view</code></td><td><code>view_item_list</code></td><td><code>ViewPricing</code> (custom)</td></tr>
+<tr><td><code>quiz_start</code> / <code>quiz_complete</code> (result tier) / <code>quiz_result_join_click</code></td><td>custom events, same names</td><td><code>trackCustom</code>, same names</td></tr>
+<tr><td><code>account_created</code></td><td><code>sign_up</code></td><td><code>Lead</code></td></tr>
+<tr><td><code>registration_complete</code> (tier, billing, value)</td><td><code>purchase</code>, value $7.99&ndash;$27.99 monthly or $83.99&ndash;$224.99 annual, item <code>tier_billing</code></td><td><code>CompleteRegistration</code> + <code>Subscribe</code>, same value. It fires once per checkout session, and the session id is the event id for dedupe.</td></tr>
+</table>
+
+<h2>Decisions I made (easy to change)</h2>
+<ul>
+<li>When a feature is on your list as New but isn&rsquo;t built (Progress photos), it shows Coming, not New.</li>
+<li>BURN COMPLETE gets the highlight and the label &ldquo;Most personalised&rdquo;.</li>
+<li>The nutrition add-on has no price and its button says &ldquo;Ask about nutrition&rdquo; (an email to customer service). It&rsquo;s tagged Coming because the in-app plan is only partly built.</li>
+<li>The checkout step says &ldquo;Demo checkout: no card is charged.&rdquo;, so nobody on the preview link thinks they&rsquo;re paying.</li>
+<li>Annual saving is &ldquo;save 33%&rdquo; for COMPLETE (12 &times; $27.99 = $335.88, and $224.99 is 33% less).</li>
+</ul>
+
+<h2>Questions for you</h2>
+<ol>
+<li><b>COMPLETE saving:</b> your note says 30% by COMPLETE. The site says 33%, which is the true saving at $224.99. Keep 33%?</li>
+<li><b>Left off the site</b> (they&rsquo;re on the Oct 8 page but not on your list): Weight Hub, daily mood check-in, stretching / mobility / massage library, &ldquo;Nourish, village &amp; wellbeing&rdquo;, life stage setting, daily quote settings / Daily Word, recently played, recipe of the day, mindset video of the day, &ldquo;This week for you&rdquo;. Add any back?</li>
+<li><b>BURN+ is mostly Coming</b> (6 of 7 features). Launch the website like that, or build Daily Read, playlists, stats and scheduling first? The class booking backend already exists; it only needs linking in the app.</li>
+<li><b>Nutrition add-on:</b> is there a price, and how should people add it (in the app, or by talking to you)?</li>
+<li><b>Progress photos:</b> on the Oct 8 page they sat under the nutrition add-on. Your list moves them into BURN. Confirm BURN.</li>
+<li><b>Recipes and daily quotes</b> in the app are still made-up / placeholder content. OK to sell them as is, or swap in your real ones first?</li>
+<li><b>Hero photo:</b> happy with the white beach-fence shot, or send a newer BURN shoot?</li>
+<li><b>Certifications:</b> send exact names if you want a line back on Meet Rebecca and About.</li>
+<li><b>Before/after photos:</b> left off until members say yes in writing.</li>
+<li>Still open from v2: support inbox (customerservice@ or a BURN one), a TestFlight public link, Android timing, a magic sign-in link, and whether to confirm email at sign-up.</li>
+</ol>
+</div></main>
+<script src="assets/site.js?v=3"></script>
+</body>
+</html>

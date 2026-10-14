@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Notes for Rebecca: BURN website v4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=1">
+<style>@media (max-width:640px){main.notes table{display:block;overflow-x:auto;max-width:100%}} main.notes code{overflow-wrap:anywhere}</style>
+</head>
+<body data-page="notes">
+<header class="site">
+  <div class="wrap">
+    <a class="logo" href="index.html" aria-label="BURN by Rebecca Louise, home"><img src="img/burn-logo.png" alt="BURN by Rebecca Louise" height="22"></a>
+    <nav class="main" aria-label="Main"><a href="index.html">Home</a><a href="workouts.html">Workouts</a><a href="membership.html">Memberships</a><a href="about.html">About</a></nav>
+    <div class="hdr-right"><a class="btn sm" href="index.html#pricing" data-join="nav">Join Now</a><button class="burger" aria-label="Menu" aria-expanded="false"><span></span></button></div>
+  </div>
+  <div class="mnav"><a href="index.html">Home</a><a href="workouts.html">Workouts</a><a href="membership.html">Memberships</a><a href="about.html">About</a></div>
+</header>
+<main class="notes"><div class="wrap narrow" style="padding:48px 24px 96px">
+<div class="kick">Not part of the website &middot; internal notes</div>
+<h1 style="font-size:52px;margin-top:10px">Notes for Rebecca: v4</h1>
+<p class="lede" style="margin-top:12px">Design only. Nothing is live on rebecca-louise.com, nothing was created or changed in Stripe, RevenueCat, Kajabi, Supabase or App Store Connect, and no money moves. v3 is untouched at <a class="link" href="../v3/">/v3/</a>. Internal notes live on this page only.</p>
+
+<h2>Your words (14 Oct)</h2>
+<blockquote>&ldquo;For the website, I told you just use the photos of me in the purple outfit. Remember we, like, settle those up? And then The day in the app, the photos are, like... the... they&rsquo;re not, like, real iPhone pictures. They need to be iPhone photos. And then I don&rsquo;t know why it says your goals, you schedule your plan. Like, yeah, you&rsquo;re gonna be able to create your own workout, but... and then move, nourish, thrive. Like, nourish should be the food... a food picture and thrive should be, like, motivation. And then the perfect workout, that&rsquo;s fine. You change every month. Um, meet Rebecca again. These all need to be the right photos. Um, so And then where you&rsquo;ve got the annual, instead of putting, like, eighty three ninety nine at the top, just put the monthly one. Remember, like, that&rsquo;s the best way to do it. Um, take off, like, all of the coming soon stuff. because we&rsquo;re just gonna have it, like, as it is. The rest of it looks pretty good.&rdquo;</blockquote>
+<p>Also confirmed: support email customerservice@rebecca-louise.com, and no certifications line.</p>
+
+<h2>What changed in v4</h2>
+<ol>
+<li><b>Photos of you: purple outfit only.</b> Hero, Meet Rebecca, the final call to action, About (both photos), the MOVE card and every workout tile now use only your purple-outfit shoot. Every beach, pool, Everest and other-outfit photo is gone from v4, including the old workout and program covers (the library now uses the same category photos as the app&rsquo;s Move tab). On a 390px phone the hero photo sits behind the headline and Join Now is on the first screen.</li>
+<li><b>Inside the app: real iPhone screenshots.</b> Four real screenshots of the BURN app (Move, your challenge calendar, Nourish, Progress), shown in an iPhone frame. The same screenshots replace the drawn mock-ups on Workouts and Download.</li>
+<li><b>&ldquo;Your goals. Your schedule. Your plan.&rdquo; is gone.</b> It&rsquo;s now <b>&ldquo;Build your workout. Schedule your week.&rdquo;</b> (BURN+): pick one or more workouts from the library, pick a day, pick a time or join a live class, and it shows your week. The Workouts page section matches. The quiz now asks whether you want to &ldquo;build my own workouts and schedule my week&rdquo; (BURN+) or have &ldquo;My BURN plan, which I can adjust&rdquo; (BURN COMPLETE, as on your list).</li>
+<li><b>Move &middot; Nourish &middot; Thrive.</b> MOVE = you in the purple set mid-workout. NOURISH = a food photo (a colourful bowl). THRIVE = a sunrise meditation/mindset photo. &ldquo;Find Your Perfect Workout&rdquo; stays, and now says the challenge changes every month.</li>
+<li><b>Annual shows the monthly price.</b> With Annual selected, every price shows the monthly equivalent big with &ldquo;Billed $X yearly&rdquo; underneath: BURN <b>$7.00</b>/month (billed $83.99 yearly, save 12%), BURN+ <b>$14.00</b>/month (billed $167.99 yearly, save 22%), BURN COMPLETE <b>$18.75</b>/month (billed $224.99 yearly, save 33%). Worked out in the code as annual &divide; 12, rounded to cents. Monthly still shows $7.99 / $17.99 / $27.99. This applies on Home, Memberships, the comparison table, the quiz result, join, checkout and thank-you. Checkout and thank-you also show the amount actually paid today ($83.99 / $167.99 / $224.99).</li>
+<li><b>All &ldquo;Coming soon&rdquo; is gone</b>: tags, legend, FAQ question, quiz, the existing-members line, the nutrition add-on and the store-badge line. Features are listed as they are. The New tags on Favourites, Community chat, Daily quote and Progress photos stay.</li>
+<li><b>Support</b> is customerservice@rebecca-louise.com everywhere. No certifications line anywhere.</li>
+</ol>
+<p>Everything else from v3 is the same: the Find your BURN quiz, merged sections, nutrition add-on card, 3 reviews + &ldquo;Read more reviews&rdquo;, join &rarr; account &rarr; demo checkout &rarr; thank-you with QR &rarr; download, and the click tracking.</p>
+
+<h2>Photos of you used (all purple outfit)</h2>
+<p>These are the photos you sent on 22 Sep and 8 Oct, and the category photos you uploaded for the app&rsquo;s Move tab (the same shoot). The app already uses this set on its Move screen, which is why I&rsquo;ve treated it as the settled set. <b>Please confirm it&rsquo;s the right one.</b></p>
+<table><tr><th>Where</th><th>File</th></tr>
+<tr><td>Hero (computer and phone)</td><td>IMG_0396 (holding up the BURN app, 22 Sep)</td></tr>
+<tr><td>Meet Rebecca, large</td><td>IMG_0189 (coaching, studio lights, 22 Sep)</td></tr>
+<tr><td>Meet Rebecca, small</td><td>Move category photo &ldquo;Arms&rdquo; (category-images/body/arms.jpg)</td></tr>
+<tr><td>Final call to action</td><td>IMG_5862 (over the shoulder with phone, 8 Oct)</td></tr>
+<tr><td>About: top / second</td><td>Category photos &ldquo;Full Body&rdquo; and &ldquo;Strength&rdquo;</td></tr>
+<tr><td>MOVE card</td><td>Category photo &ldquo;Cardio &amp; HIIT&rdquo;</td></tr>
+<tr><td>Workout tiles (Home + Workouts)</td><td>Category photos: Full Body, Legs, Arms, Core, Back &amp; Shoulders, Strength, Pilates, Barre, Sculpt, Cardio &amp; HIIT, Stretch, Weights, Bands, No Equipment</td></tr>
+</table>
+
+<h2>Food and mindset photos</h2>
+<p>There&rsquo;s no food or mindset photography of yours in the brand folders yet, so NOURISH and THRIVE use the same two photos the app already uses (Nourish recipes, Thrive). They are <b>Unsplash photos</b> (Unsplash License: free for commercial use, credit not required but given here), re-hosted in BURN&rsquo;s own recipe-images bucket:</p>
+<ul>
+<li>NOURISH: bowl of greens, eggs, sweetcorn and tomatoes. Unsplash photo <code>1546069901-ba9599a7e63c</code> (images.unsplash.com/photo-1546069901-ba9599a7e63c).</li>
+<li>THRIVE: meditation at sunrise. Unsplash photo <code>1600618528240-fb9fc964b853</code> (images.unsplash.com/photo-1600618528240-fb9fc964b853).</li>
+</ul>
+<p>Send your own food and journal/sunrise photos and they drop straight in.</p>
+
+<h2>App screenshots: where they came from</h2>
+<p><b>iOS Simulator, iPhone 16 Pro (iOS 26.5), real device resolution 1206 &times; 2622</b>, running the BURN build installed on the QA simulator (build 0.1.0 (12)) with today&rsquo;s update from the update server. Status bar set to 9:41, full battery. Screens: <b>Move</b> (library by body part, your purple photos), <b>Sweat or Treat challenge calendar</b>, <b>Nourish &rsaquo; Recipes</b>, <b>Progress</b>. The frame is a clean iPhone 16 Pro-style frame drawn in CSS (sharp at any size), not an Apple marketing frame.</p>
+<p><b>Left out on purpose:</b> the <b>Today</b> screen, because the only signed-in account on the simulator is the App Review test account and Today greets it as &ldquo;Good afternoon, Reviewer&rdquo;; <b>Community</b>, because it shows a real tester&rsquo;s post and &ldquo;2 members&rdquo;; <b>Thrive</b>, because of the &ldquo;Become an ambassador&rdquo; card; the class-booking screen, because it has no class times yet.</p>
+
+<h2>For the team: listed on the site but not built in the app yet</h2>
+<p>You chose to list every feature as it is, with no Coming soon tags. These are the features on the site that the current app code (read-only check, <code>~/burn-publish</code>, 14 Oct) does not deliver yet. <b>They need to ship before real sales open.</b></p>
+<table><tr><th>Feature (tier)</th><th>State in the app code</th></tr>
+<tr><td>Step tracking (BURN)</td><td>Not built. No Apple Health connection; Progress &rsaquo; Steps says &ldquo;Not connected yet&rdquo;.</td></tr>
+<tr><td>Progress photos (BURN, New)</td><td>Mock only. Front/Back/Side tiles toggle; no camera or storage.</td></tr>
+<tr><td>Your own playlists / build your own workout (BURN+)</td><td>Half built. A playlist can be created, but workouts can&rsquo;t be added to it.</td></tr>
+<tr><td>Daily Read (BURN+)</td><td>Screen exists but its link is switched off; 3 reads only.</td></tr>
+<tr><td>Activity tracking stats (BURN+)</td><td>Hard-coded numbers.</td></tr>
+<tr><td>Progress &amp; achievements (BURN+)</td><td>Achievements hard-coded as earned.</td></tr>
+<tr><td>Cycle-aware training (BURN+)</td><td>Not built (note card only).</td></tr>
+<tr><td>Schedule your workout &amp; join a live class (BURN+)</td><td>Class-booking backend and screens exist but nothing in the app links to them, and there are no class times (the screen is empty). No &ldquo;schedule a workout on a day/time&rdquo; feature yet.</td></tr>
+<tr><td>My BURN plan (COMPLETE)</td><td>Not built. Onboarding saves the goal only.</td></tr>
+<tr><td>AI support chat (COMPLETE)</td><td>Not built.</td></tr>
+<tr><td>Points for the store (COMPLETE)</td><td>Not built.</td></tr>
+<tr><td>Nutrition add-on</td><td>Partial (protein goal not saved, inventory hard-coded); no price.</td></tr>
+<tr><td>App Store / Google Play</td><td>Not public yet (TestFlight only). The store badges link to the download page; there&rsquo;s no store link to put behind them yet.</td></tr>
+</table>
+<p>Also: recipes in the app use Unsplash photos, and daily quotes are placeholder content.</p>
+
+<h2>Prices, checked in code</h2>
+<p>83.99 &divide; 12 = 6.9992 &rarr; <b>$7.00</b>; 167.99 &divide; 12 = 13.9992 &rarr; <b>$14.00</b>; 224.99 &divide; 12 = 18.7492 &rarr; <b>$18.75</b>. The site computes these in <code>site.js</code> (<code>annual / 12</code>, rounded to cents). Analytics still report the real amount charged: $7.99 / $17.99 / $27.99 monthly or $83.99 / $167.99 / $224.99 annual.</p>
+
+<h2>Click tracking</h2>
+<p>Unchanged from v3. On this preview <b>nothing is sent to Google or Meta</b>; tags only load on rebecca-louise.com once BURN&rsquo;s own GA4 and Pixel IDs are filled in. Every event goes to the browser console and this counter. Add <code>?debug=1</code> to any page to see a small counter.</p>
+<div class="counter" data-debug style="margin:16px 0"><div><span class="muted">join_now_click</span><b data-count="join_now_click">0</b></div><div><span class="muted">pricing_view</span><b data-count="pricing_view">0</b></div><div><span class="muted">quiz_start</span><b data-count="quiz_start">0</b></div><div><span class="muted">quiz_complete</span><b data-count="quiz_complete">0</b></div><div><span class="muted">quiz_result_join_click</span><b data-count="quiz_result_join_click">0</b></div><div><span class="muted">account_created</span><b data-count="account_created">0</b></div><div><span class="muted">registration_complete</span><b data-count="registration_complete">0</b></div></div>
+<div class="evlog" data-evlog></div>
+<p style="margin-top:10px"><button class="btn sm ghost" data-reset>Reset counter</button></p>
+<table><tr><th>Site event</th><th>GA4</th><th>Meta</th></tr>
+<tr><td><code>join_now_click</code></td><td><code>join_now_click</code></td><td><code>InitiateCheckout</code></td></tr>
+<tr><td><code>pricing_view</code></td><td><code>view_item_list</code></td><td><code>ViewPricing</code> (custom)</td></tr>
+<tr><td><code>quiz_start</code> / <code>quiz_complete</code> / <code>quiz_result_join_click</code></td><td>custom events</td><td><code>trackCustom</code></td></tr>
+<tr><td><code>account_created</code></td><td><code>sign_up</code></td><td><code>Lead</code></td></tr>
+<tr><td><code>registration_complete</code></td><td><code>purchase</code>, value = amount charged ($7.99&ndash;$27.99 monthly, $83.99&ndash;$224.99 annual)</td><td><code>CompleteRegistration</code> + <code>Subscribe</code>, same value</td></tr>
+</table>
+
+<h2>Questions for you</h2>
+<ol>
+<li><b>Photos:</b> is this purple set (22 Sep / 8 Oct shoot, the same photos as the app&rsquo;s Move tab) the one you settled on? Happy with IMG_0396 (you holding up the app) as the hero?</li>
+<li><b>Food and mindset photos:</b> the NOURISH and THRIVE photos are Unsplash for now. Do you have your own food and journal/sunrise photos to swap in?</li>
+<li><b>Today screen:</b> to add a Today screenshot, sign in to your own BURN account on the simulator once (or send an iPhone screenshot of Today) so it greets you, not &ldquo;Reviewer&rdquo;.</li>
+<li><b>Launch order:</b> 11 listed features, plus parts of the nutrition add-on, aren&rsquo;t built yet (table above). Open sales before they ship, or ship them first?</li>
+<li><b>Store badges:</b> keep the App Store and Google Play badges before the app is public in the stores?</li>
+<li>Still open from earlier: TestFlight public link, Android timing, magic sign-in link, email confirmation at sign-up, nutrition add-on price.</li>
+</ol>
+</div></main>
+<script src="assets/site.js?v=1"></script>
+</body>
+</html>

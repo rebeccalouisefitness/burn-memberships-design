@@ -63,24 +63,27 @@
 <p><b>iOS Simulator, iPhone 16 Pro (iOS 26.5), real device resolution 1206 &times; 2622</b>, running the BURN build installed on the QA simulator (build 0.1.0 (12)) with today&rsquo;s update from the update server. Status bar set to 9:41, full battery. Screens: <b>Move</b> (library by body part, your purple photos), <b>Sweat or Treat challenge calendar</b>, <b>Nourish &rsaquo; Recipes</b>, <b>Progress</b>. The frame is a clean iPhone 16 Pro-style frame drawn in CSS (sharp at any size), not an Apple marketing frame.</p>
 <p><b>Left out on purpose:</b> the <b>Today</b> screen, because the only signed-in account on the simulator is the App Review test account and Today greets it as &ldquo;Good afternoon, Reviewer&rdquo;; <b>Community</b>, because it shows a real tester&rsquo;s post and &ldquo;2 members&rdquo;; <b>Thrive</b>, because of the &ldquo;Become an ambassador&rdquo; card; the class-booking screen, because it has no class times yet.</p>
 
-<h2>For the team: listed on the site but not built in the app yet</h2>
-<p>You chose to list every feature as it is, with no Coming soon tags. These are the features on the site that the current app code (read-only check, <code>~/burn-publish</code>, 14 Oct) does not deliver yet. <b>They need to ship before real sales open.</b></p>
-<table><tr><th>Feature (tier)</th><th>State in the app code</th></tr>
-<tr><td>Step tracking (BURN)</td><td>Not built. No Apple Health connection; Progress &rsaquo; Steps says &ldquo;Not connected yet&rdquo;.</td></tr>
-<tr><td>Progress photos (BURN, New)</td><td>Mock only. Front/Back/Side tiles toggle; no camera or storage.</td></tr>
-<tr><td>Your own playlists / build your own workout (BURN+)</td><td>Half built. A playlist can be created, but workouts can&rsquo;t be added to it.</td></tr>
-<tr><td>Daily Read (BURN+)</td><td>Screen exists but its link is switched off; 3 reads only.</td></tr>
-<tr><td>Activity tracking stats (BURN+)</td><td>Hard-coded numbers.</td></tr>
-<tr><td>Progress &amp; achievements (BURN+)</td><td>Achievements hard-coded as earned.</td></tr>
-<tr><td>Cycle-aware training (BURN+)</td><td>Not built (note card only).</td></tr>
-<tr><td>Schedule your workout &amp; join a live class (BURN+)</td><td>Class-booking backend and screens exist but nothing in the app links to them, and there are no class times (the screen is empty). No &ldquo;schedule a workout on a day/time&rdquo; feature yet.</td></tr>
-<tr><td>My BURN plan (COMPLETE)</td><td>Not built. Onboarding saves the goal only.</td></tr>
+<h2>For the team: what the app does today</h2>
+<p>Re-checked 14 Oct against the <b>BURN Preview line</b> (the code that builds Preview 160&ndash;173, branch <code>burn-plus-preview</code>), not the main checkout. The earlier list here was checked against the wrong code and called several finished features unbuilt. Corrected below.</p>
+<h3>Built in the app (Preview)</h3>
+<table><tr><th>Feature (tier)</th><th>Landed in</th><th>What it does</th></tr>
+<tr><td>Your own playlists (BURN+)</td><td>Preview 160 (fixes 162)</td><td>Create, name, reorder, delete; search and add workouts; add from any workout. Saved to the account.</td></tr>
+<tr><td>Cycle-aware training (BURN+)</td><td>Preview 165</td><td>Thrive &rsaquo; Cycle tab: set-up, phase, training guidance, recommended workout, period log.</td></tr>
+<tr><td>Daily Read (BURN+)</td><td>Preview 165 (header 167, For you 168, saved to account 172)</td><td>Thrive &rsaquo; Daily Read tab with past reads.</td></tr>
+<tr><td>Activity tracking stats (BURN+)</td><td>Preview 169, redesigned 171</td><td>Real data: streaks, month vs last month, Week/Month/Year activity.</td></tr>
+<tr><td>Progress &amp; achievements (BURN+)</td><td>Preview 169, redesigned 171</td><td>24 real badges with progress and an unlock moment; nothing pre-earned.</td></tr>
+<tr><td>Schedule your workout &amp; join a live class (BURN+)</td><td>Preview 169 (classes 162, 166, 170, 173)</td><td>Schedule your own workout at a time with a reminder, or join one of 4 daily classes; &ldquo;doing it with you&rdquo; list.</td></tr>
+<tr><td>Progress photos (BURN)</td><td>Preview 169</td><td>Camera/library picker, private storage, compare two dates.</td></tr>
+</table>
+<h3>Not built yet</h3>
+<table><tr><th>Feature (tier)</th><th>State</th></tr>
+<tr><td>Step tracking (BURN)</td><td>Needs build 15 (Apple Health). The Steps tab is hidden until then (Preview 169).</td></tr>
+<tr><td>My BURN plan (COMPLETE)</td><td>Not built.</td></tr>
 <tr><td>AI support chat (COMPLETE)</td><td>Not built.</td></tr>
 <tr><td>Points for the store (COMPLETE)</td><td>Not built.</td></tr>
-<tr><td>Nutrition add-on</td><td>Partial (protein goal not saved, inventory hard-coded); no price.</td></tr>
-<tr><td>App Store / Google Play</td><td>Not public yet (TestFlight only). The store badges link to the download page; there&rsquo;s no store link to put behind them yet.</td></tr>
 </table>
-<p>Also: recipes in the app use Unsplash photos, and daily quotes are placeholder content.</p>
+<p>Also still open: the <b>nutrition add-on</b> is partly built (meal plan and protein goal screens exist; the protein goal isn&rsquo;t saved and the reorder list is sample data; no price yet). The app isn&rsquo;t public in the App Store or Google Play yet (TestFlight only), so the store badges link to the download page. Recipes use Unsplash photos.</p>
+<p>Preview is the test line: these features are on Preview and reach members when the next store build ships.</p>
 
 <h2>Prices, checked in code</h2>
 <p>83.99 &divide; 12 = 6.9992 &rarr; <b>$7.00</b>; 167.99 &divide; 12 = 13.9992 &rarr; <b>$14.00</b>; 224.99 &divide; 12 = 18.7492 &rarr; <b>$18.75</b>. The site computes these in <code>site.js</code> (<code>annual / 12</code>, rounded to cents). Analytics still report the real amount charged: $7.99 / $17.99 / $27.99 monthly or $83.99 / $167.99 / $224.99 annual.</p>
@@ -103,7 +106,7 @@
 <li><b>Photos:</b> is this purple set (22 Sep / 8 Oct shoot, the same photos as the app&rsquo;s Move tab) the one you settled on? Happy with IMG_0396 (you holding up the app) as the hero?</li>
 <li><b>Food and mindset photos:</b> the NOURISH and THRIVE photos are Unsplash for now. Do you have your own food and journal/sunrise photos to swap in?</li>
 <li><b>Today screen:</b> to add a Today screenshot, sign in to your own BURN account on the simulator once (or send an iPhone screenshot of Today) so it greets you, not &ldquo;Reviewer&rdquo;.</li>
-<li><b>Launch order:</b> 11 listed features, plus parts of the nutrition add-on, aren&rsquo;t built yet (table above). Open sales before they ship, or ship them first?</li>
+<li><b>Launch order:</b> 4 listed features (step tracking, My BURN plan, AI support chat, store points), plus parts of the nutrition add-on, aren&rsquo;t built yet (table above). Open sales before they ship, or ship them first?</li>
 <li><b>Store badges:</b> keep the App Store and Google Play badges before the app is public in the stores?</li>
 <li>Still open from earlier: TestFlight public link, Android timing, magic sign-in link, email confirmation at sign-up, nutrition add-on price.</li>
 </ol>

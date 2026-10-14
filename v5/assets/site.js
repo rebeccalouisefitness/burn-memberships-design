@@ -547,7 +547,7 @@
 
 /* ---------------- Hero photo review switcher (BRN-058) ----------------
    Review tool only. Rendered only when build.py has HERO_SWITCHER = True (it emits #hero-options).
-   ?hero=a|b|c|d picks an option so each one can be shared. No [data-join] here, so no tracking fires. */
+   ?hero=a|b|c|d|e picks an option so each one can be shared. No [data-join] here, so no tracking fires. */
 (function () {
   var sec = document.querySelector('.hero[data-hero]');
   var data = document.getElementById('hero-options');
@@ -558,7 +558,7 @@
   var bar = document.createElement('div');
   bar.className = 'hero-switch'; bar.setAttribute('role', 'group'); bar.setAttribute('aria-label', 'Hero photo options');
   bar.innerHTML = '<span class="hs-t">Hero:</span>' + keys.map(function (k) {
-    return '<button type="button" data-hero-pick="' + k + '" aria-pressed="false"><b>' + k.toUpperCase() + '</b> ' + opts[k].label + '</button>';
+    return '<button type="button" title="' + opts[k].label + '" data-hero-pick="' + k + '" aria-pressed="false"><b>' + k.toUpperCase() + '</b><span class="hl"> ' + opts[k].label + '</span></button>';
   }).join('');
   function apply(k, push) {
     var o = opts[k]; if (!o) return;

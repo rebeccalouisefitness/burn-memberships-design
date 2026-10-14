@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow">
 <title>Notes for Rebecca | BURN by Rebecca Louise (design v2)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=4">
+<link rel="stylesheet" href="assets/site.css?v=5">
 </head>
 <body data-page="notes">
 <div class="review" role="note"><b>DESIGN PREVIEW v2</b><span>Not live. No real payments.</span><a href="notes.html">Notes for Rebecca</a><a href="../">v1 backup</a></div>
@@ -28,14 +28,14 @@
 <p class="lede" style="margin-top:12px">Design v2, built from your brief. Nothing is live on rebecca-louise.com, nothing was created in Stripe or Kajabi, and no money moves. v1 is kept as a backup at <a class="link" href="../">the v1 link</a>.</p>
 
 <h2>Pages</h2>
-<ul><li><a class="link" href="index.html">Home</a>: your 11 sections, in your order, with your headlines.</li><li><a class="link" href="workouts.html">Workouts</a>, <a class="link" href="membership.html">Memberships</a> (tiers + comparison table), <a class="link" href="about.html">About</a>. How It Works jumps to section 5 on Home.</li><li><a class="link" href="thank-you.html?tier=plus">Thank you</a> and <a class="link" href="download.html">Download / open the app</a>, kept from v1 and restyled. Any Join button on a tier goes there through a pretend checkout.</li></ul>
+<ul><li><a class="link" href="index.html">Home</a>: your 11 sections, in your order, with your headlines.</li><li><a class="link" href="workouts.html">Workouts</a>, <a class="link" href="membership.html">Memberships</a> (tiers + comparison table), <a class="link" href="about.html">About</a>. How It Works jumps to section 5 on Home.</li><li><a class="link" href="thank-you.html?tier=burnplus">Thank you</a> and <a class="link" href="download.html">Download / open the app</a>, kept from v1 and restyled. Any Join button on a tier goes there through a pretend checkout.</li></ul>
 
 <h2>Click tracking (live in this mockup)</h2>
 <p>Events go to the browser console and to this counter. Click any Join Now, scroll to the pricing, or finish a pretend checkout, then come back here.</p>
 <div class="counter" data-debug style="margin:16px 0"><div><span class="muted">join_now_click</span><b data-count="join_now_click">0</b></div><div><span class="muted">pricing_view</span><b data-count="pricing_view">0</b></div><div><span class="muted">registration_complete</span><b data-count="registration_complete">0</b></div></div>
 <div class="evlog" data-evlog></div>
 <p style="margin-top:10px"><button class="btn sm ghost" data-reset>Reset counter</button></p>
-<ul><li><code>join_now_click</code> with location: nav, hero, sticky, final, tier (+ which tier), page_cta.</li><li><code>pricing_view</code>: when the pricing section comes on screen on Home, and on every Memberships page view.</li><li><code>registration_complete</code>: on the thank-you page. On the real site it fires once per paid checkout.</li><li>Everything is also pushed to <code>dataLayer</code>, so Google Analytics 4 (through Tag Manager) or the Meta Pixel can be switched on without rebuilding. <b>Your decision needed:</b> which tool (see question 5).</li></ul>
+<ul><li><code>join_now_click</code> with location: nav, hero, sticky, final, tier (+ which tier: <code>burn</code>, <code>burnplus</code> or <code>burncomplete</code>), page_cta.</li><li><code>pricing_view</code>: when the pricing section comes on screen on Home, and on every Memberships page view.</li><li><code>registration_complete</code>: on the thank-you page, with the tier id (<code>burn</code>, <code>burnplus</code>, <code>burncomplete</code>). On the real site it fires once per paid checkout.</li><li>Everything is also pushed to <code>dataLayer</code>, so Google Analytics 4 (through Tag Manager) or the Meta Pixel can be switched on without rebuilding. <b>Your decision needed:</b> which tool (see question 4).</li></ul>
 
 <h2>What&rsquo;s real and what&rsquo;s a placeholder</h2>
 <table><tr><th>Item</th><th>Status</th></tr>
@@ -46,21 +46,25 @@
 <tr><td>Transformation photos</td><td>Placeholder. None on file with member permission.</td></tr>
 <tr><td>Credentials</td><td>10+ years, &frac12; billion YouTube views, 1.5M+ social audience, 750K podcast downloads, It Takes Grit (2020), BURN launched 2018, Everest 2022, pilot licence: all checked against rebecca-louise.com/about on 14 Oct 2026. <b>Certifications: [confirm]</b>, nothing public to check against.</td></tr>
 <tr><td>App Store / Google Play badges</td><td>Official Apple and Google badge artwork. Links pending until the new app is live.</td></tr>
-<tr><td>Tier features</td><td>Rows marked <span class="pill confirm">confirm</span> need your decision. The two COMPLETE extras are placeholders.</td></tr>
+<tr><td>Tier features</td><td>Tier names match the app: BURN / BURN+ / BURN COMPLETE (Basic / Plus / Complete only as small card labels). BURN+ shows the app&rsquo;s BURN+ features only. Rows marked <span class="pill confirm">confirm</span> still need your decision.</td></tr><tr><td>Luna Bloom in BURN COMPLETE</td><td>Program names as they appear in the BURN app: <b>Luna Bloom Pregnancy Workouts</b> (week by week, all three trimesters) and the <b>Luna Bloom 12-Month Postpartum Program</b> (month by month). Text only, no Luna Bloom logo or imagery used.</td></tr>
 </table>
 
 <h3>Testimonial sources</h3>
 <table><tr><th>Reviewer (App Store)</th><th>Review title</th><th>As shown when captured</th></tr><tr><td>Chippewa214</td><td>Get the Membership!</td><td>5 stars, &ldquo;1y ago&rdquo;</td></tr><tr><td>Amber Bledssoe (shown as Amber B.)</td><td>LOVE!</td><td>5 stars, &ldquo;2y ago&rdquo;</td></tr><tr><td>Ch.El.Sa</td><td>Get The Results You Are Looking For!!</td><td>5 stars, &ldquo;3y ago&rdquo;</td></tr><tr><td>LMCZ1907</td><td>Best workout app!</td><td>5 stars, &ldquo;2y ago&rdquo;</td></tr><tr><td>Heather Taber (shown as Heather T.)</td><td>BURN with Rebecca Louise</td><td>5 stars, &ldquo;3y ago&rdquo;</td></tr><tr><td>musiclover24345</td><td>Best fitness app for women!</td><td>5 stars, &ldquo;Jul 10&rdquo;</td></tr></table>
 
+<h2>Decided</h2>
+<ol class="resolved">
+<li><b>Tier names and Luna Bloom. RESOLVED, 14 Oct 2026.</b> You said: &ldquo;No burn complete is pregnancy and postpartum Luna bloom&rdquo;. Applied: tiers are named BURN ($7.99) / BURN+ ($17.99) / BURN COMPLETE ($27.99), as in the app. BURN+ no longer mentions Luna Bloom anywhere. BURN COMPLETE = everything in BURN+, plus your Luna Bloom pregnancy &amp; postpartum programs. The comparison table, the Move / Nourish / Thrive tier tags and the FAQ all say the same thing.</li>
+</ol>
+
 <h2>Questions for you</h2>
 <ol>
-<li><b>Tier names and Luna Bloom.</b> Your brief says Basic / Plus / Complete, with Plus = &ldquo;BURN + Luna Bloom&rdquo;. The app says BURN / BURN+ / BURN COMPLETE, and our notes say BURN and Luna Bloom are separate apps and pregnancy/postpartum sits in the top tier. Which names, and is Luna Bloom in Plus or Complete?</li>
-<li><b>&ldquo;Most Popular&rdquo;.</b> Not used. There&rsquo;s no sales data for the new tiers yet, so Plus is highlighted without a label. Add the label once sign-ups show it?</li>
+<li><b>&ldquo;Most Popular&rdquo;.</b> Not used. There&rsquo;s no sales data for the new tiers yet, so BURN+ is highlighted without a label. Add the label once sign-ups show it?</li>
 <li><b>Certifications.</b> Which qualifications should the About page list?</li>
 <li><b>Testimonials.</b> These are public App Store reviews. Happy to show them, and do you want to ask members for permission to use before/after photos?</li>
 <li><b>Analytics.</b> Google Analytics 4, Meta Pixel, or both?</li>
-<li><b>COMPLETE extras.</b> What are the two extra features that make Complete worth $27.99?</li>
-<li><b>Nourish in Basic and Plus.</b> Right now Nourish shows as Complete only. Should Basic or Plus get recipes?</li>
+<li><b>Luna Bloom program list in BURN COMPLETE.</b> The page shows &ldquo;Luna Bloom Pregnancy Workouts&rdquo; and &ldquo;Luna Bloom 12-Month Postpartum Program&rdquo;, named as they appear in the app. Are those the names you want on the website, and should your GLOW Pregnancy and REBUILD Postpartum kits be listed too, or stay separate Luna Bloom purchases?</li>
+<li><b>Nourish in BURN and BURN+.</b> Still open. The page shows Nourish as BURN COMPLETE only. In the app, Recipes, Natural remedies and Nutrition foundations are BURN COMPLETE, but Supplements is open to every BURN member and personalized meal planning follows the nutrition add-on rather than the tier. Keep Nourish as COMPLETE only on the website, or show part of it in BURN and BURN+?</li>
 <li><b>Annual pricing.</b> v1 proposed annual plans. Your brief shows monthly only, so v2 does too. Keep it that way?</li>
 <li><b>Planner (How It Works).</b> The goal, days and length steps are a website illustration. Does the app ask members all three, or only goal and life stage?</li>
 <li><b>Community stats.</b> Want a real member count anywhere? We&rsquo;d need the number from you.</li>
@@ -78,6 +82,6 @@
     <div class="legal"><span>&copy; 2026 BURN by Rebecca Louise</span><span>Terms &middot; Privacy (links to be added)</span></div>
   </div>
 </footer>
-<script src="assets/site.js?v=4"></script>
+<script src="assets/site.js?v=5"></script>
 </body>
 </html>

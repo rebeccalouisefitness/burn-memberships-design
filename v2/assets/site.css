@@ -197,7 +197,11 @@ header.site.open .mnav{display:block}
 .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
 .tier{background:#fff;border:1px solid var(--line);border-radius:22px;padding:32px 28px;display:flex;flex-direction:column;position:relative}
 .tier.feat{border:1.5px solid var(--mauve);box-shadow:0 22px 50px -26px rgba(149,108,125,.6);background:linear-gradient(180deg,#fff 0%,#fff 70%,var(--rose) 100%)}
-.tier .nm{font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:var(--mauve)}
+.tier .nm{font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:var(--taupeDeep)}
+.tier .tn{font-family:var(--serif);font-size:30px;font-weight:600;line-height:1.1;color:var(--mauveDeep);margin-top:4px}
+.tier li.lb span small{color:var(--taupeDeep);font-size:12.5px}
+.cmp td small{display:block;font-size:12px;color:var(--taupeDeep)}
+.cmp tr.lbrow td:first-child{font-weight:500}
 .tier .price{display:flex;align-items:baseline;gap:6px;margin:12px 0 4px}
 .tier .amt{font-family:var(--serif);font-size:56px;font-weight:600;line-height:1}
 .tier .per{color:var(--taupeDeep);font-size:14px}
@@ -330,7 +334,7 @@ footer .legal{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,255
   .cmp{font-size:12.5px}
   .cmp th,.cmp td{padding:10px 6px}
   .cmp th:first-child,.cmp td:first-child{padding-left:12px;width:46%}
-  .cmp thead th{font-size:16px}
+  .cmp thead th{font-size:14px;line-height:1.15;overflow-wrap:anywhere}
   .cmp .pill{display:block;width:max-content;margin-top:3px}
   .final{min-height:0;display:block}
   .final img{position:relative;width:100%;height:440px}

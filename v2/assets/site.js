@@ -4,9 +4,9 @@
  *   1) pushed to window.dataLayer  -> Google Tag Manager / GA4 can read it as-is
  *   2) logged to the console as "[BURN track] <event> {...}"
  *   3) counted in localStorage so the Notes page can show a debug counter
- * Events: join_now_click {location: nav|hero|sticky|final|tier|page_cta, tier?, page}
+ * Events: join_now_click {location: nav|hero|sticky|final|tier|page_cta, tier?: burn|burnplus|burncomplete, page}
  *         pricing_view   {source: home_pricing_section|membership_page, page}
- *         registration_complete {tier, page}   (thank-you page only)
+ *         registration_complete {tier: burn|burnplus|burncomplete, page}   (thank-you page only)
  * To go live, add ONE of the snippets in sendToVendors() once Rebecca chooses a tool.
  */
 (function () {
@@ -111,9 +111,10 @@
 
   /* ---- thank-you page ---- */
   if (PAGE === 'thank-you') {
-    var tiers = { basic: ['Basic', '$7.99 / month'], plus: ['Plus', '$17.99 / month'], complete: ['Complete', '$27.99 / month'] };
-    var q = (new URLSearchParams(location.search).get('tier') || 'plus').toLowerCase();
-    var t = tiers[q] || tiers.plus;
+    var tiers = { burn: ['BURN', '$7.99 / month'], burnplus: ['BURN+', '$17.99 / month'], burncomplete: ['BURN COMPLETE', '$27.99 / month'] };
+    var q = (new URLSearchParams(location.search).get('tier') || 'burnplus').toLowerCase();
+    if (!tiers[q]) q = 'burnplus';
+    var t = tiers[q];
     document.querySelectorAll('[data-ty-tier]').forEach(function (el) { el.textContent = t[0]; });
     document.querySelectorAll('[data-ty-price]').forEach(function (el) { el.textContent = t[1]; });
     // Real site: fire once per Stripe checkout session (dedupe on session_id) after payment succeeds.

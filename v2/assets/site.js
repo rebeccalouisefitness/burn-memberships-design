@@ -8,7 +8,8 @@
  *         (tier buttons are disabled in annual mode until Rebecca sends annual prices, so they fire nothing there)
  *         pricing_view   {source: home_pricing_section|membership_page, page}
  *         registration_complete {tier: burn|burnplus|burncomplete, page}   (thank-you page only)
- * To go live, add ONE of the snippets in sendToVendors() once Rebecca chooses a tool.
+ * Vendors: GA4 + Meta Pixel (decision B). They load and send ONLY on the production host with real
+ * BURN IDs; on the GitHub Pages preview nothing leaves the browser (see the ANALYTICS block).
  */
 (function () {
   'use strict';
@@ -16,16 +17,96 @@
   var LS = 'burn_v2_mock_events';
   window.dataLayer = window.dataLayer || [];
 
+  /* ===========================================================================
+     ANALYTICS: GA4 + Meta Pixel (BRN-058 decision B, 14 Oct 2026)
+     ---------------------------------------------------------------------------
+     IDs: BURN's own GA4 measurement ID and Meta Pixel ID were NOT found on file
+     as clearly belonging to BURN, so these are placeholders. Replace them only
+     with IDs confirmed in BURN's own GA4 property / Meta Events Manager.
+     NEVER use the Luna Bloom pixel here.
+
+     HOST GATE: tags load and send ONLY on the production host(s) below AND
+     only once both IDs are real. On the GitHub Pages preview (or any other
+     host) nothing is loaded from googletagmanager.com / google-analytics.com /
+     connect.facebook.net and nothing is sent; events still go to the console,
+     dataLayer and the Notes debug counter.
+     =========================================================================== */
+  var BURN_GA4_MEASUREMENT_ID = 'G-BURN_GA4_ID_PLACEHOLDER';
+  var BURN_META_PIXEL_ID = 'BURN_META_PIXEL_ID_PLACEHOLDER';
+  var BURN_PRODUCTION_HOSTS = ['rebecca-louise.com', 'www.rebecca-louise.com'];
+  var TIER_PRICE_USD = { burn: 7.99, burnplus: 17.99, burncomplete: 27.99 }; // monthly
+  var TIER_NAME = { burn: 'BURN', burnplus: 'BURN+', burncomplete: 'BURN COMPLETE' };
+
+  var isProdHost = BURN_PRODUCTION_HOSTS.indexOf(location.hostname) > -1;
+  var idsReal = !/PLACEHOLDER/.test(BURN_GA4_MEASUREMENT_ID + BURN_META_PIXEL_ID);
+  var VENDORS_ON = isProdHost && idsReal;
+  window.BURN_ANALYTICS = { mode: VENDORS_ON ? 'live' : 'preview', host: location.hostname, sent: 0 };
+
+  if (VENDORS_ON) {
+    // GA4 (gtag.js)
+    var g = document.createElement('script');
+    g.async = true;
+    g.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(BURN_GA4_MEASUREMENT_ID);
+    document.head.appendChild(g);
+    window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+    window.gtag('js', new Date());
+    window.gtag('config', BURN_GA4_MEASUREMENT_ID);
+    // Meta Pixel (standard base code)
+    !function (f, b, e, v, n, t, s) { if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); }; if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = []; t = b.createElement(e); t.async = !0; t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s); }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+    window.fbq('init', BURN_META_PIXEL_ID);
+    window.fbq('track', 'PageView');
+  }
+
+  function newEventId(prefix) {
+    return prefix + '_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 10);
+  }
+
+  /* Translate one site event into GA4 + Meta calls. Returns the list of calls
+     so the preview can show exactly what WOULD be sent. */
+  function vendorCalls(event, params) {
+    var calls = [];
+    var tier = params.tier, billing = params.billing || 'monthly';
+    var price = tier && billing === 'monthly' ? TIER_PRICE_USD[tier] : undefined;
+    if (event === 'join_now_click') {
+      calls.push(['gtag', 'event', 'join_now_click', { location: params.location, tier: tier || '', billing: billing }]);
+      var ic = { tier: tier || '', billing: billing, content_category: 'membership' };
+      if (price !== undefined) { ic.value = price; ic.currency = 'USD'; ic.content_name = TIER_NAME[tier]; }
+      calls.push(['fbq', 'track', 'InitiateCheckout', ic, { eventID: params.event_id }]);
+    } else if (event === 'pricing_view') {
+      calls.push(['gtag', 'event', 'view_item_list', {
+        item_list_id: 'burn_memberships', item_list_name: 'BURN memberships', source: params.source,
+        items: ['burn', 'burnplus', 'burncomplete'].map(function (k) { return { item_id: k + '_monthly', item_name: TIER_NAME[k], price: TIER_PRICE_USD[k] }; })
+      }]);
+      calls.push(['fbq', 'trackCustom', 'ViewPricing', { source: params.source }, { eventID: params.event_id }]);
+    } else if (event === 'registration_complete') {
+      var v = TIER_PRICE_USD[tier];
+      calls.push(['gtag', 'event', 'sign_up', { method: 'web_checkout', tier: tier }]);
+      calls.push(['gtag', 'event', 'purchase', { transaction_id: params.event_id, value: v, currency: 'USD', tier: tier,
+        items: [{ item_id: tier + '_monthly', item_name: TIER_NAME[tier], price: v, quantity: 1 }] }]);
+      calls.push(['fbq', 'track', 'CompleteRegistration', { value: v, currency: 'USD', tier: tier }, { eventID: 'reg_' + params.event_id }]);
+      calls.push(['fbq', 'track', 'Subscribe', { value: v, currency: 'USD', tier: tier, predicted_ltv: v * 12 }, { eventID: 'sub_' + params.event_id }]);
+    }
+    return calls;
+  }
+
   function sendToVendors(event, params) {
-    // GA4 (gtag.js), once installed:      if (window.gtag) gtag('event', event, params);
-    // Meta Pixel, once installed:         if (window.fbq) fbq('trackCustom', event, params);
-    //   (registration_complete -> fbq('track','CompleteRegistration', params) is the standard Meta event)
-    // Nothing is sent anywhere in the mockup.
+    var calls = vendorCalls(event, params);
+    if (!VENDORS_ON) {
+      try { console.log('[BURN track] preview (' + location.hostname + '): NOT sent to GA4/Meta. Would send:', JSON.stringify(calls)); } catch (e) {}
+      return;
+    }
+    calls.forEach(function (c) {
+      try {
+        if (c[0] === 'gtag' && window.gtag) { window.gtag(c[1], c[2], c[3]); window.BURN_ANALYTICS.sent++; }
+        if (c[0] === 'fbq' && window.fbq) { window.fbq(c[1], c[2], c[3], c[4]); window.BURN_ANALYTICS.sent++; }
+      } catch (e) {}
+    });
   }
 
   function track(event, params) {
     params = params || {};
     params.page = PAGE;
+    if (!params.event_id) params.event_id = newEventId(event);
     var payload = Object.assign({ event: event }, params);
     window.dataLayer.push(payload);
     sendToVendors(event, params);
@@ -147,8 +228,19 @@
     var t = tiers[q];
     document.querySelectorAll('[data-ty-tier]').forEach(function (el) { el.textContent = t[0]; });
     document.querySelectorAll('[data-ty-price]').forEach(function (el) { el.textContent = t[1]; });
-    // Real site: fire once per Stripe checkout session (dedupe on session_id) after payment succeeds.
-    track('registration_complete', { tier: q });
+    // Fire once per checkout. On the real site the success URL carries Stripe's {CHECKOUT_SESSION_ID}
+    // as ?session_id=..., used as the event_id (GA4 transaction_id, Meta eventID) so a refresh of this
+    // page cannot double count, and so a server-side copy (Meta Conversions API / RevenueCat or Stripe
+    // webhook) with the same id is deduplicated by Meta.
+    var sid = new URLSearchParams(location.search).get('session_id');
+    var DONE = 'burn_v2_reg_done';
+    var done = []; try { done = JSON.parse(localStorage.getItem(DONE) || '[]'); } catch (e) {}
+    if (sid && done.indexOf(sid) > -1) {
+      try { console.log('[BURN track] registration_complete skipped: already recorded for session ' + sid); } catch (e) {}
+    } else {
+      track('registration_complete', { tier: q, event_id: sid || newEventId('mock_checkout') });
+      if (sid) { done.push(sid); try { localStorage.setItem(DONE, JSON.stringify(done.slice(-20))); } catch (e) {} }
+    }
   }
 
   /* ---- workout discovery filters (Workouts page + home) ---- */

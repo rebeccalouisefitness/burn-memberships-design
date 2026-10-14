@@ -6,10 +6,10 @@
 <meta name="robots" content="noindex,nofollow">
 <title>Notes for Rebecca | BURN by Rebecca Louise (design v2)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=8">
+<link rel="stylesheet" href="assets/site.css?v=9">
 </head>
 <body data-page="notes">
-<div class="review" role="note"><b>DESIGN PREVIEW v2</b><span>Not live. No real payments.</span><a href="notes.html">Notes for Rebecca</a><a href="../">v1 backup</a></div>
+<div class="review" role="note"><b>DESIGN PREVIEW v2</b><span>Not live. No real payments.</span><a href="notes.html">Notes for Rebecca</a></div>
 <header class="site">
   <div class="wrap">
     <a class="logo" href="index.html" aria-label="BURN by Rebecca Louise, home"><img src="img/burn-logo.png" alt="BURN by Rebecca Louise"></a>
@@ -25,17 +25,27 @@
 <main class="notes"><div class="wrap narrow" style="padding:48px 24px 96px">
 <div class="kick">Not part of the website</div>
 <h1 style="font-size:52px;margin-top:10px">Notes for Rebecca</h1>
-<p class="lede" style="margin-top:12px">Design v2, built from your brief. Nothing is live on rebecca-louise.com, nothing was created in Stripe or Kajabi, and no money moves. v1 is kept as a backup at <a class="link" href="../">the v1 link</a>.</p>
+<p class="lede" style="margin-top:12px">Design v2, built from your brief. Nothing is live on rebecca-louise.com, nothing was created in Stripe or Kajabi, and no money moves. The older v1 design has been taken down from the preview site.</p>
 
 <h2>Pages</h2>
-<ul><li><a class="link" href="index.html">Home</a>: your 11 sections, in your order, with your headlines.</li><li><a class="link" href="workouts.html">Workouts</a>, <a class="link" href="membership.html">Memberships</a> (tiers + comparison table), <a class="link" href="about.html">About</a>. How It Works jumps to section 5 on Home.</li><li><a class="link" href="thank-you.html?tier=burnplus">Thank you</a> and <a class="link" href="download.html">Download / open the app</a>, kept from v1 and restyled. Any Join button on a tier goes there through a pretend checkout.</li></ul>
+<ul><li><a class="link" href="index.html">Home</a>: your 11 sections, in your order, with your headlines.</li><li><a class="link" href="workouts.html">Workouts</a>, <a class="link" href="membership.html">Memberships</a> (tiers + comparison table), <a class="link" href="about.html">About</a>. How It Works jumps to section 5 on Home.</li><li><a class="link" href="thank-you.html?tier=burnplus">Thank you</a> and <a class="link" href="download.html">Download / open the app</a>, carried over from the first design and restyled. Any Join button on a tier goes there through a pretend checkout.</li></ul>
 
-<h2>Click tracking (live in this mockup)</h2>
-<p>Events go to the browser console and to this counter. Click any Join Now, scroll to the pricing, or finish a pretend checkout, then come back here.</p>
+<h2>Click tracking: Google Analytics 4 + Meta Pixel</h2>
+<p><b>Decided (B): both GA4 and the Meta Pixel.</b> On this preview <b>nothing is sent to Google or Meta</b>. The tags only load on rebecca-louise.com, and only once BURN&rsquo;s own GA4 and Pixel IDs are filled in, so the preview can&rsquo;t pollute your ad data. Here, every event still goes to the browser console and to this counter. Click any Join Now, scroll to the pricing, or finish a pretend checkout, then come back here.</p>
 <div class="counter" data-debug style="margin:16px 0"><div><span class="muted">join_now_click</span><b data-count="join_now_click">0</b></div><div><span class="muted">pricing_view</span><b data-count="pricing_view">0</b></div><div><span class="muted">registration_complete</span><b data-count="registration_complete">0</b></div></div>
 <div class="evlog" data-evlog></div>
 <p style="margin-top:10px"><button class="btn sm ghost" data-reset>Reset counter</button></p>
-<ul><li><code>join_now_click</code> with location: nav, hero, sticky, final, tier (+ which tier: <code>burn</code>, <code>burnplus</code> or <code>burncomplete</code>), page_cta. Every click also carries <code>billing</code>: <code>monthly</code> or <code>annual</code> (whichever the Monthly / Annual toggle shows). In annual mode the tier buttons say &ldquo;Coming soon&rdquo; and do nothing until your annual prices are in.</li><li><code>pricing_view</code>: when the pricing section comes on screen on Home, and on every Memberships page view.</li><li><code>registration_complete</code>: on the thank-you page, with the tier id (<code>burn</code>, <code>burnplus</code>, <code>burncomplete</code>). On the real site it fires once per paid checkout.</li><li>Everything is also pushed to <code>dataLayer</code>, so Google Analytics 4 (through Tag Manager) or the Meta Pixel can be switched on without rebuilding. <b>Your decision needed:</b> which tool (see question 4).</li></ul>
+<table><tr><th>Site event</th><th>Google Analytics 4</th><th>Meta Pixel</th></tr>
+<tr><td><code>join_now_click</code> (location, tier, billing)</td><td><code>join_now_click</code> with location, tier, billing</td><td><code>InitiateCheckout</code> with tier, billing; value + USD (monthly price) when a tier button was clicked</td></tr>
+<tr><td><code>pricing_view</code></td><td><code>view_item_list</code> (the 3 memberships)</td><td>custom <code>ViewPricing</code></td></tr>
+<tr><td><code>registration_complete</code> (thank-you page)</td><td><code>sign_up</code> + <code>purchase</code> (value, USD, tier)</td><td><code>CompleteRegistration</code> + <code>Subscribe</code> (value, USD)</td></tr>
+</table>
+<ul>
+<li><b>IDs:</b> placeholders for now (<code>BURN_GA4_MEASUREMENT_ID</code>, <code>BURN_META_PIXEL_ID</code> in <code>assets/site.js</code>). No GA4 ID or Pixel ID on file is clearly BURN&rsquo;s own, and the Luna Bloom pixel must never be used here.</li>
+<li><b>Every event carries an <code>event_id</code>.</b> On the real thank-you page it&rsquo;s Stripe&rsquo;s checkout session id, so refreshing the page can&rsquo;t count a purchase twice.</li>
+<li><b>Better still, server-side:</b> registration_complete / purchase should be confirmed from the server (Meta Conversions API, and GA4 through RevenueCat or a Stripe webhook) using the same <code>event_id</code>, so Meta de-duplicates the browser and server copies. The browser alone misses ad-blocked buyers and can double count.</li>
+<li>Before the tags go live for UK/EU visitors, the site needs a cookie consent banner.</li>
+</ul>
 
 <h2>What&rsquo;s real and what&rsquo;s a placeholder</h2>
 <table><tr><th>Item</th><th>Status</th></tr>
@@ -55,20 +65,31 @@
 <h2>Decided</h2>
 <ol class="resolved">
 <li><b>Tier names and Luna Bloom. RESOLVED, 14 Oct 2026.</b> You said: &ldquo;No burn complete is pregnancy and postpartum Luna bloom&rdquo;. Applied: tiers are named BURN ($7.99) / BURN+ ($17.99) / BURN COMPLETE ($27.99), as in the app. BURN+ no longer mentions Luna Bloom anywhere. BURN COMPLETE = everything in BURN+, plus your Luna Bloom pregnancy &amp; postpartum programs. The comparison table, the Move / Nourish / Thrive tier tags and the FAQ all say the same thing.</li>
+<li><b>A. v1 taken down. RESOLVED, 14 Oct 2026.</b> The old v1 page has been removed from the preview site. The main preview link now just forwards to this v2 design and shows no prices. A copy of v1 is kept on the Mac (BURN-Memberships-Home-Design.html), not online.</li>
+<li><b>B. Analytics: Google Analytics 4 and Meta Pixel, both. RESOLVED, 14 Oct 2026.</b> Wired up as in the table above. Nothing sends from this preview. Live only on rebecca-louise.com once BURN&rsquo;s own IDs are in.</li>
+<li><b>C. Unlocking the app after a web purchase: RevenueCat&rsquo;s Stripe integration. RESOLVED, 14 Oct 2026.</b> Not a separate Stripe-to-database webhook. One system (RevenueCat) knows about Apple, Google and web memberships. The step-by-step setup plan is in the plan document (section 6). Nothing has been built yet.</li>
+<li><b>D. Existing (legacy) members. RESOLVED, 14 Oct 2026.</b> $5.99 members &rarr; BURN. $13.99 members &rarr; BURN+. Nobody&rsquo;s price goes up, and everyone gets an upgrade offer. Older notes mentioned &ldquo;$19.99&rdquo; members. If Stripe shows anyone really paying $19.99, they go to the closest tier at the price they pay now (BURN+). That will be confirmed from Stripe, not by asking you.</li>
+<li><b>E. Stripe Tax: OFF for now. RESOLVED, with a flag.</b> <span class="pill confirm">flag</span> Selling digital subscriptions to US buyers can create a sales-tax duty in a state once sales there pass that state&rsquo;s threshold (and UK/EU buyers have VAT rules). Revisit before scaling up.</li>
 </ol>
 
-<h2>Questions for you</h2>
+<h2>Waiting on you</h2>
 <ol>
-<li><b>&ldquo;Most Popular&rdquo;.</b> Not used. There&rsquo;s no sales data for the new tiers yet, so BURN+ is highlighted without a label. Add the label once sign-ups show it?</li>
+<li><b>Luna Bloom program names in BURN COMPLETE.</b> The page shows &ldquo;Luna Bloom Pregnancy Workouts&rdquo; and the &ldquo;Luna Bloom 12-Month Postpartum Program&rdquo;, named as in the app. Are those the names you want, and should your GLOW Pregnancy and REBUILD Postpartum kits be listed too, or stay separate Luna Bloom purchases?</li>
 <li><b>Certifications.</b> Which qualifications should the About page list?</li>
-<li><b>Testimonials.</b> These are public App Store reviews. Happy to show them, and do you want to ask members for permission to use before/after photos?</li>
-<li><b>Analytics.</b> Google Analytics 4, Meta Pixel, or both?</li>
-<li><b>Luna Bloom program list in BURN COMPLETE.</b> The page shows &ldquo;Luna Bloom Pregnancy Workouts&rdquo; and &ldquo;Luna Bloom 12-Month Postpartum Program&rdquo;, named as they appear in the app. Are those the names you want on the website, and should your GLOW Pregnancy and REBUILD Postpartum kits be listed too, or stay separate Luna Bloom purchases?</li>
-<li><b>Nourish in BURN and BURN+.</b> Still open. The page shows Nourish as BURN COMPLETE only. In the app, Recipes, Natural remedies and Nutrition foundations are BURN COMPLETE, but Supplements is open to every BURN member and personalized meal planning follows the nutrition add-on rather than the tier. Keep Nourish as COMPLETE only on the website, or show part of it in BURN and BURN+?</li>
-<li><b>Annual pricing</b> &mdash; Rebecca has the figures, sending later. Placeholders on page; no Stripe annual prices until she sends them.</li>
-<li><b>Planner (How It Works).</b> The goal, days and length steps are a website illustration. Does the app ask members all three, or only goal and life stage?</li>
-<li><b>Community stats.</b> Want a real member count anywhere? We&rsquo;d need the number from you.</li>
+<li><b>Testimonials.</b> These are public App Store reviews. OK to show them? And do you want to ask members for permission to use before/after photos?</li>
+<li><b>Annual prices.</b> You have the figures and are sending them later. Placeholders stay on the page, and no annual prices get created in Stripe until then.</li>
+<li><b>Kajabi.</b> Your yes to create the 3 member tags, 3 welcome sequences and the automations, plus how the purchase reaches Kajabi: Zapier (simplest) or our own webhook.</li>
 </ol>
+
+<h2>Pending / technical (not waiting on a decision from you)</h2>
+<ul>
+<li><b>Stripe login.</b> Stripe isn&rsquo;t signed in in Chrome. Once you sign in, we&rsquo;ll do a read-only check of BURN&rsquo;s products, prices and how many members are on each legacy price (this confirms the $13.99 / $19.99 question). Installing the RevenueCat app in Stripe also needs your login.</li>
+<li><b>BURN&rsquo;s own GA4 and Meta Pixel IDs</b>, confirmed in BURN&rsquo;s own Google Analytics property and Meta Events Manager, before tracking goes live.</li>
+<li><b>&ldquo;Most Popular&rdquo; label.</b> Not used yet. Add it once sign-up data shows which tier sells most. BURN+ is highlighted without a label for now.</li>
+<li><b>Nourish in BURN and BURN+.</b> The page shows Nourish as BURN COMPLETE only. In the app, Supplements is open to every member and meal planning follows the nutrition add-on. Line the website up with the app before launch.</li>
+<li><b>Planner steps (How It Works).</b> Goal, days and length are a website illustration. Check them against what the app actually asks.</li>
+<li><b>Member count.</b> Only shown if there&rsquo;s a real number to show.</li>
+</ul>
 </div></main>
 <footer class="site">
   <div class="wrap">
@@ -82,6 +103,6 @@
     <div class="legal"><span>&copy; 2026 BURN by Rebecca Louise</span><span>Terms &middot; Privacy (links to be added)</span></div>
   </div>
 </footer>
-<script src="assets/site.js?v=8"></script>
+<script src="assets/site.js?v=9"></script>
 </body>
 </html>

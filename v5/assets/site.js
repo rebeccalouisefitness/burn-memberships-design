@@ -544,3 +544,41 @@
 
   renderBilling();
 })();
+
+/* ---------------- Hero photo review switcher (BRN-058) ----------------
+   Review tool only. Rendered only when build.py has HERO_SWITCHER = True (it emits #hero-options).
+   ?hero=a|b|c|d picks an option so each one can be shared. No [data-join] here, so no tracking fires. */
+(function () {
+  var sec = document.querySelector('.hero[data-hero]');
+  var data = document.getElementById('hero-options');
+  if (!sec || !data) return;
+  var opts; try { opts = JSON.parse(data.textContent); } catch (e) { return; }
+  var img = sec.querySelector('.hero-img'), source = sec.querySelector('picture source');
+  var keys = Object.keys(opts);
+  var bar = document.createElement('div');
+  bar.className = 'hero-switch'; bar.setAttribute('role', 'group'); bar.setAttribute('aria-label', 'Hero photo options');
+  bar.innerHTML = '<span class="hs-t">Hero:</span>' + keys.map(function (k) {
+    return '<button type="button" data-hero-pick="' + k + '" aria-pressed="false"><b>' + k.toUpperCase() + '</b> ' + opts[k].label + '</button>';
+  }).join('');
+  function apply(k, push) {
+    var o = opts[k]; if (!o) return;
+    if (sec.getAttribute('data-hero') !== k) {
+      if (source) source.srcset = o.m;
+      img.srcset = o.d; img.src = o.src; img.alt = o.alt;
+      sec.setAttribute('data-hero', k);
+    }
+    bar.querySelectorAll('[data-hero-pick]').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-hero-pick') === k ? 'true' : 'false'); });
+    if (push) {
+      try { var u = new URL(location.href); u.searchParams.set('hero', k); history.replaceState(null, '', u.toString()); } catch (e) {}
+    }
+  }
+  var q = '';
+  try { q = (new URLSearchParams(location.search).get('hero') || '').toLowerCase(); } catch (e) {}
+  apply(opts[q] ? q : sec.getAttribute('data-hero'), false);
+  bar.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-hero-pick]'); if (!b) return;
+    e.preventDefault(); e.stopPropagation();
+    apply(b.getAttribute('data-hero-pick'), true);
+  });
+  document.body.appendChild(bar);
+})();

@@ -493,3 +493,28 @@ div.wcard{cursor:default}
 }
 @media (max-width:900px) and (min-width:641px){.final img{width:46%}}
 [hidden]{display:none!important}
+
+/* ---------- hero photo options (BRN-058) ---------- */
+.hero[data-hero=a] .hero-img{object-position:40% 50%}
+.hero[data-hero=b] .hero-img{object-position:50% 20%}
+.hero[data-hero=c] .hero-img{object-position:50% 20%}
+.hero[data-hero=d] .hero-img{object-position:45% 40%}
+/* review switcher: floating, removable (build.py HERO_SWITCHER) */
+.hero-switch{position:fixed;z-index:39;top:calc(var(--hdr) + 10px);right:12px;display:flex;align-items:center;gap:2px;padding:4px;border-radius:999px;background:rgba(41,41,41,.78);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 8px 24px -12px rgba(0,0,0,.5);font:500 12px/1 var(--sans);color:#fff}
+.hero-switch .hs-t{padding:0 6px 0 8px;opacity:.75}
+.hero-switch button{border:0;background:transparent;color:#fff;font:inherit;padding:7px 9px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.hero-switch button b{font-weight:700}
+.hero-switch button:hover{background:rgba(255,255,255,.14)}
+.hero-switch button[aria-pressed=true]{background:#fff;color:var(--ink)}
+@media (max-width:640px){
+  .hero-switch{top:calc(var(--hdr) + 8px);right:8px;font-size:11px}
+  .hero-switch .hs-t{padding:0 4px 0 6px}
+  .hero-switch button{padding:6px 7px}
+  /* landscape originals: photo across the top of the screen, fading into the copy panel */
+  .hero[data-hero=a],.hero[data-hero=d]{background:#2B2226}
+  .hero[data-hero=a] .hero-img,.hero[data-hero=d] .hero-img{-webkit-mask-image:linear-gradient(180deg,#000 72%,transparent 100%);mask-image:linear-gradient(180deg,#000 72%,transparent 100%)}
+  .hero[data-hero=a] .hero-img{height:52%;object-position:50% 50%}
+  .hero[data-hero=d] .hero-img{height:58%;object-position:50% 50%}
+  .hero[data-hero=b] .hero-img{object-position:50% 0%}
+  .hero[data-hero=c] .hero-img{object-position:50% 0%}
+}

@@ -118,6 +118,7 @@
     });
   }
   function track(event, params) {
+    if (QS.get('preview')) return; /* journey previews never track */
     params = params || {};
     params.page = PAGE;
     if (!params.event_id) params.event_id = newEventId(event);
@@ -452,6 +453,10 @@
       errEl.textContent = '';
     };
     document.querySelector('[data-switch-mode]').addEventListener('click', function () { setMode(mode === 'create' ? 'signin' : 'create'); });
+    if (QS.get('preview')) {
+      var pf = form.elements; pf.first_name.value = 'Jess'; pf.email.value = 'jess@example.com'; pf.password.value = 'demo-pass'; pf.password2.value = 'demo-pass';
+      if (QS.get('preview') === 'pay') { setTimeout(function () { form.requestSubmit ? form.requestSubmit() : form.dispatchEvent(new Event('submit', { cancelable: true })); }, 0); }
+    }
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var f = form.elements, email = (f.email.value || '').trim(), pw = f.password.value || '';
@@ -462,7 +467,7 @@
       else if (mode === 'create' && pw !== f.password2.value) err = 'The two passwords don’t match.';
       errEl.textContent = err;
       if (err) return;
-      acct = { email: email };
+      acct = { email: email, first: (f.first_name && f.first_name.value || '').trim() };
       if (!accountEventSent) {
         accountEventSent = true;
         track(mode === 'create' ? 'account_created' : 'account_signed_in', { tier: pageTierKey, billing: billing, method: 'email_password' });
@@ -480,7 +485,7 @@
       var sid = 'cs_demo_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
       setTimeout(function () {
         location.href = 'thank-you.html?tier=' + encodeURIComponent(pageTierKey) + '&billing=' + encodeURIComponent(billing) +
-          '&email=' + encodeURIComponent(acct.email) + '&session_id=' + encodeURIComponent(sid);
+          '&email=' + encodeURIComponent(acct.email) + (acct.first ? '&first=' + encodeURIComponent(acct.first) : '') + '&session_id=' + encodeURIComponent(sid);
       }, 700);
     });
   }
@@ -503,6 +508,8 @@
   if (PAGE === 'thank-you') {
     paintTier();
     showEmail(QS.get('email'));
+    var fn = (QS.get('first') || '').trim().slice(0, 40);
+    if (fn) document.querySelectorAll('[data-ty-first]').forEach(function (x) { x.textContent = fn; });
     var dl = document.querySelectorAll('[data-dl-link]');
     var em = QS.get('email');
     dl.forEach(function (a) { if (em) a.href = 'download.html?email=' + encodeURIComponent(em); });

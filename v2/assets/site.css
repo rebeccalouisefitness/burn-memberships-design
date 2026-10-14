@@ -221,6 +221,7 @@ table.cmp{border-collapse:collapse;width:100%;font-size:14px}
 .cmp thead th{font-family:var(--serif);font-size:24px;font-weight:600;background:var(--soft);position:sticky;top:0}
 .cmp thead th small{display:block;font-family:var(--sans);font-size:12px;font-weight:500;color:var(--taupeDeep)}
 .cmp thead th.feat{color:var(--mauve)}
+.cmp thead th:not(:first-child){width:17%}
 .cmp tr.grp td{background:var(--cream);font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--taupeDeep)}
 .cmp td.feat{background:rgba(243,236,239,.55)}
 .y{color:var(--mauve);font-weight:700}

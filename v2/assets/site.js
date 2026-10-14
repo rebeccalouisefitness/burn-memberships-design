@@ -64,7 +64,7 @@
           hides while pricing or the final CTA is on screen ---- */
   var sticky = document.querySelector('.sticky-join');
   if (sticky && 'IntersectionObserver' in window) {
-    var heroCta = document.querySelector('[data-sticky-after]');
+    var heroCta = document.querySelector('[data-sticky-after]') || document.querySelector('.tier.feat [data-checkout]');
     var hideOn = document.querySelectorAll('[data-sticky-hide]');
     var pastHero = !heroCta, hidden = 0;
     var upd = function () { sticky.classList.toggle('show', pastHero && hidden === 0); };
@@ -76,7 +76,7 @@
     var io = new IntersectionObserver(function (en) {
       en.forEach(function (x) { if (x.isIntersecting) vis.add(x.target); else vis.delete(x.target); });
       hidden = vis.size; upd();
-    }, { threshold: 0.12 });
+    }, { threshold: 0 });
     hideOn.forEach(function (el) { io.observe(el); });
     upd();
   }

@@ -353,3 +353,13 @@ footer .legal{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,255
 @media (max-width:900px) and (min-width:641px){.final img{width:46%}}
 #how-it-works .sec-head{max-width:860px}
 @media (max-width:640px){.split .programs .prog .k{display:none}.split .programs .prog h4{font-size:17px}.split .programs .prog .in{padding:10px}}
+
+/* Monthly / Annual toggle (annual prices pending from Rebecca) */
+.billing{display:flex;width:max-content;max-width:100%;margin:-18px auto 28px;padding:4px;border:1px solid var(--line);border-radius:999px;background:#fff}
+.billing button{appearance:none;border:0;background:transparent;font:500 14px var(--sans);letter-spacing:.02em;color:var(--inkSoft);padding:10px 26px;min-height:44px;border-radius:999px;cursor:pointer}
+.billing button.on{background:var(--mauve);color:#fff}
+.annual-msg{text-align:center;font-size:13.5px;color:#8A6431;margin:-14px auto 24px}
+.tier .annual-ph{display:inline-block;font-size:13px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;color:#8A6431;background:#FBF1E4;border:1px dashed var(--gold);border-radius:12px;padding:12px 14px;line-height:1.3}
+.tier .price .annual-ph[hidden]{display:none}
+[data-billing=annual] .tier .amt,[data-billing=annual] .tier .per{display:none}
+.btn[aria-disabled=true]{pointer-events:none;opacity:.55;background:transparent;color:var(--taupeDeep);border-color:var(--line)}

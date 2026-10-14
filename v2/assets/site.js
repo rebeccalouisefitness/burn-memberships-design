@@ -4,7 +4,8 @@
  *   1) pushed to window.dataLayer  -> Google Tag Manager / GA4 can read it as-is
  *   2) logged to the console as "[BURN track] <event> {...}"
  *   3) counted in localStorage so the Notes page can show a debug counter
- * Events: join_now_click {location: nav|hero|sticky|final|tier|page_cta, tier?: burn|burnplus|burncomplete, page}
+ * Events: join_now_click {location: nav|hero|sticky|final|tier|page_cta, tier?: burn|burnplus|burncomplete, billing: monthly|annual, page}
+ *         (tier buttons are disabled in annual mode until Rebecca sends annual prices, so they fire nothing there)
  *         pricing_view   {source: home_pricing_section|membership_page, page}
  *         registration_complete {tier: burn|burnplus|burncomplete, page}   (thank-you page only)
  * To go live, add ONE of the snippets in sendToVendors() once Rebecca chooses a tool.
@@ -40,12 +41,40 @@
   }
   window.burnTrack = track;
 
+  /* ---- Monthly / Annual toggle. Annual prices are NOT set yet (Rebecca is sending them):
+          annual mode shows a placeholder and disables the tier Join buttons. ---- */
+  function billingOf(el) {
+    var sec = el && el.closest('[data-billing]');
+    if (!sec) sec = document.querySelector('[data-billing]');
+    return (sec && sec.getAttribute('data-billing')) || 'monthly';
+  }
+  document.querySelectorAll('[data-billing-toggle]').forEach(function (tg) {
+    var sec = tg.closest('section') || document.body;
+    sec.setAttribute('data-billing', 'monthly');
+    tg.addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-bill]');
+      if (!b) return;
+      var mode = b.getAttribute('data-bill');
+      sec.setAttribute('data-billing', mode);
+      tg.querySelectorAll('button').forEach(function (x) { var on = x === b; x.classList.toggle('on', on); x.setAttribute('aria-pressed', on); });
+      var msg = sec.querySelector('[data-annual-msg]'); if (msg) msg.hidden = mode !== 'annual';
+      sec.querySelectorAll('.annual-ph').forEach(function (ph) { ph.hidden = mode !== 'annual'; });
+      sec.querySelectorAll('[data-checkout]').forEach(function (btn) {
+        if (!btn.hasAttribute('data-label')) btn.setAttribute('data-label', btn.textContent);
+        if (mode === 'annual') { btn.textContent = 'Coming soon'; btn.setAttribute('aria-disabled', 'true'); btn.setAttribute('tabindex', '-1'); }
+        else { btn.textContent = btn.getAttribute('data-label'); btn.removeAttribute('aria-disabled'); btn.removeAttribute('tabindex'); }
+      });
+    });
+  });
+
   /* ---- Join Now clicks (any element with data-join) ---- */
   document.addEventListener('click', function (e) {
     var j = e.target.closest('[data-join]');
     if (!j) return;
     var p = { location: j.getAttribute('data-join') };
+    if (j.getAttribute('aria-disabled') === 'true') return; // annual "Coming soon": no fake checkout, no event
     if (j.getAttribute('data-tier')) p.tier = j.getAttribute('data-tier');
+    p.billing = billingOf(j);
     track('join_now_click', p);
   }, true);
 
@@ -98,6 +127,7 @@
   document.querySelectorAll('[data-checkout]').forEach(function (btn) {
     btn.addEventListener('click', function (e) {
       e.preventDefault();
+      if (btn.getAttribute('aria-disabled') === 'true') return;
       var tier = btn.getAttribute('data-tier');
       var lbl = btn.textContent;
       btn.setAttribute('data-state', 'loading');

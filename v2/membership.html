@@ -23,13 +23,15 @@
   <div class="mnav"><a href="index.html">Home</a><a href="workouts.html">Workouts</a><a href="index.html#how-it-works">How It Works</a><a href="membership.html" class=on>Memberships</a><a href="about.html">About</a><a class="member-link" href="download.html">Already a member? Open the app</a></div>
 </header>
 <main>
-<section class="phero"><div class="wrap"><div class="kick">Memberships</div><h1>Choose Your Membership</h1><p class="lede">Three ways to BURN. Every one is monthly, and you can change or cancel any time.</p></div></section>
+<section class="phero"><div class="wrap"><div class="kick">Memberships</div><h1>Choose Your Membership</h1><p class="lede">Three ways to BURN, monthly or annual. Change or cancel any time.</p></div></section>
 <section data-pricing data-sticky-hide style="padding-top:56px">
-  <div class="wrap"><div class="tiers" id="tiers">
+  <div class="wrap"><div class="billing" data-billing-toggle role="group" aria-label="Billing period"><button type="button" class="on" data-bill="monthly" aria-pressed="true">Monthly</button><button type="button" data-bill="annual" aria-pressed="false">Annual</button></div>
+    <p class="annual-msg" data-annual-msg hidden>Annual pricing is coming soon. Monthly memberships are open now.</p>
+    <div class="tiers" id="tiers">
   <article class="tier">
     <div class="nm">Basic</div>
     <div class="tn">BURN</div>
-    <div class="price"><span class="amt">$7.99</span><span class="per">/ month</span></div>
+    <div class="price"><span class="amt">$7.99</span><span class="per">/ month</span><span class="annual-ph" hidden>Annual price &mdash; coming</span></div>
     <p class="desc">The core BURN experience</p>
     <a class="btn ghost block" href="#" data-checkout data-join="tier" data-tier="burn">Join BURN</a>
     <div class="secure">Secure checkout &middot; cancel any time</div>
@@ -38,7 +40,7 @@
   <article class="tier feat">
     <div class="nm">Plus</div>
     <div class="tn">BURN+</div>
-    <div class="price"><span class="amt">$17.99</span><span class="per">/ month</span></div>
+    <div class="price"><span class="amt">$17.99</span><span class="per">/ month</span><span class="annual-ph" hidden>Annual price &mdash; coming</span></div>
     <p class="desc">More ways to plan your week and stay consistent</p>
     <a class="btn block" href="#" data-checkout data-join="tier" data-tier="burnplus">Join BURN+</a>
     <div class="secure">Secure checkout &middot; cancel any time</div>
@@ -47,7 +49,7 @@
   <article class="tier">
     <div class="nm">Complete</div>
     <div class="tn">BURN COMPLETE</div>
-    <div class="price"><span class="amt">$27.99</span><span class="per">/ month</span></div>
+    <div class="price"><span class="amt">$27.99</span><span class="per">/ month</span><span class="annual-ph" hidden>Annual price &mdash; coming</span></div>
     <p class="desc">Everything in BURN+, plus Rebecca&rsquo;s Luna Bloom pregnancy &amp; postpartum programs.</p>
     <a class="btn ghost block" href="#" data-checkout data-join="tier" data-tier="burncomplete">Join BURN COMPLETE</a>
     <div class="secure">Secure checkout &middot; cancel any time</div>

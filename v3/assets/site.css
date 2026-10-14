@@ -49,6 +49,10 @@ section{padding:104px 0}
 /* small feature tags */
 .tag{display:inline-block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;border-radius:999px;padding:2px 8px;vertical-align:middle;white-space:nowrap;line-height:1.5;margin-left:6px}
 .tag.new{background:var(--mauve);color:#fff}
+.tags{display:inline-flex;flex-wrap:wrap;gap:4px;margin-left:6px;vertical-align:middle}
+.tags .tag{margin-left:0}
+.members-new{text-align:center;font-size:13.5px;color:var(--taupeDeep);margin:18px auto 0;max-width:640px}
+.members-new b{color:var(--mauveDeep);font-weight:600}
 .tag.soon{background:var(--cream);color:var(--taupeDeep);border:1px solid var(--line)}
 
 /* header */
@@ -431,6 +435,8 @@ dialog.quiz:not([open]){display:none}
   .cmp th:first-child,.cmp td:first-child{padding-left:12px;width:46%}
   .cmp thead th{font-size:14px;line-height:1.15;overflow-wrap:anywhere}
   .cmp .tag{display:block;width:max-content;margin:3px 0 0}
+  .cmp .tags{display:flex;margin:3px 0 0}
+  .cmp .tags .tag{display:inline-block;margin:0}
   .final{min-height:0;display:block}
   .final img{position:relative;width:100%;height:440px}
   .final .wrap{padding-top:36px;padding-bottom:52px}

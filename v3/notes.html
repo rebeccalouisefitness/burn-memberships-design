@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow">
 <title>Notes for Rebecca: BURN website v3</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=5">
+<link rel="stylesheet" href="assets/site.css?v=6">
 <style>@media (max-width:640px){main.notes table{display:block;overflow-x:auto;max-width:100%}}</style>
 </head>
 <body data-page="notes">
@@ -31,17 +31,33 @@
 <li>Quiz: <a class="link" href="index.html#find-your-burn">Find your BURN</a> (opens straight away from that link).</li>
 </ul>
 
+<h2>Update 14 Oct: your confirmation</h2>
+<p>You confirmed two things:</p>
+<ul>
+<li>&ldquo;(N)&rdquo; on your list means <b>new features for regular BURN members</b>.</li>
+<li>&ldquo;Schedule&rdquo; and &ldquo;Join a class&rdquo; are <b>one BURN+ feature</b>.</li>
+</ul>
+<p><b>What changed:</b></p>
+<ul>
+<li>Favourites, Community chat, Daily quote and Progress photos each carry a small New tag: on the pricing cards (Home and Memberships), in the comparison table and on the quiz&rsquo;s BURN result.</li>
+<li>A short line under the membership cards on Home and Memberships: &ldquo;Already a BURN member? New for BURN members: favourites, community chat, daily quote and progress photos&rdquo;, with a Coming soon tag. The same sentence ends the &ldquo;I&rsquo;m already a BURN member&rdquo; FAQ answer, with &ldquo;(coming soon)&rdquo; after progress photos.</li>
+<li>BURN+ now has one line, &ldquo;Schedule your workout &amp; join a live class&rdquo;, on the cards, in the table, in the quiz result and in the FAQ.</li>
+<li>Every not-yet-built tag now says <b>Coming soon</b> (it used to say just &ldquo;Coming&rdquo;). Progress photos shows <b>New &middot; Coming soon</b>.</li>
+<li>I re-checked step tracking and progress photos in the app code (read-only, 14 Oct). Both still need the next app build. Step tracking: Apple Health isn&rsquo;t connected and the card says &ldquo;Not connected yet&rdquo;. Progress photos: the Front/Back/Side tiles only toggle, with no camera or storage. No other feature changed status.</li>
+<li>The plan and the BURN welcome email use the same wording and don&rsquo;t present progress photos or step tracking as ready yet.</li>
+</ul>
+
 <h2>Your feedback, and what changed</h2>
 <p>Your exact words for this round weren&rsquo;t in the queue, so items 1 to 9 are the brief I was given. The two quotes are yours, from your handwritten list.</p>
 <ol>
 <li><b>Hero:</b> big full-width photo of you first, &ldquo;Your Strongest Self Starts Here.&rdquo;, subhead and Join Now on top of it. On a 390px phone Join Now and the quiz link are on the first screen. App screenshots sit straight under the hero. Photo: the white beach-fence shoot from your about page (landscape on computers, portrait on phones). The pool photo was left out because of the logo on the mat.</li>
 <li><b>Find your BURN quiz:</b> 5 taps (goal, guidance, daily practice, numbers, pregnant/postpartum). Pregnant/postpartum or &ldquo;a plan made for me&rdquo; &rarr; BURN COMPLETE. Schedule/live classes, daily practice or stats &rarr; BURN+. Otherwise BURN. The result shows the tier, the price (monthly or annual) and why, with a Join button. You can open it near the top, above the pricing, on Memberships and in the footer. It has Back, Start again, keyboard support and Esc to close.</li>
 <li><b>Shorter page:</b> Why BURN + Move&middot;Nourish&middot;Thrive are one section. Workouts + Monthly challenges are one. The plan preview + Inside the app are one. Nourish says recipes are in every membership and points to the nutrition add-on, so it doesn&rsquo;t suggest nutrition is in a tier.</li>
-<li><b>Plan preview</b> kept, labelled &ldquo;My BURN plan &middot; BURN COMPLETE&rdquo; with a Coming tag, and it ends with &ldquo;Join BURN COMPLETE&rdquo;.</li>
+<li><b>Plan preview</b> kept, labelled &ldquo;My BURN plan &middot; BURN COMPLETE&rdquo; with a Coming soon tag, and it ends with &ldquo;Join BURN COMPLETE&rdquo;.</li>
 <li><b>COMPLETE</b> = &ldquo;Your most personalised BURN experience.&rdquo; It leads with My BURN plan, AI support chat and points for the store. Luna Bloom pregnancy &amp; postpartum is one line, not the headline. The card is flagged &ldquo;Most personalised&rdquo;, not &ldquo;Most popular&rdquo;, because there&rsquo;s no member data for popularity.</li>
 <li><b>Reviews:</b> 3 strongest App Store reviews (word for word), plus &ldquo;Read more reviews&rdquo; for the other 3. Before/after photos are left out completely until members give permission.</li>
 <li><b>Clean-up:</b> no internal notes on public pages. The Monthly/Annual toggle is back with real prices. Store badges say &ldquo;Coming soon to the App Store and Google Play&rdquo; and link to the download page. TestFlight is left out because there&rsquo;s no public link. Certifications are dropped because none are verified. The v2 &ldquo;pill wider than badge&rdquo; issue is gone, along with the pills.</li>
-<li><b>Membership page:</b> comparison table built exactly from your list, with New and Coming tags, and the nutrition add-on underneath. FAQ answers match your list.</li>
+<li><b>Membership page:</b> comparison table built exactly from your list, with New and Coming soon tags, and the nutrition add-on underneath. FAQ answers match your list.</li>
 <li><b>Join flow</b> is the same as v2: account &rarr; checkout &rarr; thank-you (&ldquo;Download BURN on your phone and sign in with [email]&rdquo;, QR on computers only) &rarr; download. Annual and monthly now carry through every step.</li>
 </ol>
 <blockquote>&ldquo;we make it all 1 thing&rdquo;</blockquote><p>(Schedule your workout includes joining a live class: one line in BURN+.)</p>
@@ -53,11 +69,11 @@
 <tr><td>Nutrition add-on wording</td><td>Oct 8 page: &ldquo;Your own nutrition plan, built with a coach. Add it to any membership.&rdquo; No price is shown there, so the site doesn&rsquo;t show one either.</td></tr>
 </table>
 
-<h2>What&rsquo;s marked &ldquo;Coming&rdquo;, and why</h2>
-<p>I checked each feature, read-only, in the app code (<code>~/burn-publish</code>, branches purchase-flow and testflight-build, 14 Oct). Anything not usable in the app today gets a small Coming tag. Nothing unbuilt is shown as available.</p>
+<h2>What&rsquo;s marked &ldquo;Coming soon&rdquo;, and why</h2>
+<p>I checked each feature, read-only, in the app code (<code>~/burn-publish</code>, branches purchase-flow and testflight-build, 14 Oct). Anything not usable in the app today gets a small Coming soon tag. Nothing unbuilt is shown as available.</p>
 <table><tr><th>Feature (tier)</th><th>Status in the app</th></tr>
-<tr><td>Step tracking (BURN)</td><td>Not built. No HealthKit package, and the Progress card says &ldquo;Not connected yet&rdquo;.</td></tr>
-<tr><td>Progress photos (BURN, &ldquo;New&rdquo; on your list)</td><td>Mock only. The tiles just toggle, with no camera or storage. Shown as Coming rather than New.</td></tr>
+<tr><td>Step tracking (BURN)</td><td>Not built. No HealthKit package, and the Progress card says &ldquo;Not connected yet&rdquo; (re-checked 14 Oct). Coming soon.</td></tr>
+<tr><td>Progress photos (BURN, &ldquo;New&rdquo; on your list)</td><td>Mock only. The tiles just toggle, with no camera or storage. Shown as New &middot; Coming soon (re-checked 14 Oct).</td></tr>
 <tr><td>Your own playlists (BURN+)</td><td>Half built. You can create a playlist, but nothing can be added to it.</td></tr>
 <tr><td>Daily Read (BURN+)</td><td>The screen exists, but its only link is switched off and there are just 3 reads.</td></tr>
 <tr><td>Activity tracking stats (BURN+)</td><td>Weekly bars and move minutes are hard-coded.</td></tr>
@@ -91,9 +107,9 @@
 
 <h2>Decisions I made (easy to change)</h2>
 <ul>
-<li>When a feature is on your list as New but isn&rsquo;t built (Progress photos), it shows Coming, not New.</li>
+<li>When a feature is on your list as New but isn&rsquo;t built (Progress photos), it shows both tags: New &middot; Coming soon.</li>
 <li>BURN COMPLETE gets the highlight and the label &ldquo;Most personalised&rdquo;.</li>
-<li>The nutrition add-on has no price and its button says &ldquo;Ask about nutrition&rdquo; (an email to customer service). It&rsquo;s tagged Coming because the in-app plan is only partly built.</li>
+<li>The nutrition add-on has no price and its button says &ldquo;Ask about nutrition&rdquo; (an email to customer service). It&rsquo;s tagged Coming soon because the in-app plan is only partly built.</li>
 <li>The checkout step says &ldquo;Demo checkout: no card is charged.&rdquo;, so nobody on the preview link thinks they&rsquo;re paying.</li>
 <li>Annual saving is &ldquo;save 33%&rdquo; for COMPLETE (12 &times; $27.99 = $335.88, and $224.99 is 33% less).</li>
 </ul>
@@ -102,9 +118,9 @@
 <ol>
 <li><b>COMPLETE saving:</b> your note says 30% by COMPLETE. The site says 33%, which is the true saving at $224.99. Keep 33%?</li>
 <li><b>Left off the site</b> (they&rsquo;re on the Oct 8 page but not on your list): Weight Hub, daily mood check-in, stretching / mobility / massage library, &ldquo;Nourish, village &amp; wellbeing&rdquo;, life stage setting, daily quote settings / Daily Word, recently played, recipe of the day, mindset video of the day, &ldquo;This week for you&rdquo;. Add any back?</li>
-<li><b>BURN+ is mostly Coming</b> (6 of 7 features). Launch the website like that, or build Daily Read, playlists, stats and scheduling first? The class booking backend already exists; it only needs linking in the app.</li>
+<li><b>BURN+ is mostly Coming soon</b> (6 of 7 features). Launch the website like that, or build Daily Read, playlists, stats and scheduling first? The class booking backend already exists; it only needs linking in the app.</li>
 <li><b>Nutrition add-on:</b> is there a price, and how should people add it (in the app, or by talking to you)?</li>
-<li><b>Progress photos:</b> on the Oct 8 page they sat under the nutrition add-on. Your list moves them into BURN. Confirm BURN.</li>
+<li><b>Progress photos:</b> answered 14 Oct. They&rsquo;re a new feature for BURN members, so they sit in BURN (tagged New &middot; Coming soon).</li>
 <li><b>Recipes and daily quotes</b> in the app are still made-up / placeholder content. OK to sell them as is, or swap in your real ones first?</li>
 <li><b>Hero photo:</b> happy with the white beach-fence shot, or send a newer BURN shoot?</li>
 <li><b>Certifications:</b> send exact names if you want a line back on Meet Rebecca and About.</li>
@@ -112,6 +128,6 @@
 <li>Still open from v2: support inbox (customerservice@ or a BURN one), a TestFlight public link, Android timing, a magic sign-in link, and whether to confirm email at sign-up.</li>
 </ol>
 </div></main>
-<script src="assets/site.js?v=5"></script>
+<script src="assets/site.js?v=6"></script>
 </body>
 </html>

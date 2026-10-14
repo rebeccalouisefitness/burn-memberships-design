@@ -302,18 +302,18 @@
       if (a.stage === 'pregnant' || a.stage === 'postpartum') return g + 'Rebecca’s Luna Bloom pregnancy and postpartum programs are part of BURN COMPLETE, together with everything in BURN+.';
       return g + 'BURN COMPLETE is your most personalised BURN experience. My BURN plan and AI support chat come to COMPLETE members first.';
     }
-    if (tier === 'burnplus') return g + 'BURN+ builds a daily practice around your workouts. Your gratitude journal is ready now, and the Daily Read, your stats and scheduling with live classes are on the way.';
+    if (tier === 'burnplus') return g + 'BURN+ builds a daily practice around your workouts. Your gratitude journal is ready now, and the Daily Read, your stats and scheduling your workout & joining a live class are on the way.';
     return g + 'BURN gives you 40+ programs, a new challenge every month, recipes and the community. Everything you need to start.';
   }
   var QUIZ_FEATS = {
-    burn: [['Monthly challenges', ''], ['40+ workout programs', ''], ['Recipes and the Thrive library', ''], ['Community chat', 'new']],
-    burnplus: [['Everything in BURN', ''], ['Gratitude journal', ''], ['Daily Read', 'soon'], ['Schedule your workout, with live classes', 'soon']],
+    burn: [['Monthly challenges', ''], ['40+ workout programs', ''], ['Recipes and the Thrive library', ''], ['Favourites', 'new'], ['Community chat', 'new'], ['Daily quote', 'new'], ['Progress photos', 'newsoon']],
+    burnplus: [['Everything in BURN', ''], ['Gratitude journal', ''], ['Daily Read', 'soon'], ['Schedule your workout & join a live class', 'soon']],
     burncomplete: [['Everything in BURN+', ''], ['Luna Bloom pregnancy & postpartum', ''], ['My BURN plan', 'soon'], ['AI support chat', 'soon']]
   };
   var dlg = null, step = 0, answers = {}, quizEntry = 'unknown', resultTier = null;
   function el(tag, attrs, html) { var x = document.createElement(tag); if (attrs) Object.keys(attrs).forEach(function (k) { x.setAttribute(k, attrs[k]); }); if (html != null) x.innerHTML = html; return x; }
   function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
-  function tagHtml(t) { return t === 'new' ? ' <span class="tag new">New</span>' : t === 'soon' ? ' <span class="tag soon">Coming</span>' : ''; }
+  function tagHtml(t) { return t === 'new' ? ' <span class="tag new">New</span>' : t === 'soon' ? ' <span class="tag soon">Coming soon</span>' : t === 'newsoon' ? ' <span class="tags"><span class="tag new">New</span><span class="tag soon">Coming soon</span></span>' : ''; }
   function buildDialog() {
     dlg = el('dialog', { 'class': 'quiz', id: 'find-your-burn', 'aria-labelledby': 'qz-title' });
     dlg.innerHTML = '<div class="qz"><div class="qz-top"><div class="kick" id="qz-title">Find your BURN</div>' +

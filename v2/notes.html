@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow">
 <title>Notes for Rebecca | BURN by Rebecca Louise (design v2)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=9">
+<link rel="stylesheet" href="assets/site.css?v=10">
 <style>main.notes td code{overflow-wrap:anywhere}main.notes td{overflow-wrap:anywhere}@media (max-width:640px){main.notes table{display:block;overflow-x:auto;max-width:100%}}</style>
 </head>
 <body data-page="notes">
@@ -28,21 +28,34 @@
 <h1 style="font-size:52px;margin-top:10px">Notes for Rebecca</h1>
 <p class="lede" style="margin-top:12px">Design v2, built from your brief. Nothing is live on rebecca-louise.com, nothing was created in Stripe or Kajabi, and no money moves. The older v1 design has been taken down from the preview site.</p>
 
+<div class="box" style="margin-top:28px;border-color:var(--mauve)" id="hard-requirement"><div class="kick">Hard requirement</div><h2 style="margin-top:6px">A desktop purchase unlocks the app</h2>
+<p style="margin-top:8px">You said: &ldquo;Ok and make sure if they sign up on desktop it still gets them access into the app&rdquo;</p>
+<ul>
+<li><b>Account first, then pay.</b> Every Join button now goes to <a class="link" href="join.html?tier=burnplus">Create your account</a> (first name, email, password, confirm) <b>before</b> checkout. It is the same login the BURN app uses (email + password), so whoever buys on a laptop already has their app account.</li>
+<li><b>Checkout is tied to that account.</b> The checkout email is filled in and locked to the account email, and the purchase carries the account&rsquo;s app id, so RevenueCat puts the membership on exactly that account.</li>
+<li><b>Thank-you and Download pages</b> say &ldquo;Download BURN on your phone and sign in with <i>[their email]</i>&rdquo;, in 3 steps. On a computer they show a <b>QR code</b> to scan with the phone camera. On a phone the QR is hidden and the store buttons show instead.</li>
+<li><b>Release blocker:</b> before launch we buy on a desktop in Stripe <b>test mode</b>, sign in on a phone (TestFlight) with the same email, and check the right tier unlocks, for all three tiers (plan, test T1).</li>
+</ul></div>
+
 <h2>Pages</h2>
-<ul><li><a class="link" href="index.html">Home</a>: your 11 sections, in your order, with your headlines.</li><li><a class="link" href="workouts.html">Workouts</a>, <a class="link" href="membership.html">Memberships</a> (tiers + comparison table), <a class="link" href="about.html">About</a>. How It Works jumps to section 5 on Home.</li><li><a class="link" href="thank-you.html?tier=burnplus">Thank you</a> and <a class="link" href="download.html">Download / open the app</a>, carried over from the first design and restyled. Any Join button on a tier goes there through a pretend checkout.</li></ul>
+<ul><li><a class="link" href="index.html">Home</a>: your 11 sections, in your order, with your headlines.</li><li><a class="link" href="workouts.html">Workouts</a>, <a class="link" href="membership.html">Memberships</a> (tiers + comparison table), <a class="link" href="about.html">About</a>. How It Works jumps to section 5 on Home.</li><li><a class="link" href="join.html?tier=burnplus">Create your account</a> (new): step 2 of 3, before checkout. Shows the tier and price, has &ldquo;Already have a BURN app account? Sign in&rdquo;, and the note &ldquo;Use this same email to sign in on your phone.&rdquo; Then a pretend checkout (email locked to the account), then Thank you. Nothing is created or charged.</li><li><a class="link" href="thank-you.html?tier=burnplus&amp;email=you%40example.com">Thank you</a> (&ldquo;Welcome to BURN [tier]&rdquo;, the sign-in email, 3 steps, QR on computers, store badges, TestFlight, &ldquo;Didn&rsquo;t get access? Contact support&rdquo;) and <a class="link" href="download.html">Download / open the app</a> (same steps and QR, sign-in reminder, &ldquo;Paid with a different email?&rdquo; help).</li></ul>
 
 <h2>Click tracking: Google Analytics 4 + Meta Pixel</h2>
 <p><b>Decided (B): both GA4 and the Meta Pixel.</b> On this preview <b>nothing is sent to Google or Meta</b>. The tags only load on rebecca-louise.com, and only once BURN&rsquo;s own GA4 and Pixel IDs are filled in, so the preview can&rsquo;t pollute your ad data. Here, every event still goes to the browser console and to this counter. Click any Join Now, scroll to the pricing, or finish a pretend checkout, then come back here.</p>
-<div class="counter" data-debug style="margin:16px 0"><div><span class="muted">join_now_click</span><b data-count="join_now_click">0</b></div><div><span class="muted">pricing_view</span><b data-count="pricing_view">0</b></div><div><span class="muted">registration_complete</span><b data-count="registration_complete">0</b></div></div>
+<div class="counter" data-debug style="margin:16px 0;grid-template-columns:repeat(auto-fit,minmax(140px,1fr))"><div><span class="muted">join_now_click</span><b data-count="join_now_click">0</b></div><div><span class="muted">pricing_view</span><b data-count="pricing_view">0</b></div><div><span class="muted">account_created</span><b data-count="account_created">0</b></div><div><span class="muted">registration_complete</span><b data-count="registration_complete">0</b></div></div>
 <div class="evlog" data-evlog></div>
 <p style="margin-top:10px"><button class="btn sm ghost" data-reset>Reset counter</button></p>
 <table><tr><th>Site event</th><th>Google Analytics 4</th><th>Meta Pixel</th></tr>
 <tr><td><code>join_now_click</code> (location, tier, billing)</td><td><code>join_now_click</code> with location, tier, billing</td><td><code>InitiateCheckout</code> with tier, billing; value + USD (monthly price) when a tier button was clicked</td></tr>
 <tr><td><code>pricing_view</code></td><td><code>view_item_list</code> (the 3 memberships)</td><td>custom <code>ViewPricing</code></td></tr>
-<tr><td><code>registration_complete</code> (thank-you page)</td><td><code>sign_up</code> + <code>purchase</code> (value, USD, tier)</td><td><code>CompleteRegistration</code> + <code>Subscribe</code> (value, USD)</td></tr>
+<tr><td><code>account_created</code> (account step, once per submit; new 14 Oct)</td><td><code>sign_up</code> (method email_password, tier) <b>moved here</b> from the thank-you page</td><td><code>Lead</code> (tier; value + USD for monthly)</td></tr>
+<tr><td><code>account_signed_in</code> (&ldquo;Already have an account? Sign in&rdquo; path)</td><td><code>login</code></td><td>nothing</td></tr>
+<tr><td><code>registration_complete</code> (thank-you page, once per <code>session_id</code>)</td><td><code>purchase</code> (transaction_id = session_id, value, USD, tier)</td><td><code>CompleteRegistration</code> + <code>Subscribe</code> (value, USD; eventIDs <code>reg_</code>/<code>sub_</code> + session_id)</td></tr>
 </table>
 <ul>
 <li><b>IDs:</b> placeholders for now (<code>BURN_GA4_MEASUREMENT_ID</code>, <code>BURN_META_PIXEL_ID</code> in <code>assets/site.js</code>). No GA4 ID or Pixel ID on file is clearly BURN&rsquo;s own, and the Luna Bloom pixel must never be used here.</li>
+<li><b>Final mapping (14 Oct):</b> GA4 <code>sign_up</code> + Meta <code>Lead</code> fire when the account is created; GA4 <code>purchase</code> + Meta <code>Subscribe</code> + <code>CompleteRegistration</code> stay on the thank-you page. So <code>sign_up</code> counts accounts, <code>purchase</code> counts paid members, and the gap between them is people who made an account but didn&rsquo;t pay (a follow-up email audience later).</li>
+<li><b>Real site: no email in the URL.</b> This preview passes the email in the address bar so the page can show it. The live thank-you page must look it up from the Stripe <code>session_id</code> on the server instead, so emails never reach analytics or logs.</li>
 <li><b>Every event carries an <code>event_id</code>.</b> On the real thank-you page it&rsquo;s Stripe&rsquo;s checkout session id, so refreshing the page can&rsquo;t count a purchase twice.</li>
 <li><b>Better still, server-side:</b> registration_complete / purchase should be confirmed from the server (Meta Conversions API, and GA4 through RevenueCat or a Stripe webhook) using the same <code>event_id</code>, so Meta de-duplicates the browser and server copies. The browser alone misses ad-blocked buyers and can double count.</li>
 <li>Before the tags go live for UK/EU visitors, the site needs a cookie consent banner.</li>
@@ -82,6 +95,15 @@
 <li><b>Kajabi.</b> Your yes to create the 3 member tags, 3 welcome sequences and the automations, plus how the purchase reaches Kajabi: Zapier (simplest) or our own webhook.</li>
 </ol>
 
+<h2>New questions (14 Oct, app access)</h2>
+<ol>
+<li><b>Support email.</b> The site uses customerservice@rebecca-louise.com for &ldquo;Didn&rsquo;t get access? Contact support&rdquo;. Is that the right inbox for BURN app access, and who answers it? The plan promises a reply within 1 working day.</li>
+<li><b>TestFlight public link.</b> TestFlight is invite-only today (testers are added to the BURN Testers group by email). Do you want a <b>public TestFlight link</b> for paying web members until the App Store launch? If not, every web buyer on iPhone must be added by hand, and the page shows &ldquo;public link pending&rdquo;.</li>
+<li><b>Android.</b> No Google Play listing yet, and the app&rsquo;s purchases are set up for iPhone only. Android web buyers can&rsquo;t install BURN until there is a Play listing (or internal test link). When is Android planned?</li>
+<li><b>Magic sign-in link.</b> The app signs in with email + password only. A one-tap &ldquo;magic link&rdquo; in the welcome email needs an app update (plan, section 0). Want it for launch, or is email + password fine?</li>
+<li><b>Email confirmation.</b> Should new website accounts confirm their email before paying? Safer against typos (the #1 cause of &ldquo;paid but can&rsquo;t get in&rdquo;), but one more step. Recommended: confirm by code on the account step.</li>
+</ol>
+
 <h2>Pending / technical (not waiting on a decision from you)</h2>
 <ul>
 <li><b>Stripe login.</b> Stripe isn&rsquo;t signed in in Chrome. Once you sign in, we&rsquo;ll do a read-only check of BURN&rsquo;s products, prices and how many members are on each legacy price (this confirms the $13.99 / $19.99 question). Installing the RevenueCat app in Stripe also needs your login.</li>
@@ -104,6 +126,6 @@
     <div class="legal"><span>&copy; 2026 BURN by Rebecca Louise</span><span>Terms &middot; Privacy (links to be added)</span></div>
   </div>
 </footer>
-<script src="assets/site.js?v=9"></script>
+<script src="assets/site.js?v=10"></script>
 </body>
 </html>

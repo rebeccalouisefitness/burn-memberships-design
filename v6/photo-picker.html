@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Photo picker | BURN website v6</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--mauve:#956C7D;--mauveDeep:#7E5A6A;--mauveSoft:#CBB4BB;--rose:#F3ECEF;--cream:#F2EDE7;--soft:#FAF9F7;--ink:#292929;--inkSoft:#5B534F;--taupe:#A49A93;--line:#ECE7E0;
+--serif:'Cormorant Garamond',Georgia,serif;--sans:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--soft);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;padding-bottom:84px}
+img{display:block;max-width:100%}
+button{font-family:inherit}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px}
+header.top{background:var(--cream);border-bottom:1px solid var(--line);padding:22px 0 18px}
+.kick{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mauve);font-weight:600}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(32px,7vw,48px);line-height:1.05;margin:6px 0 8px}
+h2{font-family:var(--serif);font-weight:600;font-size:clamp(24px,5vw,32px);line-height:1.1;margin:0}
+h3{margin:0;font-size:16px;font-weight:600}
+.lede{color:var(--inkSoft);margin:0;max-width:640px}
+.lede a{color:var(--mauveDeep)}
+details.group{margin:26px 0 0;border-top:1px solid var(--line);padding-top:18px}
+details.group>summary{list-style:none;cursor:pointer;display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+details.group>summary::-webkit-details-marker{display:none}
+details.group>summary .tog{font-size:13px;color:var(--mauve);white-space:nowrap}
+details.group[open]>summary .tog .c{display:none}
+details.group:not([open])>summary .tog .o{display:none}
+.gnote{color:var(--inkSoft);font-size:13px;margin:4px 0 0}
+.spot{background:#fff;border:1px solid var(--line);border-radius:16px;margin:16px 0 0;padding:14px;box-shadow:0 14px 30px -26px rgba(41,41,41,.5)}
+.spot-head{display:flex;gap:14px;align-items:flex-start}
+.prev{flex:0 0 auto;width:118px;border-radius:12px;overflow:hidden;background:var(--cream);position:relative}
+.prev img{width:100%;height:100%;object-fit:cover}
+.prev.strip{width:150px;display:grid;grid-template-columns:repeat(4,1fr);gap:3px;padding:6px;aspect-ratio:auto!important}
+.prev.strip img{border-radius:4px;height:auto;aspect-ratio:9/19.5}
+.prev .badge{position:absolute;left:6px;top:6px;background:var(--mauve);color:#fff;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:3px 7px;border-radius:99px}
+.info{min-width:0;flex:1}
+.where{font-size:12px;color:var(--taupe);margin-top:2px}
+.now{margin-top:10px;font-size:13px;color:var(--inkSoft)}
+.now b{color:var(--ink);font-weight:600}
+.now .new{color:var(--mauveDeep)}
+.undo{margin-top:8px;border:0;background:none;color:var(--mauve);font-size:13px;padding:0;text-decoration:underline;cursor:pointer;display:none}
+.spot.changed .undo{display:inline-block}
+.spot.changed{border-color:var(--mauveSoft)}
+.grid-label{font-size:12px;color:var(--taupe);margin:14px 0 6px;display:flex;justify-content:space-between}
+.grid{display:grid;grid-auto-flow:column;grid-template-rows:repeat(2,auto);grid-auto-columns:104px;gap:8px;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;padding:2px 2px 8px;margin:0 -2px}
+.grid::-webkit-scrollbar{height:6px}.grid::-webkit-scrollbar-thumb{background:var(--mauveSoft);border-radius:9px}
+.tile{scroll-snap-align:start;border:0;background:none;padding:0;text-align:left;cursor:pointer;color:var(--ink);-webkit-tap-highlight-color:transparent}
+.tile .ph{position:relative;width:104px;height:104px;border-radius:10px;overflow:hidden;background:var(--cream);outline:3px solid transparent;outline-offset:-3px;transition:outline-color .12s}
+.tile .ph img{width:100%;height:100%;object-fit:cover}
+.tile .cap{font-size:11px;line-height:1.25;margin-top:4px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tile .res{font-size:10.5px;color:var(--taupe);line-height:1.2}
+.tile .tick{position:absolute;right:5px;top:5px;width:24px;height:24px;border-radius:50%;background:var(--mauve);color:#fff;font-size:14px;font-weight:700;display:none;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.tile .cur{position:absolute;left:5px;bottom:5px;background:rgba(41,41,41,.72);color:#fff;font-size:9.5px;font-weight:600;letter-spacing:.04em;padding:2px 6px;border-radius:99px}
+.tile.on .ph{outline-color:var(--mauve)}
+.tile.on .tick{display:flex}
+.tile.keep .ph{display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;font-weight:600;color:var(--mauveDeep);background:var(--rose);padding:8px}
+.send{margin:34px 0 0;background:var(--ink);color:#fff;border-radius:18px;padding:20px 16px}
+.send h2{color:#fff}
+.send p{color:#d9d2cd;font-size:14px;margin:6px 0 12px}
+.send textarea{width:100%;min-height:150px;border-radius:12px;border:0;padding:12px;font:14px/1.5 var(--sans);color:var(--ink);background:#fff;resize:vertical}
+.row{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;align-items:center}
+.btn{appearance:none;border:0;border-radius:99px;background:var(--mauve);color:#fff;font-weight:600;font-size:15px;padding:13px 22px;cursor:pointer}
+.btn:active{background:var(--mauveDeep)}
+.btn.ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4);font-weight:500;font-size:14px;padding:11px 16px}
+.copied{font-size:13px;color:#e9dce2}
+.bar{position:fixed;left:0;right:0;bottom:0;background:rgba(250,249,247,.96);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));z-index:9}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0}
+.bar .n{font-size:14px;color:var(--inkSoft)}
+.bar .n b{color:var(--ink)}
+.bar .btn{padding:11px 18px;font-size:14px;text-decoration:none}
+footer{color:var(--taupe);font-size:12px;margin:22px 0 10px}
+@media (min-width:720px){
+  .prev{width:180px}.prev.strip{width:220px}
+  .grid{grid-auto-columns:120px}.tile .ph{width:120px;height:120px}
+  .spot{padding:18px}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="kick">BURN website v6 · Photo picker</div>
+    <h1>Choose a photo for each spot</h1>
+    <p class="lede">Every photo spot on the website is listed below with the photo it has now. Tap any photo underneath a spot to put it there. Tap it again to undo. Swipe sideways to see all the photos. When you're done, tap <b>Send my picks</b> at the bottom, copy, and paste it to me. Your picks are saved on this phone, so you can come back later. <a href="index.html">Open the website</a></p>
+  </div>
+</header>
+
+<main class="wrap" id="spots"></main>
+
+<section class="wrap" id="send-wrap">
+  <div class="send" id="send">
+    <h2>Send my picks</h2>
+    <p>This is your list in plain text. Tap Copy, then paste it to me.</p>
+    <textarea id="picks" readonly aria-label="Your photo picks"></textarea>
+    <div class="row">
+      <button class="btn" id="copy" type="button">Copy</button>
+      <button class="btn ghost" id="reset" type="button">Start over</button>
+      <span class="copied" id="copied" role="status" aria-live="polite"></span>
+    </div>
+  </div>
+  <footer>Purple shoot: high-resolution originals only. The size under each photo is the original's full resolution. Food and meditation photos are the ones the BURN app already uses; some are only 1080 px wide, so they will look soft in a big spot.</footer>
+</section>
+
+<div class="bar"><div class="wrap"><span class="n" id="count">No changes yet</span><a class="btn" href="#send">Send my picks</a></div></div>
+
+<script>
+(function(){
+var PHOTOS = [
+ {id:'IMG_0302',label:'IMG_0302',g:'purple',w:3024,h:4032},
+ {id:'IMG_5877',label:'IMG_5877',g:'purple',w:3923,h:5885},
+ {id:'IMG_5862',label:'IMG_5862',g:'purple',w:3959,h:5939},
+ {id:'IMG_6145',label:'IMG_6145',g:'purple',w:5713,h:3809},
+ {id:'IMG_0147',label:'IMG_0147',g:'purple',w:5934,h:3956},
+ {id:'IMG_0189',label:'IMG_0189',g:'purple',w:3024,h:4032},
+ {id:'IMG_0286',label:'IMG_0286',g:'purple',w:3024,h:4032},
+ {id:'IMG_0352',label:'IMG_0352',g:'purple',w:3024,h:4032},
+ {id:'IMG_0396',label:'IMG_0396',g:'purple',w:2268,h:3024},
+ {id:'IMG_0404',label:'IMG_0404',g:'purple',w:2268,h:3024},
+ {id:'IMG_0170',label:'IMG_0170 (behind the scenes)',g:'purple',w:4284,h:5712},
+ {id:'IMG_0425',label:'IMG_0425 (behind the scenes)',g:'purple',w:4284,h:5712},
+ {id:'IMG_9603',label:'IMG_9603 (polaroid)',g:'purple',w:4284,h:5712},
+ {id:'food-bowl',label:'Food: salad bowl',g:'food',w:3160,h:3160},
+ {id:'food-buddha',label:'Food: veggie bowl',g:'food',w:1080,h:720},
+ {id:'food-avocado',label:'Food: avocado toast',g:'food',w:1080,h:1080},
+ {id:'food-salmon',label:'Food: salmon',g:'food',w:1080,h:1620},
+ {id:'med-sunrise',label:'Meditation: sunrise',g:'med',w:6277,h:4185},
+ {id:'med-lake',label:'Meditation: lake jetty',g:'med',w:1080,h:682}
+];
+var BY = {}; PHOTOS.forEach(function(p){BY[p.id]=p;});
+var W = function(slug,name){return {id:'w-'+slug,title:name+' tile',where:'Workout tile (Home and Workouts page)',cur:null,curLabel:'Category photo from the app (1400 px)',img:'img/w/'+slug+'.jpg',ar:'16/10'};};
+var GROUPS = [
+ {title:'Hero',note:'The first thing people see on the home page.',spots:[
+  {id:'hero',title:'Hero',where:'Top of the home page',cur:'IMG_0302',img:'img/hero/m-800.jpg',ar:'4/5'}]},
+ {title:'Why BURN',note:'The three cards in the "Why BURN? Move. Nourish. Thrive." section of the home page.',spots:[
+  {id:'move',title:'Move',where:'Why BURN, first card',cur:null,curLabel:'Cardio & HIIT category photo (1400 px)',img:'img/p/move-900.jpg',ar:'3/4'},
+  {id:'nourish',title:'Nourish',where:'Why BURN, second card',cur:'food-bowl',img:'img/p/nourish-800.jpg',ar:'3/4',first:'food'},
+  {id:'thrive',title:'Thrive',where:'Why BURN, third card',cur:'med-sunrise',img:'img/p/thrive-800.jpg',ar:'3/4',first:'med'}]},
+ {title:'Workouts',note:'The workout tiles (the home page shows the first 8) and the phone next to the monthly challenges.',spots:[
+  W('full-body','Full Body'),W('legs','Legs'),W('arms','Arms'),W('core','Core'),W('strength','Strength'),W('pilates','Pilates'),W('weights','Weights'),W('no-equipment','No Equipment'),
+  W('back-shoulders','Back & Shoulders'),W('barre','Barre'),W('sculpt','Sculpt'),W('cardio-hiit','Cardio & HIIT'),W('stretch','Stretch'),W('bands','Bands'),
+  {id:'challenge',title:'Monthly challenge phone',where:'Home and Workouts page, next to the monthly challenges',cur:null,curLabel:'App screenshot (challenge calendar)',img:'img/app/calendar.jpg',ar:'9/19.5'}]},
+ {title:'Inside the app',note:'The row of app screens under the hero ("Your training, in one app").',spots:[
+  {id:'inside',title:'Inside the app',where:'Home page, under the hero',cur:null,curLabel:'4 real app screenshots',strip:['img/app/move.jpg','img/app/calendar.jpg','img/app/nourish.jpg','img/app/progress.jpg'],ar:'4/3'}]},
+ {title:'Meet Rebecca',note:'The two photos next to "Meet Rebecca" on the home page.',spots:[
+  {id:'meet1',title:'Meet Rebecca 1 (large)',where:'Home page, Meet Rebecca',cur:'IMG_5877',img:'img/rl/meet-a-800.jpg',ar:'69/100'},
+  {id:'meet2',title:'Meet Rebecca 2 (small)',where:'Home page, Meet Rebecca',cur:'IMG_0189',img:'img/rl/meet-b-600.jpg',ar:'81/100'}]},
+ {title:'Final CTA',note:'"Ready to Become Your Strongest Self?" at the bottom of every page.',spots:[
+  {id:'final',title:'Final CTA',where:'Bottom of Home, Workouts, Memberships and About',cur:'IMG_5862',img:'img/rl/final-1200.jpg',ar:'1/1'}]},
+ {title:'About page',note:'',spots:[
+  {id:'about1',title:'About: top',where:'About page, next to "Hi, I’m Rebecca."',cur:'IMG_0286',img:'img/rl/about-800.jpg',ar:'4/5'},
+  {id:'about2',title:'About: "So you never train alone"',where:'About page, lower section',cur:'IMG_0147',img:'img/rl/about-2-600.jpg',ar:'72/100'}]},
+ {title:'Download page',note:'',spots:[
+  {id:'download',title:'Download page phone',where:'"Open the BURN app" page',cur:null,curLabel:'App screenshot (Move screen)',img:'img/app/move.jpg',ar:'9/19.5'}]}
+];
+var KEY='burn-v6-photo-picks', picks={};
+try{picks=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){picks={};}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(picks));}catch(e){}}
+function res(p){return p.w+' × '+p.h;}
+function el(t,c,h){var e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e;}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function curName(s){return s.cur?BY[s.cur].label:s.curLabel;}
+var ALL=[], main=document.getElementById('spots');
+
+GROUPS.forEach(function(g){
+  var d=el('details','group'); d.open=true;
+  var sm=el('summary',null,'<div><h2>'+esc(g.title)+'</h2>'+(g.note?'<p class="gnote">'+esc(g.note)+'</p>':'')+'</div><span class="tog"><span class="o">Hide</span><span class="c">Show</span></span>');
+  d.appendChild(sm);
+  g.spots.forEach(function(s){
+    ALL.push(s);
+    var card=el('div','spot'); card.id='spot-'+s.id;
+    var prev=el('div','prev'); prev.style.aspectRatio=s.ar;
+    var info=el('div','info','<h3>'+esc(s.title)+'</h3><div class="where">'+esc(s.where)+'</div><div class="now"></div>');
+    var undo=el('button','undo','Undo, keep the current photo'); undo.type='button';
+    undo.onclick=function(){delete picks[s.id];save();update(s);};
+    info.appendChild(undo);
+    var head=el('div','spot-head'); head.appendChild(prev); head.appendChild(info); card.appendChild(head);
+    card.appendChild(el('div','grid-label','<span>Tap a photo to put it here</span><span>swipe →</span>'));
+    var grid=el('div','grid'); grid.setAttribute('role','group'); grid.setAttribute('aria-label','Photos for '+s.title);
+    var keep=el('button','tile keep','<div class="ph">Keep current photo</div><div class="cap">No change</div><div class="res">&nbsp;</div>');
+    keep.type='button'; keep.dataset.id=''; grid.appendChild(keep);
+    var order=PHOTOS.slice();
+    if(s.first){order.sort(function(a,b){return (b.g===s.first)-(a.g===s.first);});}
+    order.forEach(function(p){
+      var t=el('button','tile','<div class="ph"><img loading="lazy" decoding="async" src="img/pick/'+p.id+'-t.jpg" alt="'+esc(p.label)+'"><span class="tick">✓</span>'+(p.id===s.cur?'<span class="cur">NOW</span>':'')+'</div><div class="cap">'+esc(p.label)+'</div><div class="res">'+res(p)+'</div>');
+      t.type='button'; t.dataset.id=p.id; t.setAttribute('aria-label',p.label+', '+res(p)); grid.appendChild(t);
+    });
+    grid.addEventListener('click',function(e){
+      var t=e.target.closest('.tile'); if(!t)return;
+      var id=t.dataset.id;
+      if(!id||picks[s.id]===id){delete picks[s.id];} else {picks[s.id]=id;}
+      save(); update(s);
+    });
+    card.appendChild(grid);
+    d.appendChild(card);
+    s._card=card; s._prev=prev; s._now=info.querySelector('.now'); s._grid=grid;
+  });
+  main.appendChild(d);
+});
+
+function update(s){
+  var pk=picks[s.id], p=pk&&BY[pk];
+  if(pk&&!p){delete picks[s.id];pk=null;}
+  var prev=s._prev; prev.innerHTML='';
+  if(p){
+    prev.className='prev'; prev.style.aspectRatio=s.ar;
+    prev.innerHTML='<img src="img/pick/'+p.id+'-p.jpg" alt="'+esc(p.label)+'"><span class="badge">New</span>';
+    s._now.innerHTML='Now: '+esc(curName(s))+'<br><b class="new">Your pick: '+esc(p.label)+'</b>';
+  } else {
+    if(s.strip){prev.className='prev strip';prev.innerHTML=s.strip.map(function(u){return '<img src="'+u+'" alt="">';}).join('');}
+    else {prev.className='prev';prev.style.aspectRatio=s.ar;prev.innerHTML='<img src="'+s.img+'" alt="'+esc(curName(s))+'">';}
+    s._now.innerHTML='Now: <b>'+esc(curName(s))+'</b>';
+  }
+  s._card.classList.toggle('changed',!!p);
+  Array.prototype.forEach.call(s._grid.children,function(t){
+    var on=p?t.dataset.id===p.id:t.dataset.id==='';
+    t.classList.toggle('on',on); t.setAttribute('aria-pressed',on?'true':'false');
+  });
+  summary();
+}
+function shortId(p){return p.id.indexOf('IMG_')===0?p.id:p.label;}
+function summary(){
+  var lines=[], n=0;
+  ALL.forEach(function(s){var p=picks[s.id]&&BY[picks[s.id]]; if(p){n++;lines.push(s.title+': '+shortId(p));}});
+  var txt = n ? 'BURN website photo picks\n'+lines.join(' · ')+'\n\nEverything else: keep as it is.' : 'No changes yet. Tap a photo under any spot to choose it.';
+  document.getElementById('picks').value=txt;
+  document.getElementById('count').innerHTML = n ? '<b>'+n+'</b> '+(n===1?'spot':'spots')+' changed' : 'No changes yet';
+}
+ALL.forEach(update);
+
+document.getElementById('copy').onclick=function(){
+  var ta=document.getElementById('picks'), msg=document.getElementById('copied'), txt=ta.value;
+  function ok(){msg.textContent='Copied. Now paste it to Claude.';setTimeout(function(){msg.textContent='';},4000);}
+  function fallback(){ta.removeAttribute('readonly');ta.focus();ta.select();ta.setSelectionRange(0,txt.length);
+    var done=false;try{done=document.execCommand('copy');}catch(e){}ta.setAttribute('readonly','');
+    if(done)ok();else msg.textContent='Press and hold the text to copy it.';}
+  if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(txt).then(ok,fallback);}else fallback();
+};
+document.getElementById('reset').onclick=function(){
+  if(!confirm('Clear all your picks?'))return;
+  picks={};save();ALL.forEach(update);
+};
+})();
+</script>
+</body>
+</html>

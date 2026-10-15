@@ -113,11 +113,13 @@ var PH = {
  'move-now':{t:'img/p/move-900.jpg',p:'img/p/move-1400.jpg',d:'Knee drive'},
  'food-bowl':{t:'img/pick/food-bowl-t.jpg',p:'img/pick/food-bowl-p.jpg',d:'Salad bowl'},
  'med-sunrise':{t:'img/pick/med-sunrise-t.jpg',p:'img/pick/med-sunrise-p.jpg',d:'Sunrise meditation'},
- 'IMG_5963':{t:'img/pick/IMG_5963-t.jpg',p:'img/pick/IMG_5963-p.jpg',d:'Flexing, full length',nw:1},
- 'IMG_5881':{t:'img/pick/IMG_5881-t.jpg',p:'img/pick/IMG_5881-p.jpg',d:'Kneeling with your phone',nw:1},
- 'IMG_6046':{t:'img/pick/IMG_6046-t.jpg',p:'img/pick/IMG_6046-p.jpg',d:'The kick',nw:1},
- 'IMG_5839':{t:'img/pick/IMG_5839-t.jpg',p:'img/pick/IMG_5839-p.jpg',d:'Leaning on the wall',nw:1},
- 'IMG_6173':{t:'img/pick/IMG_6173-t.jpg',p:'img/pick/IMG_6173-p.jpg',d:'On the mat with your phone',nw:1}
+ 'IMG_5963':{t:'img/pick/IMG_5963-t.jpg',p:'img/pick/IMG_5963-p.jpg',d:'Flexing, full length'},
+ 'IMG_5881':{t:'img/pick/IMG_5881-t.jpg',p:'img/pick/IMG_5881-p.jpg',d:'Kneeling with your phone'},
+ 'IMG_6046':{t:'img/pick/IMG_6046-t.jpg',p:'img/pick/IMG_6046-p.jpg',d:'The kick'},
+ 'IMG_5839':{t:'img/pick/IMG_5839-t.jpg',p:'img/pick/IMG_5839-p.jpg',d:'Leaning on the wall'},
+ 'IMG_6173':{t:'img/pick/IMG_6173-t.jpg',p:'img/pick/IMG_6173-p.jpg',d:'On the mat with your phone'},
+ 'IMG_5816':{t:'img/hero-5/ml-800.jpg',p:'img/hero-5/d-1200.jpg',d:'Hand on hip, smiling'},
+ 'IMG_6093':{t:'img/rl/meet-b2-600.jpg',p:'img/rl/meet-b2-1000.jpg',d:'Lunge on the mat, arm up'}
 };
 // Full-size versions for the live home-page previews, and where each photo is anchored so your face stays in frame.
 ['IMG_0302','IMG_5877','IMG_0396','IMG_0404','IMG_0189','IMG_0147','IMG_5963','IMG_5881','IMG_6046','IMG_5839','IMG_6173'].forEach(function(k){PH[k].h='img/pick/'+k+'-h.jpg';});
@@ -126,23 +128,23 @@ var POS = {
  move:{'IMG_6046':'55% 30%','IMG_0147':'50% 40%','IMG_0189':'50% 22%'},
  meet:{'IMG_5877':'50% 20%','IMG_0396':'50% 20%','IMG_0404':'50% 20%','IMG_0189':'50% 25%','IMG_5839':'50% 20%','IMG_6173':'46% 30%'}
 };
-// First option in each list is the current photo.
+// First option in each list is the photo on the site now (updated 15 Oct).
 var SPOTS = [
- {id:'hero',  title:'Hero',               where:'Top of the home page',                          opts:['IMG_0302','IMG_5877','IMG_0396','IMG_5963','IMG_5881'],live:'#top'},
- {id:'move',  title:'Move',               where:'Home page, "Why BURN", first card',               opts:['move-now','IMG_0147','IMG_0189','IMG_6046'],live:'#why .pillar'},
+ {id:'hero',  title:'Hero',               where:'Top of the home page',                          opts:['IMG_5816','IMG_5963','IMG_5881','IMG_5877','IMG_0302'],live:'#top'},
+ {id:'move',  title:'Move',               where:'Home page, "Why BURN", first card',               opts:['IMG_6046','IMG_0147','IMG_0189'],live:'#why .pillar'},
  {id:'nourish',title:'Nourish',           where:'Home page, "Why BURN", second card',              opts:['food-bowl','IMG_0286']},
  {id:'thrive',title:'Thrive',             where:'Home page, "Why BURN", third card',               opts:['med-sunrise','IMG_0147']},
- {id:'meet1', title:'Meet Rebecca 1',     where:'Home page, Meet Rebecca, large photo',           opts:['IMG_5877','IMG_0396','IMG_0404','IMG_5839','IMG_6173'],live:'#meet'},
- {id:'meet2', title:'Meet Rebecca 2',     where:'Home page, Meet Rebecca, small photo',           opts:['IMG_0189','IMG_0404','IMG_0396','IMG_5839','IMG_6173'],live:'#meet'},
+ {id:'meet1', title:'Meet Rebecca 1',     where:'Home page, Meet Rebecca, large photo',           opts:['IMG_5839','IMG_5877','IMG_0396','IMG_0404','IMG_6173'],live:'#meet'},
+ {id:'meet2', title:'Meet Rebecca 2',     where:'Home page, Meet Rebecca, small photo',           opts:['IMG_6093','IMG_6173','IMG_0189','IMG_0404','IMG_0396'],live:'#meet'},
  {id:'final', title:'Final CTA',          where:'"Ready to Become Your Strongest Self?", bottom of every page', opts:['IMG_5862','IMG_5877','IMG_0396']},
  {id:'about1',title:'About: top',         where:'About page, next to "Hi, I’m Rebecca."',     opts:['IMG_0286','IMG_0404','IMG_5877']},
  {id:'about2',title:'About: second photo',where:'About page, "So you never train alone"',          opts:['IMG_0147','IMG_0189','IMG_0396']}
 ];
-var L='ABCDE', KEY='burn-v6-photo-abc', picks={};
+var L='ABCDE', KEY='burn-v6-photo-oct15', picks={};
 try{picks=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){picks={};}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(picks));}catch(e){}}
 // Rebecca: "move should be the kick one" -> Move starts on Option D (IMG_6046), once.
-if(!picks._kick){picks.move='D';picks._kick=1;save();}
+
 function pickedKey(id){var s=SPOTS.filter(function(x){return x.id===id;})[0],i=picks[id]?L.indexOf(picks[id]):0;return s.opts[i<0||i>=s.opts.length?0:i];}
 /* ---- live previews: the real v6 home page in a frame, with the picked photos swapped in (the live site is not changed) ---- */
 var VW={phone:[390,760],desk:[1280,800]};
@@ -155,11 +157,11 @@ function swap(img,src,pos){
 }
 function applyAll(doc,mode){
   var h=pickedKey('hero'),hi=doc.querySelector('.hero .hero-img'),hs=doc.querySelector('.hero picture source');
-  if(hs){if(!hs.dataset.o){hs.dataset.o=hs.getAttribute('srcset');}hs.setAttribute('srcset',h==='IMG_0302'?hs.dataset.o:PH[h].h);}
-  var hp=POS.hero[h];swap(hi,h==='IMG_0302'?null:PH[h].h,hp?(mode==='phone'?hp.m:hp.d):'');
-  var m=pickedKey('move');swap(doc.querySelector('#why .pillar img'),m==='move-now'?null:PH[m].h,POS.move[m]);
-  var a=pickedKey('meet1');swap(doc.querySelector('#meet .photos .a img'),a==='IMG_5877'?null:PH[a].h,POS.meet[a]);
-  var b=pickedKey('meet2');swap(doc.querySelector('#meet .photos .b img'),b==='IMG_0189'?null:PH[b].h,POS.meet[b]);
+  if(hs){if(!hs.dataset.o){hs.dataset.o=hs.getAttribute('srcset');}hs.setAttribute('srcset',h==='IMG_5816'?hs.dataset.o:PH[h].h);}
+  var hp=POS.hero[h];swap(hi,h==='IMG_5816'?null:PH[h].h,hp?(mode==='phone'?hp.m:hp.d):'');
+  var m=pickedKey('move');swap(doc.querySelector('#why .pillar img'),m==='IMG_6046'?null:PH[m].h,POS.move[m]);
+  var a=pickedKey('meet1');swap(doc.querySelector('#meet .photos .a img'),a==='IMG_5839'?null:PH[a].h,POS.meet[a]);
+  var b=pickedKey('meet2');swap(doc.querySelector('#meet .photos .b img'),b==='IMG_6093'?null:PH[b].h,POS.meet[b]);
 }
 function frameFor(s,mode){
   var box=s._lv.querySelector('.fbox'),W=box.clientWidth||300,vw=VW[mode][0],vh=VW[mode][1];

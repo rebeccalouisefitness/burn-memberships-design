@@ -32,7 +32,7 @@
   var PRICES = {
     burn:         { name: 'BURN',          monthly: 7.99,  annual: 83.99,  save: 12 },
     burnplus:     { name: 'BURN+',         monthly: 17.99, annual: 167.99, save: 22 },
-    burncomplete: { name: 'BURN COMPLETE', monthly: 27.99, annual: 224.99, save: 33 }
+    burncomplete: { name: 'BURN COMPLETE', monthly: 27.99, annual: 227.99, save: 32 }
   };
   /* Annual is SHOWN as a monthly equivalent (Rebecca, 14 Oct: "just put the monthly one"):
      annual / 12, rounded to cents. BURN 83.99 -> 7.00, BURN+ 167.99 -> 14.00, COMPLETE 224.99 -> 18.75.

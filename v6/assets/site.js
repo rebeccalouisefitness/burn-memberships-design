@@ -582,7 +582,7 @@
   }
 
   /* journey preview frames: lazy iframes don't jump to #anchors on their own */
-  if (QS.get('preview') && /^#[\w-]+$/.test(location.hash)) window.addEventListener('load', function () { var t = document.querySelector(location.hash); if (t) t.scrollIntoView(); });
+  if (QS.get('preview') && /^#[\w-]+$/.test(location.hash)) window.addEventListener('load', function () { var t = document.querySelector(location.hash); if (t) window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY, behavior: 'instant' }); }); /* own window only, never the parent journey page; instant because html is scroll-behavior:smooth */
 
   renderBilling();
 })();

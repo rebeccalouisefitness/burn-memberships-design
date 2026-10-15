@@ -12,16 +12,26 @@ header{padding:28px 20px 8px;text-align:center}
 header img{height:34px}
 h1{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:34px;margin:14px 0 6px}
 p.sub{margin:0 auto;max-width:520px;color:#5b5b5b;font-size:15px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:28px;max-width:1180px;margin:28px auto 60px;padding:0 20px}
-.opt{text-align:center}
-.phone{width:234px;height:468px;margin:0 auto;border:8px solid #1d1d1d;border-radius:34px;overflow:hidden;position:relative;background:#fff}
-.phone iframe{width:390px;height:780px;border:0;transform:scale(.6);transform-origin:0 0;pointer-events:none}
+.label{max-width:1180px;margin:34px auto 0;padding:0 20px;text-align:center;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#956C7D;font-weight:600}
+.grid{--s:.6;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:28px;max-width:1180px;margin:18px auto 40px;padding:0 20px}
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;max-width:900px;margin:18px auto 30px;padding:0 20px;--s:.6}
+.opt{text-align:center;min-width:0}
+.phone{width:calc(390px * var(--s));height:calc(780px * var(--s));margin:0 auto;border:8px solid #1d1d1d;border-radius:34px;overflow:hidden;position:relative;background:#fff}
+.phone iframe{width:390px;height:780px;border:0;transform:scale(var(--s));transform-origin:0 0;pointer-events:none}
 .phone a{position:absolute;inset:0}
 h2{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:22px;margin:14px 0 4px}
 .opt p{font-size:13.5px;color:#5b5b5b;margin:0 0 12px}
 .btn{display:inline-block;background:#956C7D;color:#fff;font-weight:600;text-decoration:none;padding:10px 22px;border-radius:999px;font-size:14px}
 .now{max-width:1180px;margin:0 auto;padding:0 20px 50px;text-align:center;font-size:14px;color:#5b5b5b}
 .now a{color:#292929}
+hr{border:0;border-top:1px solid rgba(41,41,41,.12);max-width:1140px;margin:10px auto}
+@media (max-width:640px){
+  .trio{--s:.27;gap:8px;padding:0 10px}
+  .trio .phone{border-width:4px;border-radius:16px}
+  .trio h2{font-size:18px;margin-top:8px}
+  .trio .opt p{font-size:11.5px;margin-bottom:8px}
+  .trio .btn{padding:8px 12px;font-size:12px}
+}
 </style>
 </head>
 <body>
@@ -30,6 +40,16 @@ h2{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:22px;margin:
 <h1>Pick your hero photo</h1>
 <p class="sub">Each option is the full home page with only the top photo changed. Tap one to open it and scroll.</p>
 </header>
+
+<div class="label">New: thighs up, square on</div>
+<div class="trio">
+<div class="opt"><div class="phone"><iframe src="hero-5.html" title="Option 5" loading="lazy" tabindex="-1"></iframe><a href="hero-5.html" aria-label="Open option 5"></a></div><h2>Option 5</h2><p>Hand on hip, smiling</p><a class="btn" href="hero-5.html">Open 5</a></div>
+<div class="opt"><div class="phone"><iframe src="hero-6.html" title="Option 6" loading="lazy" tabindex="-1"></iframe><a href="hero-6.html" aria-label="Open option 6"></a></div><h2>Option 6</h2><p>Flex, square on</p><a class="btn" href="hero-6.html">Open 6</a></div>
+<div class="opt"><div class="phone"><iframe src="hero-7.html" title="Option 7" loading="lazy" tabindex="-1"></iframe><a href="hero-7.html" aria-label="Open option 7"></a></div><h2>Option 7</h2><p>Flex, closer in</p><a class="btn" href="hero-7.html">Open 7</a></div>
+</div>
+
+<hr>
+<div class="label">Earlier options</div>
 <div class="grid">
 <div class="opt"><div class="phone"><iframe src="hero-1.html" title="Option 1" loading="lazy" tabindex="-1"></iframe><a href="hero-1.html" aria-label="Open option 1"></a></div><h2>Option 1</h2><p>The flex photo, zoomed in close</p><a class="btn" href="hero-1.html">Open option 1</a></div>
 <div class="opt"><div class="phone"><iframe src="hero-2.html" title="Option 2" loading="lazy" tabindex="-1"></iframe><a href="hero-2.html" aria-label="Open option 2"></a></div><h2>Option 2</h2><p>Kneeling with your phone, close up</p><a class="btn" href="hero-2.html">Open option 2</a></div>

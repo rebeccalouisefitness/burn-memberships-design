@@ -598,3 +598,7 @@ body[data-page="join"] main{padding-bottom:48px}
 .billing{overflow:visible;margin-top:40px}
 .bill-switch button small{white-space:pre-line}
 html[data-burn-checkout="stripe"] .xpay{margin-bottom:16px}
+
+/* quiz result: Does this work for you? Yes / Too much for me */
+.qz-ask{font-family:var(--serif);font-size:22px;font-weight:600;margin:4px 0 12px;color:var(--ink)}
+.qz-yesno{display:grid;gap:10px}

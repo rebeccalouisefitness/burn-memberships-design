@@ -305,15 +305,15 @@
       { v: 'stronger', t: 'Get stronger' }, { v: 'tone', t: 'Tone and sculpt' }, { v: 'weight', t: 'Lose weight' },
       { v: 'energy', t: 'Feel more energised' }, { v: 'habit', t: 'Build a habit that sticks' }] },
     { id: 'guide', q: 'How much guidance do you want?', opts: [
-      { v: 'self', t: 'I’ll pick my own workouts', s: 'Programs, challenges and the full library' },
-      { v: 'schedule', t: 'I want to build my own workouts and schedule my week', s: 'Create your own workout, schedule it or join a live class', w: 'plus' },
-      { v: 'personal', t: 'My BURN plan, which I can adjust', s: 'Plus AI support chat', w: 'complete' }] },
-    { id: 'daily', q: 'Would a daily practice help you?', sub: 'Daily Read, a gratitude journal and cycle-aware training.', opts: [
+      { v: 'self', t: 'I’ll follow along with what everyone else is doing', s: 'The monthly challenge, 40+ programs and the full library' },
+      { v: 'schedule', t: 'I want a bit more control', s: 'Build my own workouts, schedule my week and join live classes', w: 'plus' },
+      { v: 'personal', t: 'I want the ultimate: a plan built around me', s: 'My BURN plan, built for you', w: 'complete' }] },
+    { id: 'daily', q: 'Would a little mindset support each day help you?', sub: 'A daily read, a gratitude journal and training that fits your cycle.', opts: [
       { v: 'yes', t: 'Yes, I’d use it most days', w: 'plus' }, { v: 'no', t: 'Not right now' }] },
-    { id: 'stats', q: 'Do you like to see your numbers?', sub: 'Activity stats, progress and achievements.', opts: [
+    { id: 'stats', q: 'Do you like to see your progress?', sub: 'Your streaks, activity stats and achievements.', opts: [
       { v: 'yes', t: 'Yes, it keeps me going', w: 'plus' }, { v: 'no', t: 'Just the workouts is fine' }] },
     { id: 'stage', q: 'Are you pregnant, or have you had a baby in the last year?', opts: [
-      { v: 'pregnant', t: 'Yes, I’m pregnant', w: 'complete' }, { v: 'postpartum', t: 'Yes, I’m postpartum', w: 'complete' }, { v: 'no', t: 'No' }] }
+      { v: 'pregnant', t: 'Yes, I’m pregnant', w: 'complete' }, { v: 'postpartum', t: 'Yes, I’ve had a baby in the last year', w: 'complete' }, { v: 'no', t: 'No' }] }
   ];
   var GOAL_TXT = { stronger: 'getting stronger', tone: 'toning and sculpting', weight: 'losing weight', energy: 'feeling more energised', habit: 'building a habit that sticks' };
   function quizResult(a) {
@@ -322,21 +322,23 @@
     return 'burn';
   }
   window.burnQuizResult = quizResult; // exposed for testing all paths
-  function quizWhy(tier, a) {
-    var g = GOAL_TXT[a.goal] ? 'For ' + GOAL_TXT[a.goal] + ': ' : '';
+  /* "Too much for me" steps down one tier inside the quiz: COMPLETE -> BURN+ -> BURN */
+  var QUIZ_DOWN = { burncomplete: 'burnplus', burnplus: 'burn' };
+  function quizWhy(tier, a, dropped) {
+    var g = !dropped && GOAL_TXT[a.goal] ? 'For ' + GOAL_TXT[a.goal] + ': ' : '';
     if (tier === 'burncomplete') {
-      if (a.stage === 'pregnant' || a.stage === 'postpartum') return g + 'Rebecca’s Luna Bloom pregnancy and postpartum programs are part of BURN COMPLETE, together with everything in BURN+.';
-      return g + 'BURN COMPLETE is your most personalised BURN experience: My BURN plan, AI support chat and points for the store, plus everything in BURN+.';
+      if (a.stage === 'pregnant' || a.stage === 'postpartum') return g + 'Rebecca’s Luna Bloom pregnancy and postpartum programs are part of BURN COMPLETE, with My BURN plan and everything in BURN+.';
+      return g + 'BURN COMPLETE is the ultimate: My BURN plan built around you, AI support chat and points for the store, plus everything in BURN+.';
     }
-    if (tier === 'burnplus') return g + 'BURN+ makes BURN yours: build your own workouts, schedule your week or join a live class, with the Daily Read, your gratitude journal and your stats.';
-    return g + 'BURN gives you 40+ programs, a new challenge every month, recipes and the community. Everything you need to start.';
+    if (tier === 'burnplus') return g + 'BURN+ gives you more control: build your own workouts, schedule your week and join live classes, with the Daily Read, your gratitude journal and your progress.';
+    return g + 'BURN gives you 40+ programs, a new challenge every month, recipes and the community. Follow along with everyone else.';
   }
   var QUIZ_FEATS = {
-    burn: [['Monthly challenges', ''], ['40+ workout programs', ''], ['Recipes and the Thrive library', ''], ['Favourites', 'new'], ['Community chat', 'new'], ['Daily quote', 'new'], ['Progress photos', 'new']],
-    burnplus: [['Everything in BURN', ''], ['Your own playlists', ''], ['Schedule your workout & join a live class', ''], ['Daily Read', ''], ['Gratitude journal', '']],
-    burncomplete: [['Everything in BURN+', ''], ['My BURN plan', ''], ['AI support chat', ''], ['Luna Bloom pregnancy & postpartum', '']]
+    burn: ['Monthly challenges', '40+ workout programs', 'Recipes and the Thrive library', 'Favourites and community chat', 'Daily quote and progress photos'],
+    burnplus: ['Everything in BURN', 'Build your own workouts & schedule your week', 'Join live classes', 'Daily Read and gratitude journal', 'Your progress, stats and achievements'],
+    burncomplete: ['Everything in BURN+', 'My BURN plan, built for you', 'AI support chat', 'Points for the store', 'Luna Bloom pregnancy & postpartum']
   };
-  var dlg = null, step = 0, answers = {}, quizEntry = 'unknown', resultTier = null;
+  var dlg = null, step = 0, answers = {}, quizEntry = 'unknown', resultTier = null, offerTier = null;
   function el(tag, attrs, html) { var x = document.createElement(tag); if (attrs) Object.keys(attrs).forEach(function (k) { x.setAttribute(k, attrs[k]); }); if (html != null) x.innerHTML = html; return x; }
   function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
   function tagHtml(t) { return t === 'new' ? ' <span class="tag new">New</span>' : ''; }
@@ -351,17 +353,18 @@
       if (e.target.closest('[data-qz-close]')) { closeQuiz(); return; }
       var o = e.target.closest('[data-qz-opt]');
       if (o) { answers[QUIZ[step].id] = o.getAttribute('data-qz-opt'); step++; renderStep(); return; }
-      if (e.target.closest('[data-qz-back]')) { if (step > 0) { step--; renderStep(); } return; }
-      if (e.target.closest('[data-qz-restart]')) { answers = {}; step = 0; resultTier = null; renderStep(); return; }
+      if (e.target.closest('[data-qz-back]')) { if (step >= QUIZ.length && offerTier && offerTier !== resultTier) { offerTier = resultTier; renderStep(); return; } if (step > 0) { step--; offerTier = null; renderStep(); } return; }
+      if (e.target.closest('[data-qz-down]')) { if (QUIZ_DOWN[offerTier]) { offerTier = QUIZ_DOWN[offerTier]; renderStep(); } return; }
+      if (e.target.closest('[data-qz-restart]')) { answers = {}; step = 0; resultTier = null; offerTier = null; renderStep(); return; }
       var j = e.target.closest('[data-qz-join]');
       if (j) {
         e.preventDefault();
-        track('quiz_result_join_click', { tier: resultTier, billing: billing });
-        location.href = joinUrl(resultTier, 'quiz_result');
+        track('quiz_result_join_click', { tier: offerTier || resultTier, billing: billing });
+        location.href = joinUrl(offerTier || resultTier, 'quiz_result');
       }
     });
     dlg.addEventListener('close', function () { if (lastFocus && lastFocus.focus) lastFocus.focus(); });
-    document.addEventListener('burn:billing', function () { if (resultTier && dlg.open) renderStep(true); });
+    document.addEventListener('burn:billing', function () { if (resultTier && dlg.open && step >= QUIZ.length) renderStep(true); });
   }
   function renderStep(keepFocus) {
     var body = dlg.querySelector('[data-qz-body]');
@@ -382,18 +385,21 @@
       bar.style.width = '100%';
       var first = resultTier === null;
       resultTier = quizResult(answers);
-      var P = PRICES[resultTier];
-      var lis = QUIZ_FEATS[resultTier].map(function (f) { return '<li>' + esc(f[0]) + tagHtml(f[1]) + '</li>'; }).join('');
-      body.innerHTML = '<div class="muted" style="font-size:13px">Your result</div><h2 tabindex="-1" data-qz-h>Your BURN is ' + esc(P.name) + '</h2>' +
+      if (!offerTier) offerTier = resultTier;
+      var T = offerTier, P = PRICES[T], dropped = T !== resultTier, down = QUIZ_DOWN[T];
+      var lis = QUIZ_FEATS[T].map(function (f) { return '<li>' + esc(f) + '</li>'; }).join('');
+      body.innerHTML = '<div class="muted" style="font-size:13px">' + (dropped ? 'Here’s the next one down' : 'Your result') + '</div>' +
+        '<h2 tabindex="-1" data-qz-h>' + (dropped ? 'How about ' + esc(P.name) + '?' : esc(P.name) + ' is the membership for you') + '</h2>' +
         '<div class="qz-res">' +
-        '<div class="price"><span class="amt">' + money(shownAmt(resultTier, billing)) + '</span><span class="per">' + perTxt(billing) + '</span>' +
+        '<div class="price"><span class="amt">' + money(shownAmt(T, billing)) + '</span><span class="per">' + perTxt(billing) + '</span>' +
         (billing === 'annual' ? '<span class="save">Save ' + P.save + '%</span>' : '') + '</div>' +
-        '<div class="muted" style="font-size:13px" data-qz-billed>' + (billing === 'annual' ? 'Billed ' + money(P.annual) + ' yearly' : 'or ' + money(P.annualMonthly) + '/month, billed yearly') + '</div>' +
+        (billing === 'annual' ? '<div class="muted" style="font-size:13px" data-qz-billed>Billed ' + money(P.annual) + ' yearly</div>' : '') +
         '<div class="billing" role="group" aria-label="Billing period"><button type="button" data-bill="monthly">Monthly</button><button type="button" data-bill="annual">Annual</button></div>' +
-        '<p class="why">' + esc(quizWhy(resultTier, answers)) + '</p><ul>' + lis + '</ul>' +
-        '<a class="btn block" href="' + joinUrl(resultTier, 'quiz_result') + '" data-qz-join data-join="quiz_result" data-tier="' + resultTier + '">Join ' + esc(P.name) + '</a></div>' +
-        '<div class="qz-nav"><button type="button" class="textbtn" data-qz-back>&larr; Back</button><button type="button" class="textbtn" data-qz-restart>Start again</button></div>' +
-        '<p style="text-align:center;margin-top:10px;font-size:14px"><a class="link" href="membership.html#compare">Compare all memberships</a></p>';
+        '<p class="why">' + esc(quizWhy(T, answers, dropped)) + '</p><ul>' + lis + '</ul>' +
+        '<p class="qz-ask">Does this work for you?</p>' +
+        '<div class="qz-yesno"><a class="btn block" href="' + joinUrl(T, 'quiz_result') + '" data-qz-join data-join="quiz_result" data-tier="' + T + '">Yes, this is me</a>' +
+        (down ? '<button type="button" class="btn ghost block" data-qz-down>Too much for me</button>' : '') + '</div></div>' +
+        '<div class="qz-nav"><button type="button" class="textbtn" data-qz-back>&larr; Back</button><button type="button" class="textbtn" data-qz-restart>Start again</button></div>';
       renderBilling();
       if (first) track('quiz_complete', { tier: resultTier, billing: billing, goal: answers.goal || '' });
     }

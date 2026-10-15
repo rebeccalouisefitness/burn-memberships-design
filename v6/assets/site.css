@@ -594,3 +594,6 @@ body[data-page="join"] main{padding-bottom:48px}
 .billing button .sv{position:absolute;top:-30px;right:-18px;width:62px;height:62px;margin:0;opacity:1;display:grid;place-items:center;text-align:center;padding:10px;background:var(--mauve);color:#fff;font:700 9px/1.1 var(--sans);letter-spacing:.03em;text-transform:uppercase;transform:rotate(12deg);
   clip-path:polygon(50% 0%,59% 12%,73% 5%,76% 20%,91% 19%,87% 33%,100% 40%,90% 51%,100% 61%,87% 67%,91% 81%,76% 80%,73% 95%,59% 88%,50% 100%,41% 88%,27% 95%,24% 80%,9% 81%,13% 67%,0% 61%,10% 51%,0% 40%,13% 33%,9% 19%,24% 20%,27% 5%,41% 12%)}
 .billing{margin-top:26px}
+.billing button .sv{top:-46px;right:-30px;width:64px;height:64px;padding:12px 8px;white-space:normal;font-size:8.5px;line-height:1.05;overflow:visible}
+.billing{overflow:visible;margin-top:40px}
+.bill-switch button small{white-space:pre-line}

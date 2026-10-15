@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow">
 <title>Notes for Rebecca: BURN website v6</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=6">
+<link rel="stylesheet" href="assets/site.css?v=61">
 <style>@media (max-width:640px){main.notes table{display:block;overflow-x:auto;max-width:100%}} main.notes code{overflow-wrap:anywhere}</style>
 </head>
 <body data-page="notes">
@@ -14,7 +14,7 @@
   <div class="wrap">
     <a class="logo" href="index.html" aria-label="BURN by Rebecca Louise, home"><img src="img/burn-logo.png" alt="BURN by Rebecca Louise" height="22"></a>
     <nav class="main" aria-label="Main"><a href="index.html">Home</a><a href="workouts.html">Workouts</a><a href="membership.html">Memberships</a><a href="about.html">About</a></nav>
-    <div class="hdr-right"><a class="btn sm" href="index.html#pricing" data-join="nav">Join Now</a><button class="burger" aria-label="Menu" aria-expanded="false"><span></span></button></div>
+    <div class="hdr-right"><a class="btn sm" href="join.html" data-chooser data-join="nav">Join Now</a><button class="burger" aria-label="Menu" aria-expanded="false"><span></span></button></div>
   </div>
   <div class="mnav"><a href="index.html">Home</a><a href="workouts.html">Workouts</a><a href="membership.html">Memberships</a><a href="about.html">About</a></div>
 </header>
@@ -22,6 +22,57 @@
 <div class="kick">Not part of the website &middot; internal notes</div>
 <h1 style="font-size:52px;margin-top:10px">Notes for Rebecca: v6</h1>
 <p class="lede" style="margin-top:12px">Design only. Nothing is live on rebecca-louise.com, nothing was created or changed in Stripe, RevenueCat, Kajabi, Supabase or App Store Connect, and no money moves. v5 is untouched at <a class="link" href="../v5/">/v5/</a>. Internal notes live on this page only.</p>
+
+<h2>Website to app: the new journey (14 Oct, late)</h2>
+<p><a class="link" href="journey.html">Preview the journey</a> shows both paths end to end, website then app.</p>
+<blockquote>&ldquo;for the like. Once they&rsquo;ve clicked on join burn, if they&rsquo;ve already clicked on, like, the membership that they want because I don&rsquo;t... like, that&rsquo;s right. So they see the three different options, right, on the website, or if they just hit join now. does it then take them to the three options again? Like, if they click on one of the already, like, prices, then it should take them straight there. The name, their email address, and payment information paying by Apple Pay, Google Pay, like, every way that you can pay, um, not like Klarna and stuff like that. And then they get great. You&rsquo;re now in. Download the app. Then they go straight to downloading the app. They sign in with their current details. And if they haven&rsquo;t already gone through, like, the on boarding process of, like, getting started, like, to set up their account properly, that&rsquo;s where that then pops up. It says get started. And then let&rsquo;s... now, you know, it it... even if they just... if they&rsquo;re signing in for the very first time, so we need to obviously have it set up that, like, if they sign in for the first time and they haven&rsquo;t, like, created their pope... they haven&rsquo;t done their photo, their birthday, or what what they&rsquo;re trying to achieve, like, all of those questions, like, it has to go to that. But I wanna do that all inside the app so we just get them in the app base app.&rdquo;</blockquote>
+<h3>What changed on the website</h3>
+<ol>
+<li><b>A membership button goes straight to checkout</b> for that membership and the monthly/annual already picked: home pricing, Memberships page cards, the comparison table (new Join buttons under each column), the quiz result and &ldquo;Join BURN+&rdquo; under Build &amp; schedule. Checkout has a small <b>Change plan</b> link.</li>
+<li><b>Only a general Join Now</b> (top bar, hero, sticky bar, final button, About/Workouts buttons) opens the <b>three-option chooser</b> (BURN, BURN+, COMPLETE with the Monthly/Annual switch), then checkout.</li>
+<li><b>Checkout asks only: Name, Email, Create a password (one field, Show/Hide), Payment.</b> Payment shows Apple Pay, Google Pay and Link buttons, then card. No Klarna, Afterpay, Affirm or any pay-later option anywhere. The separate &ldquo;Create your account&rdquo; page (first name, re-enter password, sign-in switch) is gone. Nothing about birthday, photo or goals on the website.</li>
+<li><b>Thank-you:</b> &ldquo;You&rsquo;re in.&rdquo; with &ldquo;Welcome to BURN, [first name]!&rdquo; above it and your sign-off kept. <b>Download BURN</b> is the main action (store badges, QR on a computer), then &ldquo;Sign in with [email] and the password you just created&rdquo;, then 3 steps ending in <b>Get started</b>. The download page gained the same Get started step.</li>
+<li><b>Journey preview</b> now has Path 1 (tap a membership, 10 steps from website into the app) and Path 2 (Join Now, chooser, checkout, then the same as Path 1).</li>
+</ol>
+<p><b>Honest labels for the journey (internal only):</b> website steps are the real pages. App steps 5&ndash;9 are <b>drawn screens</b> (<code>app-screens.html</code>) using the app&rsquo;s exact copy from the Preview line (<code>app/signin.tsx</code>, <code>app/onboarding.tsx</code>, <code>src/data/onboarding.ts</code>), not screenshots. Step 6 shows the Get started welcome <b>right after sign-in</b>, which the app does not do yet (see the change list below); in the app today it uses 7 progress dots and includes Create account and Choose membership steps, which a paid web member would skip. Step 10 is the <b>real</b> Move screenshot with a drawn &ldquo;Your BURN+ is unlocked&rdquo; banner on top; the app has no such banner today.</p>
+
+<h3>Sign-in details: decision for you</h3>
+<p>The app signs in with <b>email + password only</b> (Supabase <code>signInWithPassword</code>; no magic link, no email code; checked in <code>~/burn-plus-preview</code>, <code>src/lib/supabase.ts</code>, <code>app/signin.tsx</code>). You said they &ldquo;sign in with their current details&rdquo;, so they need a password they know.</p>
+<ul>
+<li><b>Used in this design (works with no app change):</b> checkout asks Name, Email, <b>Create a password</b>, Payment. The app&rsquo;s sign-in already says &ldquo;Use the same email and password you signed up with on the web.&rdquo; Someone who already has the app types their current password; the server checks it instead of creating a new account.</li>
+<li><b>Alternative (no password at checkout):</b> (a) the app adds <b>&ldquo;Email me a code&rdquo;</b> on sign-in: Supabase <code>signInWithOtp</code> + <code>verifyOtp</code> with a 6-digit code (email template shows the code). JavaScript only, so it can ship as an app update without a new store build. Or a one-tap <b>magic link</b>, which also needs <code>apple-app-site-association</code> / <code>assetlinks.json</code> hosted on the domain (both 404 today) and a new native build. Or (b) a <b>&ldquo;Set your password&rdquo; email</b> after checkout (Supabase invite/recovery link to a set-password page on the site; redirect allow-list), which adds an email step before she can sign in. Recommendation: keep the password for launch, add &ldquo;Email me a code&rdquo; later as a convenience.</li>
+<li><b>Account linking stays the same:</b> at Pay, the server creates the Supabase user (email + password, <code>full_name</code> in user metadata, email marked confirmed) or verifies an existing one, and passes that uid to Stripe as <code>metadata.app_user_id</code> and <code>subscription_data.metadata.app_user_id</code>, so RevenueCat and the webhook put the tier on the account she signs in with. Desktop purchase unlocks the app (T1 stays the release blocker).</li>
+</ul>
+
+<h3>For the team (internal): what the app needs for &ldquo;Get started&rdquo; on first sign-in</h3>
+<p>Read-only check of the Preview line <code>~/burn-plus-preview</code> (commit 57c56e8, Preview 174), plus <code>~/burn-publish</code> for RevenueCat. No app code was changed.</p>
+<table><tr><th>Question</th><th>What the app does today</th></tr>
+<tr><td>How Get started is reached</td><td>No sign-in gate (<code>app/_layout.tsx</code> opens the tabs for everyone). <code>/onboarding</code> is only opened from Profile &rsaquo; &ldquo;Sign in or create an account&rdquo; when <b>signed out</b> (<code>app/profile.tsx</code> ~line 466; signed in it opens <code>/account</code>). Sign-in is Progress &rsaquo; Profile &rsaquo; that row &rsaquo; &ldquo;I already have an account&rdquo; &rsaquo; <code>/signin</code>.</td></tr>
+<tr><td>What happens after sign-in</td><td><code>app/signin.tsx</code> calls <code>signIn()</code> then <code>router.replace('/')</code>. It never checks onboarding, so a website buyer goes straight to Home and never sees Get started.</td></tr>
+<tr><td>Get started steps (<code>app/onboarding.tsx</code>)</td><td>0 Welcome (&ldquo;Get started&rdquo;) &middot; 1 &ldquo;Where are you at right now?&rdquo; (general, beginner, pregnancy, postpartum, menopause) &middot; 2 goal, branching (lose weight / tone up / build muscle; pregnancy week; months postpartum; beginner and menopause goals) &middot; 3 Create account (name, email, password, optional code: calls <code>signUp</code>) &middot; 4 legacy offer &middot; 5 Choose membership (hidden while pricing is off) &middot; 6 Make it yours: photo, birthday, &ldquo;What should I call you?&rdquo;, &ldquo;What made you start?&rdquo; (all optional, &ldquo;Skip for now&rdquo;).</td></tr>
+<tr><td>Where answers are stored</td><td>Steps 1&ndash;2: <code>public.onboarding_answers</code> (<code>life_stage</code>, <code>goal</code>, <code>pregnancy_week</code>, <code>months_postpartum</code>, <code>answers</code>, <code>completed_at</code>) via <code>saveOnboarding()</code>, written at step 3. Step 6: <code>public.profiles</code> (<code>avatar_url</code>, <code>date_of_birth</code>, <code>preferred_name</code>, <code>motivation</code>) via <code>saveProfileExtras()</code>, which is an <b>update</b> (does nothing if the row is missing). There is <b>no</b> <code>onboarding_completed</code> flag, and nothing records that step 6 was finished or skipped.</td></tr>
+<tr><td>A user created at web checkout</td><td>The <code>handle_new_user()</code> trigger inserts <code>profiles</code> (id, email, <code>full_name</code> from user metadata), <code>entitlement_key</code> = free until the webhook sets the tier. Empty: <code>avatar_url</code>, <code>date_of_birth</code>, <code>preferred_name</code>, <code>motivation</code>; no <code>onboarding_answers</code> row. If Supabase &ldquo;Confirm email&rdquo; is on, the server must create the user already confirmed or the app sign-in fails.</td></tr>
+<tr><td>Tier and RevenueCat</td><td>The tier on screen comes from Supabase <code>my_entitlement()</code> (<code>src/state/auth.tsx</code> refresh), not the RevenueCat SDK. RevenueCat <code>configure(uid)</code> / <code>logIn(uid)</code> exists only in <code>~/burn-publish</code> <code>src/lib/purchases.ts</code> and runs only when the paywall opens (iOS key only). The Preview line has the package but no <code>purchases.ts</code>.</td></tr>
+</table>
+<p><b>Change list (for the app developer; not done):</b></p>
+<ol>
+<li><b>Gating condition</b> (one function, e.g. <code>needsGetStarted()</code>): signed in AND not anonymous AND (no <code>onboarding_answers</code> row OR <code>life_stage</code> is null OR <code>profiles.onboarding_completed_at</code> is null). New migration: <code>profiles.onboarding_completed_at timestamptz</code>, set when Make it yours is saved <b>or skipped</b>; return it (and <code>life_stage</code>) from <code>my_entitlement()</code> so no extra query. Backfill it to now() for every existing account so current members aren&rsquo;t sent back through setup.</li>
+<li><b>Decision for you:</b> photo and birthday are optional with &ldquo;Skip for now&rdquo; today. Recommended: Skip counts as done (gentle reminder in Profile later). Strict version (keep sending her to Get started while photo, birthday or goal is empty) means removing Skip.</li>
+<li><b>Route on sign-in:</b> <code>app/signin.tsx</code> after success: <code>await auth.refresh()</code>, then <code>router.replace(needsGetStarted ? '/onboarding?mode=setup' : '/')</code>. Plus a small gate component in <code>app/_layout.tsx</code> (inside <code>AuthProvider</code> + <code>AppProvider</code>) that does the same on launch or session restore, so it also catches &ldquo;onboarding incomplete&rdquo; on any later open. Fail open if the status can&rsquo;t be read (offline).</li>
+<li><b>Signed-in &ldquo;setup&rdquo; mode in <code>app/onboarding.tsx</code>:</b> skip step 3 (no <code>signUp</code>, which would fail with &ldquo;already registered&rdquo;; call <code>saveOnboarding(auth.user.id, …)</code> directly after step 2), skip steps 4 and 5 (she has paid; never show plans or a paywall to a paid member), hide &ldquo;I already have an account&rdquo;, 4 progress dots, prefill the name from <code>profiles.full_name</code>. Resume where she left off: no <code>life_stage</code> &rarr; step 1; <code>life_stage</code> but not completed &rarr; Make it yours. Change <code>saveProfileExtras()</code> to an upsert.</li>
+<li><b>Easy way in from a cold launch:</b> the thank-you page says &ldquo;Tap Sign in&rdquo;, but signing in is 3&ndash;4 taps deep today. Add a first-open screen (or a Sign in button on Home when signed out) that opens <code>/signin</code>.</li>
+<li><b>RevenueCat:</b> add <code>purchases.ts</code> to the Preview line and call <code>configure(uid)</code> / <code>logIn(uid)</code> on every sign-in (auth state change), not only on the paywall; never <code>logOut()</code>; add the Android key when Android ships.</li>
+<li><b>Tier sync on first launch:</b> Stripe &rarr; RevenueCat &rarr; webhook &rarr; <code>profiles</code> can lag. If she signs in before it lands she&rsquo;d see Free. After sign-in, if the tier is still free, re-check <code>my_entitlement()</code> a few times (for example 2, 5, 10, 30 seconds and when the app returns to the foreground) while she does Get started, and show no paywall in the meantime.</li>
+</ol>
+<p><b>Edge cases:</b> web buyer with no <code>profiles</code> row (trigger missed): the server creates it at checkout, and the app upserts on first sign-in; the gate treats a missing row as &ldquo;needs Get started&rdquo;. App Store buyer: creates the account inside Get started and buys in the app (app_user_id = uid), so the gate only catches her if she quits before Make it yours. Partly finished: resumes at the first missing step, on any device (stored in the database, not on the phone). App Review account and existing members: covered by the backfill. Anonymous sessions: never gated.</p>
+
+<h3>Stripe settings needed at go-live (note only: nothing was changed in Stripe)</h3>
+<ul>
+<li><b>Payment method configuration</b> for the website checkout (Settings &rsaquo; Payments &rsaquo; Payment methods; a separate configuration for BURN, passed as <code>payment_method_configuration</code>): <b>ON</b> cards, Apple Pay, Google Pay, Link. <b>OFF</b> Klarna, Afterpay/Clearpay, Affirm, Zip and every other pay-later method; also off: bank debits, Cash App Pay, PayPal, Amazon Pay (RevenueCat&rsquo;s Stripe purchase tracking doesn&rsquo;t support bank debits, PayPal, Klarna or Cash App Pay).</li>
+<li><b>Apple Pay domain:</b> register <code>rebecca-louise.com</code> and <code>www.rebecca-louise.com</code> under Settings &rsaquo; Payment method domains. Apple Pay needs Stripe&rsquo;s verification file served at <code>/.well-known/apple-developer-merchantid-domain-association</code>; Kajabi may not allow that path (same problem as the app links file), in which case checkout lives on a subdomain such as <code>join.rebecca-louise.com</code>, registered the same way. Google Pay and Link use the same domain list.</li>
+<li>Subscriptions save the wallet or card for renewals (<code>save_default_payment_method: on_subscription</code>).</li>
+<li>Test in a Stripe Sandbox first: Apple Pay needs Safari on a real iPhone or Mac; Google Pay needs Chrome with a saved card.</li>
+</ul>
 
 <h2>Your words (14 Oct, v6)</h2>
 <blockquote>&ldquo;For the website, you have not used a high res photo. The one of me like squatting down, like, with the app in front of me, um, is the one I think that we should use. Then even when it says about Rebecca, um, that one is not a high res photo that you&rsquo;ve used. And then nourish needs to be, like, a meditation one, and then thry... nourish needs to be a food food one. Thrive needs to be, like, the meditation photo that we have before.&rdquo;</blockquote>
@@ -34,7 +85,7 @@
 <li><b>NOURISH</b> is a food photo again (the bowl from v4, which is also a recipe photo in the app). <b>THRIVE</b> is the sunrise meditation photo from v4. Both are now exported from the photographer&rsquo;s full-size original, so they are sharper than in v4.</li>
 <li><b>Final call to action</b> keeps IMG_5862, re-exported from the Canon original (3959 &times; 5939) up to 2400px wide.</li>
 </ol>
-<p>Everything else from v5 is the same: prices (annual shown as the monthly equivalent, billed yearly underneath), the Find your BURN quiz, features shown as included with New tags, the nutrition add-on, support at customerservice@rebecca-louise.com, no certifications line, real iPhone app screenshots, join &rarr; account &rarr; demo checkout &rarr; thank-you with QR &rarr; download, and click tracking that sends nothing from this preview.</p>
+<p>Everything else from v5 is the same: prices (annual shown as the monthly equivalent, billed yearly underneath), the Find your BURN quiz, features shown as included with New tags, the nutrition add-on, support at customerservice@rebecca-louise.com, no certifications line, real iPhone app screenshots, the join journey (now: membership button &rarr; checkout, or Join Now &rarr; chooser &rarr; checkout; then thank-you with QR &rarr; download), and click tracking that sends nothing from this preview.</p>
 
 <h2>Photos used</h2>
 <p>Every photo of a person is you, from the purple shoot (20&ndash;21 Sep). Every image is a downscaled crop of the original: nothing is upscaled.</p>
@@ -90,14 +141,15 @@
 
 <h2>Click tracking</h2>
 <p>Unchanged from v4. On this preview <b>nothing is sent to Google or Meta</b>; tags only load on rebecca-louise.com once BURN&rsquo;s own GA4 and Pixel IDs are filled in. Every event goes to the browser console and this counter. Add <code>?debug=1</code> to any page to see a small counter.</p>
-<div class="counter" data-debug style="margin:16px 0"><div><span class="muted">join_now_click</span><b data-count="join_now_click">0</b></div><div><span class="muted">pricing_view</span><b data-count="pricing_view">0</b></div><div><span class="muted">quiz_start</span><b data-count="quiz_start">0</b></div><div><span class="muted">quiz_complete</span><b data-count="quiz_complete">0</b></div><div><span class="muted">quiz_result_join_click</span><b data-count="quiz_result_join_click">0</b></div><div><span class="muted">account_created</span><b data-count="account_created">0</b></div><div><span class="muted">registration_complete</span><b data-count="registration_complete">0</b></div></div>
+<div class="counter" data-debug style="margin:16px 0"><div><span class="muted">join_now_click</span><b data-count="join_now_click">0</b></div><div><span class="muted">pricing_view</span><b data-count="pricing_view">0</b></div><div><span class="muted">quiz_start</span><b data-count="quiz_start">0</b></div><div><span class="muted">quiz_complete</span><b data-count="quiz_complete">0</b></div><div><span class="muted">quiz_result_join_click</span><b data-count="quiz_result_join_click">0</b></div><div><span class="muted">plan_chooser_view</span><b data-count="plan_chooser_view">0</b></div><div><span class="muted">checkout_view</span><b data-count="checkout_view">0</b></div><div><span class="muted">registration_complete</span><b data-count="registration_complete">0</b></div></div>
 <div class="evlog" data-evlog></div>
 <p style="margin-top:10px"><button class="btn sm ghost" data-reset>Reset counter</button></p>
 <table><tr><th>Site event</th><th>GA4</th><th>Meta</th></tr>
 <tr><td><code>join_now_click</code></td><td><code>join_now_click</code></td><td><code>InitiateCheckout</code></td></tr>
 <tr><td><code>pricing_view</code></td><td><code>view_item_list</code></td><td><code>ViewPricing</code> (custom)</td></tr>
 <tr><td><code>quiz_start</code> / <code>quiz_complete</code> / <code>quiz_result_join_click</code></td><td>custom events</td><td><code>trackCustom</code></td></tr>
-<tr><td><code>account_created</code></td><td><code>sign_up</code></td><td><code>Lead</code></td></tr>
+<tr><td><code>plan_chooser_view</code> (source)</td><td><code>plan_chooser_view</code></td><td><code>PlanChooserView</code> (custom)</td></tr>
+<tr><td><code>checkout_view</code> (tier, billing, source = tier_button | chooser)</td><td><code>begin_checkout</code></td><td><code>CheckoutView</code> (custom)</td></tr>
 <tr><td><code>registration_complete</code></td><td><code>purchase</code>, value = amount charged ($7.99&ndash;$27.99 monthly, $83.99&ndash;$224.99 annual)</td><td><code>CompleteRegistration</code> + <code>Subscribe</code>, same value</td></tr>
 </table>
 
@@ -108,6 +160,6 @@
 <li>Still open from earlier: TestFlight public link, Android timing, magic sign-in link, email confirmation at sign-up, nutrition add-on price.</li>
 </ol>
 </div></main>
-<script src="assets/site.js?v=6"></script>
+<script src="assets/site.js?v=61"></script>
 </body>
 </html>

@@ -7,7 +7,7 @@
 <title>Preview the journey | Your Strongest Self Starts Here | BURN by Rebecca Louise</title>
 <meta name="description" content="Train with Rebecca Louise. Follow-along workouts, monthly challenges, recipes and mindset in one app.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=6">
+<link rel="stylesheet" href="assets/site.css?v=61">
 </head>
 <body data-page="journey">
 <header class="site">
@@ -16,7 +16,7 @@
     <nav class="main" aria-label="Main"><a href="index.html" class="on" aria-current="page">Home</a><a href="workouts.html">Workouts</a><a href="membership.html">Memberships</a><a href="about.html">About</a></nav>
     <div class="hdr-right">
       <a class="member-link top" href="download.html">Already a member? Open the app</a>
-      <a class="btn sm" href="#pricing" data-join="nav">Join Now</a>
+      <a class="btn sm" href="join.html" data-chooser data-join="nav">Join Now</a>
       <button class="burger" aria-label="Menu" aria-expanded="false"><span></span></button>
     </div>
   </div>
@@ -24,26 +24,53 @@
 </header>
 <main class="jr">
   <div class="jr-head"><div class="kick">Design preview</div><h1 style="margin:10px 0 0;font-size:clamp(36px,5vw,54px)">Preview the journey</h1>
-    <p class="lede" style="margin:12px auto 0">Every step a new member goes through, in order, from Join Now to opening the app. Each screen is the real page in its phone size. Demo details: Jess, jess@example.com, BURN+ monthly. No card is charged.</p></div>
+    <p class="lede" style="margin:12px auto 0">Every step a new member goes through, from the website into the BURN app. Tapping a membership goes straight to checkout. Join Now shows the three options first. Then: You&rsquo;re in, download BURN, sign in, and Get started inside the app. Demo details: Jess, jess@example.com, BURN+ monthly. No card is charged.</p></div>
+
+  <div class="jr-path"><h2>Path 1: she taps a membership</h2><p>Home pricing, Memberships page, comparison table or quiz result.</p></div>
   <div class="jr-steps">
-    <div class="jr-step"><div class="lab"><span class="n">1</span><b>Join Now</b></div><div class="sub">She lands on the home page and taps Join Now.</div>
-      <div class="jr-frame"><iframe src="index.html?preview=1" title="Step 1: Join Now" loading="lazy"></iframe></div>
-      <a class="open link" href="index.html?preview=1" target="_blank" rel="noopener">Open full page ›</a></div>
-    <div class="jr-step"><div class="lab"><span class="n">2</span><b>Choose her membership</b></div><div class="sub">BURN, BURN+ or COMPLETE, monthly or annual.</div>
-      <div class="jr-frame"><iframe src="membership.html?preview=1#tiers" title="Step 2: Choose her membership" loading="lazy"></iframe></div>
-      <a class="open link" href="membership.html?preview=1#tiers" target="_blank" rel="noopener">Open full page ›</a></div>
-    <div class="jr-step"><div class="lab"><span class="n">3</span><b>Create her account</b></div><div class="sub">First name, email and password. This is her app login.</div>
-      <div class="jr-frame"><iframe src="join.html?tier=burnplus&preview=account" title="Step 3: Create her account" loading="lazy"></iframe></div>
-      <a class="open link" href="join.html?tier=burnplus&preview=account" target="_blank" rel="noopener">Open full page ›</a></div>
-    <div class="jr-step"><div class="lab"><span class="n">4</span><b>Checkout</b></div><div class="sub">BURN-branded Stripe-style checkout. The email is locked to her account.</div>
-      <div class="jr-frame"><iframe src="join.html?tier=burnplus&preview=pay" title="Step 4: Checkout" loading="lazy"></iframe></div>
-      <a class="open link" href="join.html?tier=burnplus&preview=pay" target="_blank" rel="noopener">Open full page ›</a></div>
-    <div class="jr-step"><div class="lab"><span class="n">5</span><b>Thank you: welcome to BURN!</b></div><div class="sub">Your words, her first name and the email she signs in with.</div>
-      <div class="jr-frame"><iframe src="thank-you.html?tier=burnplus&billing=monthly&first=Jess&email=jess%40example.com&preview=1" title="Step 5: Thank you: welcome to BURN!" loading="lazy"></iframe></div>
+    <div class="jr-step"><div class="lab"><span class="n">1</span><b>Taps Join BURN+</b><span class="where">Website</span></div><div class="sub">On the home page pricing. Monthly or annual is already picked.</div>
+      <div class="jr-frame"><iframe src="index.html?preview=1#pricing" title="Path 1, step 1: taps Join BURN+" loading="lazy"></iframe></div>
+      <a class="open link" href="index.html?preview=1#pricing" target="_blank" rel="noopener">Open full page ›</a></div>
+    <div class="jr-step"><div class="lab"><span class="n">2</span><b>Checkout</b><span class="where">Website</span></div><div class="sub">Straight to BURN+ monthly. Name, email, a password, then Apple Pay, Google Pay, Link or card. &ldquo;Change plan&rdquo; if she wants another.</div>
+      <div class="jr-frame"><iframe src="join.html?tier=burnplus&billing=monthly&src=tier&preview=pay" title="Path 1, step 2: checkout" loading="lazy"></iframe></div>
+      <a class="open link" href="join.html?tier=burnplus&billing=monthly&src=tier&preview=pay" target="_blank" rel="noopener">Open full page ›</a></div>
+    <div class="jr-step"><div class="lab"><span class="n">3</span><b>You&rsquo;re in.</b><span class="where">Website</span></div><div class="sub">Download BURN is the main button. QR code on a computer. Sign in with her email and the password she just made.</div>
+      <div class="jr-frame"><iframe src="thank-you.html?tier=burnplus&billing=monthly&first=Jess&email=jess%40example.com&preview=1" title="Path 1, step 3: You're in" loading="lazy"></iframe></div>
       <a class="open link" href="thank-you.html?tier=burnplus&billing=monthly&first=Jess&email=jess%40example.com&preview=1" target="_blank" rel="noopener">Open full page ›</a></div>
-    <div class="jr-step"><div class="lab"><span class="n">6</span><b>Download the app</b></div><div class="sub">Where the QR code and store buttons land.</div>
-      <div class="jr-frame"><iframe src="download.html?email=jess%40example.com&preview=1" title="Step 6: Download the app" loading="lazy"></iframe></div>
+    <div class="jr-step"><div class="lab"><span class="n">4</span><b>Download BURN</b><span class="where">Website</span></div><div class="sub">Where the QR code and store buttons land.</div>
+      <div class="jr-frame"><iframe src="download.html?email=jess%40example.com&preview=1" title="Path 1, step 4: download BURN" loading="lazy"></iframe></div>
       <a class="open link" href="download.html?email=jess%40example.com&preview=1" target="_blank" rel="noopener">Open full page ›</a></div>
+    <div class="jr-step"><div class="lab"><span class="n">5</span><b>Signs in</b><span class="where app">App</span></div><div class="sub">The same email and password from checkout.</div>
+      <div class="jr-frame"><iframe src="app-screens.html?s=signin" title="Path 1, step 5: signs in to the app" loading="lazy"></iframe></div>
+      <a class="open link" href="app-screens.html?s=signin" target="_blank" rel="noopener">Open full page ›</a></div>
+    <div class="jr-step"><div class="lab"><span class="n">6</span><b>Get started</b><span class="where app">App</span></div><div class="sub">Opens on her first sign-in, and any time her setup isn&rsquo;t finished.</div>
+      <div class="jr-frame"><iframe src="app-screens.html?s=welcome" title="Path 1, step 6: Get started" loading="lazy"></iframe></div>
+      <a class="open link" href="app-screens.html?s=welcome" target="_blank" rel="noopener">Open full page ›</a></div>
+    <div class="jr-step"><div class="lab"><span class="n">7</span><b>Where she&rsquo;s at</b><span class="where app">App</span></div><div class="sub">General, beginner, pregnancy, postpartum or menopause.</div>
+      <div class="jr-frame"><iframe src="app-screens.html?s=stage" title="Path 1, step 7: life stage" loading="lazy"></iframe></div>
+      <a class="open link" href="app-screens.html?s=stage" target="_blank" rel="noopener">Open full page ›</a></div>
+    <div class="jr-step"><div class="lab"><span class="n">8</span><b>Her goal</b><span class="where app">App</span></div><div class="sub">The question changes with her stage (pregnancy asks the week).</div>
+      <div class="jr-frame"><iframe src="app-screens.html?s=goal" title="Path 1, step 8: goal" loading="lazy"></iframe></div>
+      <a class="open link" href="app-screens.html?s=goal" target="_blank" rel="noopener">Open full page ›</a></div>
+    <div class="jr-step"><div class="lab"><span class="n">9</span><b>Make it yours</b><span class="where app">App</span></div><div class="sub">Photo, birthday, what to call her and why she started.</div>
+      <div class="jr-frame"><iframe src="app-screens.html?s=yours" title="Path 1, step 9: Make it yours" loading="lazy"></iframe></div>
+      <a class="open link" href="app-screens.html?s=yours" target="_blank" rel="noopener">Open full page ›</a></div>
+    <div class="jr-step"><div class="lab"><span class="n">10</span><b>She&rsquo;s in, BURN+ unlocked</b><span class="where app">App</span></div><div class="sub">Straight into the app with the membership she paid for.</div>
+      <div class="jr-frame"><iframe src="app-screens.html?s=home&tier=burnplus" title="Path 1, step 10: in the app with BURN+ unlocked" loading="lazy"></iframe></div>
+      <a class="open link" href="app-screens.html?s=home&tier=burnplus" target="_blank" rel="noopener">Open full page ›</a></div>
+  </div>
+
+  <div class="jr-path"><h2>Path 2: she taps Join Now</h2><p>Nav, hero, sticky bar or the final button. She sees the three options first.</p></div>
+  <div class="jr-steps">
+    <div class="jr-step"><div class="lab"><span class="n">1</span><b>Taps Join Now</b><span class="where">Website</span></div><div class="sub">Any general Join Now button.</div>
+      <div class="jr-frame"><iframe src="index.html?preview=1" title="Path 2, step 1: taps Join Now" loading="lazy"></iframe></div>
+      <a class="open link" href="index.html?preview=1" target="_blank" rel="noopener">Open full page ›</a></div>
+    <div class="jr-step"><div class="lab"><span class="n">2</span><b>Chooses her membership</b><span class="where">Website</span></div><div class="sub">BURN, BURN+ or COMPLETE, monthly or annual.</div>
+      <div class="jr-frame"><iframe src="join.html?billing=monthly&src=hero&preview=choose" title="Path 2, step 2: chooses her membership" loading="lazy"></iframe></div>
+      <a class="open link" href="join.html?billing=monthly&src=hero&preview=choose" target="_blank" rel="noopener">Open full page ›</a></div>
+    <div class="jr-step"><div class="lab"><span class="n">3</span><b>Checkout</b><span class="where">Website</span></div><div class="sub">The same checkout as Path 1. From here it&rsquo;s Path 1, steps 3 to 10.</div>
+      <div class="jr-frame"><iframe src="join.html?tier=burnplus&billing=monthly&src=hero&preview=pay" title="Path 2, step 3: checkout" loading="lazy"></iframe></div>
+      <a class="open link" href="join.html?tier=burnplus&billing=monthly&src=hero&preview=pay" target="_blank" rel="noopener">Open full page ›</a></div>
   </div>
 </main>
 <footer class="site">
@@ -58,6 +85,6 @@
     <div class="legal">&copy; 2026 BURN by Rebecca Louise</div>
   </div>
 </footer>
-<script src="assets/site.js?v=6"></script>
+<script src="assets/site.js?v=61"></script>
 </body>
 </html>

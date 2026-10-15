@@ -31,7 +31,8 @@
   root.setAttribute('data-burn-checkout', 'stripe');
   root.setAttribute('data-burn-checkout-mode', MODE);
   var css = document.createElement('style');
-  css.textContent = 'html[data-burn-checkout="stripe"] [data-mock-payment]{display:none!important}';
+  /* Keep the Apple Pay / Google Pay / Link buttons and the Pay button exactly as designed; Stripe's secure page takes the card, so only the demo card fields and demo fine print go. */
+  css.textContent = 'html[data-burn-checkout="stripe"] [data-mock-payment] .card-el,html[data-burn-checkout="stripe"] [data-mock-payment] .or-line,html[data-burn-checkout="stripe"] p[data-mock-payment]{display:none!important}';
   document.head.appendChild(css);
   var showLive = function () {
     document.querySelectorAll('[data-live-only]').forEach(function (x) { x.hidden = false; });

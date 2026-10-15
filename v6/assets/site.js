@@ -44,7 +44,7 @@
   var perTxt = function () { return '/ month'; };
   /* headline per-month figure for the current billing */
   var shownAmt = function (t, b) { return b === 'annual' ? PRICES[t].annualMonthly : PRICES[t].monthly; };
-  var priceTxt = function (t, b) { return money(shownAmt(t, b)) + ' / month'; };
+  var priceTxt = function (t, b) { return money(shownAmt(t, b)) + '/month'; };
   var billedTxt = function (t, b) { return b === 'annual' ? 'Billed ' + money(PRICES[t].annual) + ' yearly' : 'Billed monthly'; };
 
   /* ---------------- ANALYTICS: GA4 + Meta Pixel, host-gated ----------------
@@ -162,7 +162,7 @@
     });
     document.querySelectorAll('[data-alt]').forEach(function (el) {
       var t = el.getAttribute('data-alt'), P = PRICES[t];
-      el.textContent = billing === 'annual' ? 'Billed ' + money(P.annual) + ' yearly' : 'or ' + money(P.annualMonthly) + ' / month billed yearly (save ' + P.save + '%)';
+      el.textContent = billing === 'annual' ? 'Billed ' + money(P.annual) + ' yearly' : 'or ' + money(P.annualMonthly) + '/month, billed yearly';
     });
     document.querySelectorAll('[data-from]').forEach(function (el) {
       el.textContent = billing === 'annual' ? 'From ' + money(PRICES.burn.annualMonthly) + ' a month, billed yearly' : 'From ' + money(PRICES.burn.monthly) + ' a month';
@@ -388,7 +388,7 @@
         '<div class="qz-res">' +
         '<div class="price"><span class="amt">' + money(shownAmt(resultTier, billing)) + '</span><span class="per">' + perTxt(billing) + '</span>' +
         (billing === 'annual' ? '<span class="save">Save ' + P.save + '%</span>' : '') + '</div>' +
-        '<div class="muted" style="font-size:13px" data-qz-billed>' + (billing === 'annual' ? 'Billed ' + money(P.annual) + ' yearly' : 'or ' + money(P.annualMonthly) + ' / month billed yearly (save ' + P.save + '%)') + '</div>' +
+        '<div class="muted" style="font-size:13px" data-qz-billed>' + (billing === 'annual' ? 'Billed ' + money(P.annual) + ' yearly' : 'or ' + money(P.annualMonthly) + '/month, billed yearly') + '</div>' +
         '<div class="billing" role="group" aria-label="Billing period"><button type="button" data-bill="monthly">Monthly</button><button type="button" data-bill="annual">Annual</button></div>' +
         '<p class="why">' + esc(quizWhy(resultTier, answers)) + '</p><ul>' + lis + '</ul>' +
         '<a class="btn block" href="' + joinUrl(resultTier, 'quiz_result') + '" data-qz-join data-join="quiz_result" data-tier="' + resultTier + '">Join ' + esc(P.name) + '</a></div>' +
@@ -436,7 +436,8 @@
     document.querySelectorAll('[data-ty-then]').forEach(function (x) { x.textContent = billing === 'annual' ? money(P.annual) + ' every year (' + money(P.annualMonthly) + ' / month)' : money(P.monthly) + ' every month'; });
     document.querySelectorAll('[data-ty-paidnote]').forEach(function (x) { x.textContent = billing === 'annual' ? 'Billed yearly (' + money(P.annualMonthly) + ' / month)' : 'Billed monthly'; });
     document.querySelectorAll('[data-ty-bill-m]').forEach(function (x) { x.textContent = priceTxt(pageTierKey, 'monthly'); });
-    document.querySelectorAll('[data-ty-bill-a]').forEach(function (x) { x.textContent = priceTxt(pageTierKey, 'annual') + ' · billed ' + money(P.annual) + ' yearly · save ' + P.save + '%'; });
+    document.querySelectorAll('[data-ty-bill-a]').forEach(function (x) { x.textContent = priceTxt(pageTierKey, 'annual') + ' · billed ' + money(P.annual) + ' yearly'; });
+    document.querySelectorAll('[data-burst]').forEach(function (x) { x.innerHTML = 'SAVE<br>' + P.save + '%'; });
   }
   document.addEventListener('burn:billing', paintTier);
   function showEmail(email) {

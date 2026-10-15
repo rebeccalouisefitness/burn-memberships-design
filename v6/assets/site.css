@@ -205,7 +205,7 @@ header.site.open .mnav{display:block}
 .tier .price{display:flex;align-items:baseline;gap:6px;margin:12px 0 2px;flex-wrap:wrap}
 .tier .amt{font-family:var(--serif);font-size:56px;font-weight:600;line-height:1}
 .tier .per{color:var(--taupeDeep);font-size:14px}
-.save{display:inline-block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;border-radius:999px;padding:3px 9px;background:var(--rose);color:var(--mauveDeep)}
+.save{display:inline-block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;border-radius:999px;padding:4px 10px;background:var(--mauve);color:#fff}
 .tier .alt{font-size:13px;color:var(--taupeDeep);min-height:20px}
 .tier .desc{font-size:15px;color:var(--inkSoft);margin:10px 0 20px;min-height:48px}
 .tier .secure{font-size:12px;color:var(--taupe);text-align:center;margin-top:8px}
@@ -584,3 +584,13 @@ html[data-billing="monthly"] .tier .alt{display:none}
 /* join chooser: annual Save badge (BRN-058) */
 .ch-opt .save{grid-column:1/-1;justify-self:start}
 body[data-page="join"] main{padding-bottom:48px}
+
+/* Annual starburst sticker (Rebecca, 15 Oct: "the annual asterisk thing to save twenty two percent") */
+.burst{position:absolute;top:-16px;right:-8px;width:58px;height:58px;display:grid;place-items:center;text-align:center;background:var(--mauve);color:#fff;font:700 10.5px/1.05 var(--sans);letter-spacing:.04em;transform:rotate(12deg);
+  clip-path:polygon(50% 0%,59% 12%,73% 5%,76% 20%,91% 19%,87% 33%,100% 40%,90% 51%,100% 61%,87% 67%,91% 81%,76% 80%,73% 95%,59% 88%,50% 100%,41% 88%,27% 95%,24% 80%,9% 81%,13% 67%,0% 61%,10% 51%,0% 40%,13% 33%,9% 19%,24% 20%,27% 5%,41% 12%)}
+.bill-switch button{position:relative}
+.bill-switch{margin-top:10px}
+.billing button{position:relative}
+.billing button .sv{position:absolute;top:-30px;right:-18px;width:62px;height:62px;margin:0;opacity:1;display:grid;place-items:center;text-align:center;padding:10px;background:var(--mauve);color:#fff;font:700 9px/1.1 var(--sans);letter-spacing:.03em;text-transform:uppercase;transform:rotate(12deg);
+  clip-path:polygon(50% 0%,59% 12%,73% 5%,76% 20%,91% 19%,87% 33%,100% 40%,90% 51%,100% 61%,87% 67%,91% 81%,76% 80%,73% 95%,59% 88%,50% 100%,41% 88%,27% 95%,24% 80%,9% 81%,13% 67%,0% 61%,10% 51%,0% 40%,13% 33%,9% 19%,24% 20%,27% 5%,41% 12%)}
+.billing{margin-top:26px}

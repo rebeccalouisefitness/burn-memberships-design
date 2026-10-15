@@ -11,6 +11,8 @@
  */
 (function () {
   var h = location.hostname.replace(/^www\./, '');
+  /* Journey preview frames (?preview=…) always show the design exactly as it will look live, with no test-mode line. */
+  if (/[?&]preview=/.test(location.search)) h = '';
   window.BURN_CHECKOUT_CONFIG = h === 'burnrebeccalouise.com'
     ? { mode: 'test', functionsUrl: '/api' }
     : { mode: 'off', functionsUrl: '' };

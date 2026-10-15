@@ -524,3 +524,54 @@ div.wcard{cursor:default}
 .jr-frame iframe{width:100%;height:100%;border:0;display:block}
 .jr-step .open{display:block;text-align:center;margin-top:8px;font-size:13px}
 @media (max-width:480px){.jr{padding:24px 12px 60px}.jr-steps{grid-template-columns:1fr}.jr-frame{height:760px;border-width:6px}}
+
+/* v6.1 (BRN-058, Rebecca's website-to-app journey): plan chooser, checkout = name + email + password + payment */
+.chooser{display:grid;gap:12px;text-align:left;margin:0 0 18px}
+.ch-opt{appearance:none;position:relative;display:grid;grid-template-columns:1fr auto;gap:4px 14px;align-items:center;width:100%;border:1px solid var(--line);background:#fff;border-radius:18px;padding:18px 20px;font:inherit;color:var(--ink);text-align:left;cursor:pointer;min-height:56px}
+.ch-opt:hover{border-color:var(--mauveSoft)}
+.ch-opt.feat{border:1.5px solid var(--mauve)}
+.ch-opt .nm{font-family:var(--serif);font-size:24px;font-weight:600;line-height:1.1}
+.ch-opt .pr{text-align:right;white-space:nowrap;font-size:13px;color:var(--inkSoft)}
+.ch-opt .pr b{font-size:19px;color:var(--ink);font-weight:600}
+.ch-opt .ds{grid-column:1/-1;font-size:14px;color:var(--inkSoft)}
+.ch-opt .bl{grid-column:1/-1;font-size:12.5px;color:var(--taupeDeep)}
+.ch-opt .bl:empty{display:none}
+.ch-opt .go{grid-column:1/-1;font-size:14px;font-weight:600;color:var(--mauve);margin-top:4px}
+.ch-opt .fl{position:absolute;top:-11px;right:18px;background:var(--mauve);color:#fff;font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;border-radius:999px;padding:4px 10px}
+.pw-wrap{position:relative;display:block}
+.pw-wrap input{padding-right:78px}
+.pw-toggle{position:absolute;right:6px;top:50%;transform:translateY(-50%);appearance:none;border:0;background:var(--rose);color:var(--mauveDeep);font:600 13px var(--sans);border-radius:999px;padding:8px 12px;min-height:36px;cursor:pointer}
+.pay-sec{text-align:left;border-top:1px solid var(--lineSoft);padding-top:16px;margin-top:4px}
+.pay-h{font-size:13.5px;font-weight:600;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.pay-h small{font-weight:500;color:var(--taupeDeep);font-size:12px}
+.xpay{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.xbtn{appearance:none;display:flex;align-items:center;justify-content:center;gap:5px;min-height:48px;border-radius:10px;border:1px solid #1d1d1f;background:#000;color:#fff;font:600 17px/1 -apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;cursor:pointer;padding:0 8px;white-space:nowrap}
+.xbtn svg{flex:none}
+.xbtn.gpay{background:#fff;color:#3c4043;border-color:#dadce0;font-family:"Google Sans",Roboto,Arial,sans-serif;font-weight:500}
+.xbtn.lnk{background:#00D66F;border-color:#00D66F;color:#011E0F;font-weight:700;letter-spacing:-.02em}
+.or-line{display:flex;align-items:center;gap:10px;margin:14px 0 12px;font-size:12.5px;color:var(--taupeDeep)}
+.or-line::before,.or-line::after{content:"";flex:1;height:1px;background:var(--line)}
+.card-el{border:1px solid var(--line);border-radius:12px;background:#fff;overflow:hidden;margin-bottom:12px}
+.card-el input{width:100%;border:0;font:16px var(--sans);padding:13px 14px;min-height:48px;color:var(--ink);background:transparent}
+.card-el input:focus{outline:2px solid var(--mauveSoft);outline-offset:-2px}
+.card-el .r2{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid var(--line)}
+.card-el .r2 input+input{border-left:1px solid var(--line)}
+.card-brands{display:flex;gap:4px;align-items:center}
+.card-brands i{display:inline-block;font:700 9px/1 var(--sans);letter-spacing:.02em;font-style:normal;border:1px solid var(--line);border-radius:4px;padding:3px 4px;color:var(--inkSoft);background:#fff}
+.pay-fine{font-size:12px;color:var(--taupeDeep);text-align:center;margin-top:10px}
+.form-err:empty{display:none}
+.ty h1 .yi{display:block}
+.ty-dl{margin-top:22px;text-align:center}
+.ty-dl h2{font-size:clamp(28px,4vw,36px);margin:0 0 6px}
+.ty-signin{background:var(--rose);color:var(--mauveDeep);border-radius:14px;padding:14px 16px;font-size:15px;margin:16px auto 0;max-width:520px;text-align:left;display:flex;gap:10px;align-items:flex-start}
+.ty-signin b{overflow-wrap:anywhere}
+.cmp tfoot td{padding:14px 10px;text-align:center;border-top:1px solid var(--line)}
+.cmp tfoot .btn{padding:9px 14px;min-height:40px;font-size:13.5px;white-space:nowrap}
+/* journey: two paths + app screens */
+.jr-path{margin:44px 0 16px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:26px}
+.jr-head + .jr-path{border-top:0;padding-top:0;margin-top:10px}
+.jr-path h2{font-size:clamp(26px,3.4vw,34px);margin:0}
+.jr-path p{margin:0;color:var(--inkSoft);font-size:14.5px}
+.jr-step .where{display:inline-block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;border-radius:999px;padding:3px 9px;margin-left:auto;background:var(--rose);color:var(--mauveDeep)}
+.jr-step .where.app{background:var(--ink);color:#fff}
+.jr-step .lab{flex-wrap:wrap}

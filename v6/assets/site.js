@@ -7,14 +7,17 @@
  *   4) sent to GA4 + Meta ONLY on the production host with real BURN IDs (see ANALYTICS). On the
  *      GitHub Pages preview nothing leaves the browser.
  * Events:
- *   join_now_click        {location, tier?, billing}
+ *   join_now_click        {location, tier ('' on generic Join Now), billing}
  *   pricing_view          {source}
+ *   plan_chooser_view     {source, billing}            (join.html chooser; generic Join Now / Change plan)
+ *   checkout_view         {tier, billing, source}      (join.html checkout; source = tier_button | chooser)
  *   quiz_start            {entry}
  *   quiz_complete         {tier, billing, goal}
  *   quiz_result_join_click{tier, billing}
- *   account_created       {tier, billing, method}      (join.html, once per page view)
- *   account_signed_in     {tier, billing}
- *   registration_complete {tier, billing, value}       (thank-you, once per session_id) -> GA4 purchase
+ *   registration_complete {tier, billing, value}       (thank-you, once per session_id = event_id) -> GA4 purchase
+ * v6.1 journey (Rebecca, 14 Oct): a TIER button goes straight to checkout for that tier + billing;
+ * only a generic Join Now (nav / hero / final / sticky) shows the three-option chooser first.
+ * Checkout asks only name, email, password and payment (the account is created server-side at checkout).
  * Billing (monthly | annual) is one shared state: URL ?billing= wins, then sessionStorage, then monthly.
  * It is carried tier + billing through join.html -> checkout -> thank-you.html in the URL.
  */
@@ -88,13 +91,13 @@
       var qp = {}; ['entry', 'tier', 'billing', 'goal'].forEach(function (k) { if (p[k]) qp[k] = p[k]; });
       calls.push(['gtag', 'event', event, qp]);                       // GA4 custom event
       calls.push(['fbq', 'trackCustom', event, qp, { eventID: p.event_id }]); // Meta custom event
-    } else if (event === 'account_created') {
-      calls.push(['gtag', 'event', 'sign_up', { method: 'email_password', tier: tier || '', billing: billing }]);
-      var lead = { content_name: tier ? PRICES[tier].name : '', tier: tier || '', billing: billing, content_category: 'membership' };
-      if (price !== undefined) { lead.value = price; lead.currency = 'USD'; }
-      calls.push(['fbq', 'track', 'Lead', lead, { eventID: p.event_id }]);
-    } else if (event === 'account_signed_in') {
-      calls.push(['gtag', 'event', 'login', { method: 'email_password', tier: tier || '', billing: billing }]);
+    } else if (event === 'plan_chooser_view') {
+      calls.push(['gtag', 'event', 'plan_chooser_view', { source: p.source || '', billing: billing }]);
+      calls.push(['fbq', 'trackCustom', 'PlanChooserView', { source: p.source || '', billing: billing }, { eventID: p.event_id }]);
+    } else if (event === 'checkout_view') {
+      calls.push(['gtag', 'event', 'begin_checkout', { value: price, currency: 'USD', tier: tier, billing: billing, source: p.source || '',
+        items: [{ item_id: itemId, item_name: PRICES[tier].name, item_variant: billing, price: price, quantity: 1 }] }]);
+      calls.push(['fbq', 'trackCustom', 'CheckoutView', { value: price, currency: 'USD', tier: tier, billing: billing, source: p.source || '' }, { eventID: p.event_id }]);
     } else if (event === 'registration_complete') {
       calls.push(['gtag', 'event', 'purchase', { transaction_id: p.event_id, value: price, currency: 'USD', tier: tier, billing: billing,
         items: [{ item_id: itemId, item_name: PRICES[tier].name, item_variant: billing, price: price, quantity: 1 }] }]);
@@ -179,25 +182,33 @@
     if (b) { e.preventDefault(); setBilling(b.getAttribute('data-bill')); }
   });
 
+  /* journey previews (?preview=...) keep previewing on the next page, so they never track */
+  var PREVIEW_Q = QS.get('preview') ? '&preview=1' : '';
+  var JOIN_PAGE = 'join.html';
+  /* tier button -> straight to checkout for THAT tier + the billing currently selected */
   function joinUrl(tier, src) {
-    return 'join.html?tier=' + encodeURIComponent(tier) + '&billing=' + encodeURIComponent(billing) + (src ? '&src=' + encodeURIComponent(src) : '');
+    return JOIN_PAGE + '?tier=' + encodeURIComponent(tier) + '&billing=' + encodeURIComponent(billing) + (src ? '&src=' + encodeURIComponent(src) : '') + PREVIEW_Q;
+  }
+  /* generic Join Now -> the three-option chooser (tiers + monthly/annual), then checkout */
+  function chooserUrl(src) {
+    return JOIN_PAGE + '?billing=' + encodeURIComponent(billing) + (src ? '&src=' + encodeURIComponent(src) : '') + PREVIEW_Q;
   }
 
   /* ---------------- Join Now clicks (any [data-join]) ---------------- */
   document.addEventListener('click', function (e) {
     var j = e.target.closest('[data-join]');
     if (!j) return;
-    var p = { location: j.getAttribute('data-join'), billing: billing };
-    if (j.getAttribute('data-tier')) p.tier = j.getAttribute('data-tier');
-    track('join_now_click', p);
+    track('join_now_click', { location: j.getAttribute('data-join'), tier: j.getAttribute('data-tier') || '', billing: billing });
   }, true);
 
-  /* tier buttons -> account step first (desktop purchase unlocks the app) */
+  /* tier buttons ([data-checkout]) skip the chooser; generic Join Now ([data-chooser]) opens it */
   document.addEventListener('click', function (e) {
-    var btn = e.target.closest('[data-checkout]');
+    var btn = e.target.closest('[data-checkout],[data-chooser]');
     if (!btn) return;
     e.preventDefault();
-    location.href = joinUrl(btn.getAttribute('data-tier'), btn.getAttribute('data-join'));
+    if (btn.hasAttribute('data-checkout') && PRICES[btn.getAttribute('data-tier')]) location.href = joinUrl(btn.getAttribute('data-tier'), btn.getAttribute('data-join'));
+    else if (PAGE === 'join' && window.burnShowChooser) window.burnShowChooser(btn.getAttribute('data-join') || 'join_page');
+    else location.href = chooserUrl(btn.getAttribute('data-join'));
   });
 
   /* ---------------- mobile menu ---------------- */
@@ -407,12 +418,15 @@
   });
   if (location.hash === '#find-your-burn' && document.querySelector('[data-quiz-open]')) setTimeout(function () { openQuiz('link'); }, 300);
 
-  /* ---------------- join page: account -> checkout -> thank-you ----------------
-     DESIGN ONLY. Real site: supabase.auth.signUp / signInWithPassword (same login as the app), then a server
-     function creates the Stripe Checkout Session for the price with lookup key <tier>_<billing>, with
-     client_reference_id = metadata.app_user_id = the Supabase uid and customer_email = the account email. */
+  /* ---------------- join page: [chooser ->] checkout (name, email, password, payment) -> thank-you ----------------
+     DESIGN ONLY. Real site, on Pay: a server function (production host only) creates the Supabase Auth user with
+     this email + password (the same login the app uses; an existing app user is verified with signInWithPassword
+     instead), takes its uid, creates the Stripe customer + subscription for the price with lookup key
+     <tier>_<billing> with metadata.app_user_id = subscription_data.metadata.app_user_id = uid, and the Payment
+     Element / Express Checkout Element (cards, Apple Pay, Google Pay, Link; no BNPL) takes the payment. */
   var TIER_OK = function (k) { return PRICES[k] ? k : 'burnplus'; };
-  var pageTierKey = TIER_OK((QS.get('tier') || 'burnplus').toLowerCase());
+  var pageTierRaw = (QS.get('tier') || '').toLowerCase();
+  var pageTierKey = TIER_OK(pageTierRaw || 'burnplus');
   function paintTier() {
     document.querySelectorAll('[data-ty-tier]').forEach(function (x) { x.textContent = PRICES[pageTierKey].name; });
     var P = PRICES[pageTierKey];
@@ -432,62 +446,80 @@
   }
 
   if (PAGE === 'join') {
-    paintTier();
-    var form = document.querySelector('[data-account-form]');
+    var form = document.querySelector('[data-checkout-form]');
     var errEl = document.querySelector('[data-form-err]');
-    var mode = 'create', acct = null, accountEventSent = false;
-    var setMode = function (m) {
-      mode = m;
-      document.querySelectorAll('[data-create-only]').forEach(function (x) {
-        x.hidden = m !== 'create';
-        x.querySelectorAll('input').forEach(function (i) { i.disabled = m !== 'create'; });
-      });
-      form.querySelector('[name=password]').setAttribute('autocomplete', m === 'create' ? 'new-password' : 'current-password');
-      document.querySelector('[data-mode-title]').textContent = m === 'create' ? 'Create your account' : 'Sign in to BURN';
-      document.querySelector('[data-mode-lede]').textContent = m === 'create'
-        ? 'This is your BURN app login. You’ll use it on your phone, so your membership is waiting for you there.'
-        : 'Use the email and password you already use in the BURN app. Your membership goes on that account.';
-      document.querySelector('[data-account-submit]').textContent = m === 'create' ? 'Create account & continue' : 'Sign in & continue';
-      document.querySelector('[data-switch-q]').textContent = m === 'create' ? 'Already have a BURN app account?' : 'New to BURN?';
-      document.querySelector('[data-switch-mode]').textContent = m === 'create' ? 'Sign in' : 'Create an account';
-      errEl.textContent = '';
+    var stepChoose = document.querySelector('[data-join-step=choose]'), stepPay = document.querySelector('[data-join-step=pay]');
+    var indC = document.querySelector('[data-step-ind=choose]'), indP = document.querySelector('[data-step-ind=pay]');
+    var joinSrc = QS.get('src') || 'direct', paying = false;
+    var setUrl = function (tier, push) {
+      var q = new URLSearchParams(location.search);
+      if (tier) q.set('tier', tier); else q.delete('tier');
+      q.set('billing', billing);
+      var u = location.pathname + '?' + q.toString();
+      try { push ? history.pushState({ tier: tier || '' }, '', u) : history.replaceState({ tier: tier || '' }, '', u); } catch (e) {}
     };
-    document.querySelector('[data-switch-mode]').addEventListener('click', function () { setMode(mode === 'create' ? 'signin' : 'create'); });
-    if (QS.get('preview')) {
-      var pf = form.elements; pf.first_name.value = 'Jess'; pf.email.value = 'jess@example.com'; pf.password.value = 'demo-pass'; pf.password2.value = 'demo-pass';
-      if (QS.get('preview') === 'pay') { setTimeout(function () { form.requestSubmit ? form.requestSubmit() : form.dispatchEvent(new Event('submit', { cancelable: true })); }, 0); }
-    }
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var f = form.elements, email = (f.email.value || '').trim(), pw = f.password.value || '';
-      var err = '';
-      if (mode === 'create' && !(f.first_name.value || '').trim()) err = 'Please add your first name.';
-      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) err = 'Please enter a valid email address.';
-      else if (pw.length < 8) err = 'Your password needs at least 8 characters.';
-      else if (mode === 'create' && pw !== f.password2.value) err = 'The two passwords don’t match.';
-      errEl.textContent = err;
-      if (err) return;
-      acct = { email: email, first: (f.first_name && f.first_name.value || '').trim() };
-      if (!accountEventSent) {
-        accountEventSent = true;
-        track(mode === 'create' ? 'account_created' : 'account_signed_in', { tier: pageTierKey, billing: billing, method: 'email_password' });
-      }
-      document.querySelector('[data-join-step=account]').hidden = true;
-      document.querySelector('[data-join-step=pay]').hidden = false;
-      document.querySelector('[data-pay-email]').value = email;
-      var a = document.querySelector('[data-step-ind=account]'), p = document.querySelector('[data-step-ind=pay]');
-      a.classList.remove('on'); a.classList.add('done'); p.classList.add('on');
+    /* one view per screen shown */
+    var showChooser = function (source, push) {
+      stepChoose.hidden = false; stepPay.hidden = true;
+      indC.className = 'on'; indP.className = '';
+      if (push !== false) setUrl('', push === true);
+      track('plan_chooser_view', { source: source || joinSrc, billing: billing });
       window.scrollTo(0, 0);
+    };
+    var showCheckout = function (tier, source, push) {
+      pageTierKey = TIER_OK(tier); paintTier();
+      stepChoose.hidden = true; stepPay.hidden = false;
+      indC.className = 'done'; indP.className = 'on';
+      if (push !== false) setUrl(pageTierKey, push === true);
+      track('checkout_view', { tier: pageTierKey, billing: billing, source: source, entry: joinSrc });
+      window.scrollTo(0, 0);
+    };
+    window.burnShowChooser = function (src) { showChooser(src, true); };
+    document.querySelectorAll('[data-choose]').forEach(function (b) {
+      b.addEventListener('click', function () { showCheckout(b.getAttribute('data-choose'), 'chooser', true); });
     });
-    document.querySelector('[data-mock-pay]').addEventListener('click', function () {
+    document.querySelector('[data-change-plan]').addEventListener('click', function (e) { e.preventDefault(); showChooser('change_plan', true); });
+    window.addEventListener('popstate', function () {
+      var t = (new URLSearchParams(location.search).get('tier') || '').toLowerCase();
+      if (PRICES[t]) showCheckout(t, 'back', false); else showChooser('back', false);
+    });
+    /* show / hide password */
+    var pwT = document.querySelector('[data-pw-toggle]');
+    pwT.addEventListener('click', function () {
+      var i = document.getElementById(pwT.getAttribute('aria-controls')), show = i.type === 'password';
+      i.type = show ? 'text' : 'password'; pwT.textContent = show ? 'Hide' : 'Show'; pwT.setAttribute('aria-pressed', show ? 'true' : 'false');
+    });
+    document.addEventListener('burn:billing', function () { setUrl(stepPay.hidden ? '' : pageTierKey, false); });
+    if (QS.get('preview') === 'pay') {
+      var pf = form.elements; pf.name.value = 'Jess Taylor'; pf.email.value = 'jess@example.com'; pf.password.value = 'demo-pass-2026';
+    }
+    var validate = function () {
+      var f = form.elements, email = (f.email.value || '').trim(), err = '';
+      if (!(f.name.value || '').trim()) err = 'Please add your name.';
+      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) err = 'Please enter a valid email address.';
+      else if ((f.password.value || '').length < 8) err = 'Your password needs at least 8 characters.';
+      errEl.textContent = err;
+      if (err) { var bad = !(f.name.value || '').trim() ? f.name : err.indexOf('email') > -1 ? f.email : f.password; try { bad.focus(); } catch (x) {} }
+      return err ? null : { email: email, first: (f.name.value || '').trim().split(/\s+/)[0].slice(0, 40) };
+    };
+    var pay = function (method, btn) {
+      if (paying) return;
+      var acct = validate();
       if (!acct) return;
-      var b = this; b.setAttribute('data-state', 'loading'); b.textContent = 'Processing…';
+      paying = true;
+      if (btn) { btn.setAttribute('data-state', 'loading'); if (btn.matches('[data-pay-submit]')) btn.textContent = 'Processing…'; }
       var sid = 'cs_demo_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
       setTimeout(function () {
         location.href = 'thank-you.html?tier=' + encodeURIComponent(pageTierKey) + '&billing=' + encodeURIComponent(billing) +
-          '&email=' + encodeURIComponent(acct.email) + (acct.first ? '&first=' + encodeURIComponent(acct.first) : '') + '&session_id=' + encodeURIComponent(sid);
+          '&email=' + encodeURIComponent(acct.email) + (acct.first ? '&first=' + encodeURIComponent(acct.first) : '') +
+          '&method=' + encodeURIComponent(method) + '&session_id=' + encodeURIComponent(sid) + PREVIEW_Q;
       }, 700);
-    });
+    };
+    form.addEventListener('submit', function (e) { e.preventDefault(); pay('card', document.querySelector('[data-pay-submit]')); });
+    document.querySelectorAll('[data-wallet]').forEach(function (w) { w.addEventListener('click', function () { pay(w.getAttribute('data-wallet'), w); }); });
+    /* entry: a tier in the URL (tier button, quiz result) = straight to checkout; no tier (generic Join Now) = chooser */
+    if (PRICES[pageTierRaw]) showCheckout(pageTierRaw, 'tier_button', false);
+    else showChooser(joinSrc, false);
   }
 
   /* ---------------- download page = where the QR lands ---------------- */
@@ -512,7 +544,7 @@
     if (fn) document.querySelectorAll('[data-ty-first]').forEach(function (x) { x.textContent = fn; });
     var dl = document.querySelectorAll('[data-dl-link]');
     var em = QS.get('email');
-    dl.forEach(function (a) { if (em) a.href = 'download.html?email=' + encodeURIComponent(em); });
+    dl.forEach(function (a) { if (em) a.href = 'download.html?email=' + encodeURIComponent(em) + PREVIEW_Q; });
     var sid = QS.get('session_id');
     var DONE = 'burn_v5_reg_done', done = [];
     try { done = JSON.parse(localStorage.getItem(DONE) || '[]'); } catch (e) {}
@@ -525,7 +557,7 @@
   }
 
   /* ---------------- debug counters ---------------- */
-  var EVENTS = ['join_now_click', 'pricing_view', 'quiz_start', 'quiz_complete', 'quiz_result_join_click', 'account_created', 'registration_complete'];
+  var EVENTS = ['join_now_click', 'pricing_view', 'plan_chooser_view', 'checkout_view', 'quiz_start', 'quiz_complete', 'quiz_result_join_click', 'registration_complete'];
   function readLog() { try { return JSON.parse(localStorage.getItem(LS) || '{"counts":{},"log":[]}'); } catch (e) { return { counts: {}, log: [] }; } }
   var counter = document.querySelector('[data-debug]');
   if (counter) {

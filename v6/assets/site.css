@@ -575,3 +575,9 @@ div.wcard{cursor:default}
 .jr-step .where{display:inline-block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;border-radius:999px;padding:3px 9px;margin-left:auto;background:var(--rose);color:var(--mauveDeep)}
 .jr-step .where.app{background:var(--ink);color:#fff}
 .jr-step .lab{flex-wrap:wrap}
+
+/* feedback 15 Oct: monthly view drops the "or $x / month billed yearly" line; home grid shows a short mix under All */
+html[data-billing="monthly"] .tier .alt{display:none}
+.disco:has([data-f="all"].on) + #home-grid .wcard.x{display:none}
+.wcard .im.tint{display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#EFE3E8,#E2CFD8)}
+.wcard .im.tint span{font-family:var(--serif,"Cormorant Garamond",serif);font-size:24px;font-weight:600;color:#6E4A5A}

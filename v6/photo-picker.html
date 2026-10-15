@@ -31,6 +31,19 @@ h2{font-family:var(--serif);font-weight:600;font-size:clamp(26px,6vw,32px);line-
 .big{margin-top:12px;background:var(--cream);border-radius:14px;overflow:hidden;position:relative;height:min(62vw,380px)}
 .big img{width:100%;height:100%;object-fit:contain}
 .big .tag{position:absolute;left:10px;top:10px;background:rgba(41,41,41,.78);color:#fff;font-size:12px;font-weight:600;padding:4px 10px;border-radius:99px}
+.live{margin-top:12px;background:var(--cream);border-radius:14px;padding:12px 10px 14px;position:relative}
+.live .tag{display:inline-block;background:rgba(41,41,41,.78);color:#fff;font-size:12px;font-weight:600;padding:4px 10px;border-radius:99px}
+.live .lhead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.seg{display:inline-flex;background:#fff;border:1px solid var(--line);border-radius:99px;padding:3px}
+.seg button{border:0;background:none;font-size:13px;font-weight:600;color:var(--inkSoft);padding:6px 14px;border-radius:99px;cursor:pointer}
+.seg button.on{background:var(--mauve);color:#fff}
+.frame{position:relative;margin:0 auto;overflow:hidden;background:#fff;box-shadow:0 10px 28px -14px rgba(41,41,41,.45)}
+.frame.phone{border-radius:22px;border:6px solid #1f1a1c}
+.frame.desk{border-radius:8px;border:1px solid #d8d0c9}
+.frame iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0;pointer-events:none;background:#fff}
+.frame .ld{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--taupe)}
+.live .hint{font-size:12px;color:var(--taupe);text-align:center;margin-top:8px}
+.opt .new{display:inline-block;background:var(--mauve);color:#fff;font-size:10px;font-weight:600;letter-spacing:.05em;padding:1px 6px;border-radius:99px;margin-left:4px;vertical-align:2px}
 .opts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
 .opts.n2{grid-template-columns:repeat(2,1fr)}
 .opt{border:0;background:none;padding:0;text-align:left;cursor:pointer;color:var(--ink);-webkit-tap-highlight-color:transparent;min-width:0}
@@ -63,8 +76,8 @@ footer{color:var(--taupe);font-size:12px;margin:22px 0 10px}
 <header class="top">
   <div class="wrap">
     <div class="kick">BURN website · Photo picker</div>
-    <h1>Pick A, B or C for each spot</h1>
-    <p class="lede">Each photo spot on the website has 2 or 3 options. Tap the one you like. Option A is always the photo that's there now. When you're done, tap <b>Send my picks</b>, copy, and paste it to me. Your picks stay saved on this phone. <a href="index.html">Open the website</a></p>
+    <h1>Pick one option for each spot</h1>
+    <p class="lede">Tap the option you like for each photo spot. Option A is always the photo that's there now. For the Hero, Move and Meet Rebecca, the preview shows your pick on the real home page: switch between Phone and Computer to see both. Move is already set to your kick photo. When you're done, tap <b>Send my picks</b>, copy, and paste it to me. Your picks stay saved on this phone. <a href="index.html">Open the website</a></p>
   </div>
 </header>
 
@@ -81,7 +94,7 @@ footer{color:var(--taupe);font-size:12px;margin:22px 0 10px}
       <span class="copied" id="copied" role="status" aria-live="polite"></span>
     </div>
   </div>
-  <footer>Every new option is a full-resolution original from your purple shoot, with only you in it and your face in frame.</footer>
+  <footer>Every new option is a full-resolution original from your purple shoot, with only you in it and your face in frame on phone and computer. The live previews use the real home page; nothing on the website changes until you send your picks.</footer>
 </section>
 
 <div class="bar"><div class="wrap"><span class="n" id="count"></span><a class="btn" href="#send">Send my picks</a></div></div>
@@ -99,32 +112,93 @@ var PH = {
  'IMG_0147':{t:'img/pick/IMG_0147-t.jpg',p:'img/pick/IMG_0147-p.jpg',d:'Warrior pose'},
  'move-now':{t:'img/p/move-900.jpg',p:'img/p/move-1400.jpg',d:'Knee drive'},
  'food-bowl':{t:'img/pick/food-bowl-t.jpg',p:'img/pick/food-bowl-p.jpg',d:'Salad bowl'},
- 'med-sunrise':{t:'img/pick/med-sunrise-t.jpg',p:'img/pick/med-sunrise-p.jpg',d:'Sunrise meditation'}
+ 'med-sunrise':{t:'img/pick/med-sunrise-t.jpg',p:'img/pick/med-sunrise-p.jpg',d:'Sunrise meditation'},
+ 'IMG_5963':{t:'img/pick/IMG_5963-t.jpg',p:'img/pick/IMG_5963-p.jpg',d:'Flexing, full length',nw:1},
+ 'IMG_5881':{t:'img/pick/IMG_5881-t.jpg',p:'img/pick/IMG_5881-p.jpg',d:'Kneeling with your phone',nw:1},
+ 'IMG_6046':{t:'img/pick/IMG_6046-t.jpg',p:'img/pick/IMG_6046-p.jpg',d:'The kick',nw:1},
+ 'IMG_5839':{t:'img/pick/IMG_5839-t.jpg',p:'img/pick/IMG_5839-p.jpg',d:'Leaning on the wall',nw:1},
+ 'IMG_6173':{t:'img/pick/IMG_6173-t.jpg',p:'img/pick/IMG_6173-p.jpg',d:'On the mat with your phone',nw:1}
+};
+// Full-size versions for the live home-page previews, and where each photo is anchored so your face stays in frame.
+['IMG_0302','IMG_5877','IMG_0396','IMG_0404','IMG_0189','IMG_0147','IMG_5963','IMG_5881','IMG_6046','IMG_5839','IMG_6173'].forEach(function(k){PH[k].h='img/pick/'+k+'-h.jpg';});
+var POS = {
+ hero:{'IMG_5963':{m:'40% 45%',d:'50% 42%'}},
+ move:{'IMG_6046':'55% 30%','IMG_0147':'50% 40%','IMG_0189':'50% 22%'},
+ meet:{'IMG_5877':'50% 20%','IMG_0396':'50% 20%','IMG_0404':'50% 20%','IMG_0189':'50% 25%','IMG_5839':'50% 20%','IMG_6173':'46% 30%'}
 };
 // First option in each list is the current photo.
 var SPOTS = [
- {id:'hero',  title:'Hero',               where:'Top of the home page',                          opts:['IMG_0302','IMG_5877','IMG_0396']},
- {id:'move',  title:'Move',               where:'Home page, "Why BURN", first card',               opts:['move-now','IMG_0147','IMG_0189']},
+ {id:'hero',  title:'Hero',               where:'Top of the home page',                          opts:['IMG_0302','IMG_5877','IMG_0396','IMG_5963','IMG_5881'],live:'#top'},
+ {id:'move',  title:'Move',               where:'Home page, "Why BURN", first card',               opts:['move-now','IMG_0147','IMG_0189','IMG_6046'],live:'#why .pillar'},
  {id:'nourish',title:'Nourish',           where:'Home page, "Why BURN", second card',              opts:['food-bowl','IMG_0286']},
  {id:'thrive',title:'Thrive',             where:'Home page, "Why BURN", third card',               opts:['med-sunrise','IMG_0147']},
- {id:'meet1', title:'Meet Rebecca 1',     where:'Home page, Meet Rebecca, large photo',           opts:['IMG_5877','IMG_0396','IMG_0404']},
- {id:'meet2', title:'Meet Rebecca 2',     where:'Home page, Meet Rebecca, small photo',           opts:['IMG_0189','IMG_0404','IMG_0396']},
+ {id:'meet1', title:'Meet Rebecca 1',     where:'Home page, Meet Rebecca, large photo',           opts:['IMG_5877','IMG_0396','IMG_0404','IMG_5839','IMG_6173'],live:'#meet'},
+ {id:'meet2', title:'Meet Rebecca 2',     where:'Home page, Meet Rebecca, small photo',           opts:['IMG_0189','IMG_0404','IMG_0396','IMG_5839','IMG_6173'],live:'#meet'},
  {id:'final', title:'Final CTA',          where:'"Ready to Become Your Strongest Self?", bottom of every page', opts:['IMG_5862','IMG_5877','IMG_0396']},
  {id:'about1',title:'About: top',         where:'About page, next to "Hi, I’m Rebecca."',     opts:['IMG_0286','IMG_0404','IMG_5877']},
  {id:'about2',title:'About: second photo',where:'About page, "So you never train alone"',          opts:['IMG_0147','IMG_0189','IMG_0396']}
 ];
-var L='ABC', KEY='burn-v6-photo-abc', picks={};
+var L='ABCDE', KEY='burn-v6-photo-abc', picks={};
 try{picks=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){picks={};}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(picks));}catch(e){}}
+// Rebecca: "move should be the kick one" -> Move starts on Option D (IMG_6046), once.
+if(!picks._kick){picks.move='D';picks._kick=1;save();}
+function pickedKey(id){var s=SPOTS.filter(function(x){return x.id===id;})[0],i=picks[id]?L.indexOf(picks[id]):0;return s.opts[i<0||i>=s.opts.length?0:i];}
+/* ---- live previews: the real v6 home page in a frame, with the picked photos swapped in (the live site is not changed) ---- */
+var VW={phone:[390,760],desk:[1280,800]};
+function swap(img,src,pos){
+  if(!img)return;
+  if(!img.dataset.o){img.dataset.o='1';img.dataset.os=img.getAttribute('src')||'';img.dataset.oss=img.getAttribute('srcset')||'';img.dataset.ost=img.getAttribute('style')||'';}
+  if(src==null){img.setAttribute('src',img.dataset.os);if(img.dataset.oss)img.setAttribute('srcset',img.dataset.oss);img.setAttribute('style',img.dataset.ost);return;}
+  img.removeAttribute('srcset');img.loading='eager';img.setAttribute('src',src);
+  img.setAttribute('style',img.dataset.ost);img.style.objectPosition=pos||'';
+}
+function applyAll(doc,mode){
+  var h=pickedKey('hero'),hi=doc.querySelector('.hero .hero-img'),hs=doc.querySelector('.hero picture source');
+  if(hs){if(!hs.dataset.o){hs.dataset.o=hs.getAttribute('srcset');}hs.setAttribute('srcset',h==='IMG_0302'?hs.dataset.o:PH[h].h);}
+  var hp=POS.hero[h];swap(hi,h==='IMG_0302'?null:PH[h].h,hp?(mode==='phone'?hp.m:hp.d):'');
+  var m=pickedKey('move');swap(doc.querySelector('#why .pillar img'),m==='move-now'?null:PH[m].h,POS.move[m]);
+  var a=pickedKey('meet1');swap(doc.querySelector('#meet .photos .a img'),a==='IMG_5877'?null:PH[a].h,POS.meet[a]);
+  var b=pickedKey('meet2');swap(doc.querySelector('#meet .photos .b img'),b==='IMG_0189'?null:PH[b].h,POS.meet[b]);
+}
+function frameFor(s,mode){
+  var box=s._lv.querySelector('.fbox'),W=box.clientWidth||300,vw=VW[mode][0],vh=VW[mode][1];
+  var shown=mode==='phone'?Math.min(W-12,270):W, sc=(shown-(mode==='phone'?12:2))/vw;
+  var fr=el('div','frame '+mode);fr.style.width=shown+'px';fr.style.height=Math.round(vh*sc+(mode==='phone'?12:2))+'px';
+  fr.innerHTML='<div class="ld">Loading the home page…</div>';
+  var f=document.createElement('iframe');f.setAttribute('tabindex','-1');f.setAttribute('aria-hidden','true');f.setAttribute('scrolling','no');
+  f.style.width=vw+'px';f.style.height=vh+'px';f.style.transform='scale('+sc+')';
+  f.onload=function(){try{var d=f.contentDocument;
+      var st=d.createElement('style');st.textContent='.sticky-join,.preview-bar{display:none!important}html{scroll-behavior:auto!important}';d.head.appendChild(st);
+      applyAll(d,mode);
+      var t=d.querySelector(s.live),y=s.live==='#top'?0:t.getBoundingClientRect().top+f.contentWindow.scrollY-90;
+      f.contentWindow.scrollTo(0,Math.max(0,y));fr.querySelector('.ld')&&fr.querySelector('.ld').remove();
+    }catch(e){}};
+  f.src='index.html';fr.appendChild(f);s._fr[mode]=f;return fr;
+}
+function showMode(s,mode){
+  s._mode=mode;var box=s._lv.querySelector('.fbox');
+  Array.prototype.forEach.call(s._lv.querySelectorAll('.seg button'),function(b){b.classList.toggle('on',b.dataset.m===mode);});
+  Array.prototype.forEach.call(box.children,function(c){c.style.display='none';});
+  if(!s._fe[mode]){s._fe[mode]=frameFor(s,mode);box.appendChild(s._fe[mode]);}
+  s._fe[mode].style.display='';
+}
+function refreshLive(){SPOTS.forEach(function(s){if(!s.live)return;['phone','desk'].forEach(function(m){var f=s._fr[m];try{if(f&&f.contentDocument&&f.contentDocument.readyState!=='loading')applyAll(f.contentDocument,m);}catch(e){}});});}
 function el(t,c,h){var e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e;}
 var main=document.getElementById('spots');
 SPOTS.forEach(function(s){
   var card=el('section','spot'); card.id='spot-'+s.id;
   card.appendChild(el('div','shead','<div><h2>'+s.title+'</h2><div class="where">'+s.where+'</div></div><span class="status"></span>'));
-  var big=el('div','big'); card.appendChild(big);
+  var big;
+  if(s.live){
+    big=el('div','live','<div class="lhead"><span class="tag"></span><span class="seg"><button type="button" data-m="phone" class="on">Phone</button><button type="button" data-m="desk">Computer</button></span></div><div class="fbox"></div><div class="hint">The real home page with your pick in place</div>');
+    s._fr={};s._fe={};s._lv=big;
+    Array.prototype.forEach.call(big.querySelectorAll('.seg button'),function(b){b.onclick=function(){showMode(s,b.dataset.m);};});
+  } else big=el('div','big');
+  card.appendChild(big);
   var row=el('div','opts'+(s.opts.length===2?' n2':''));
   s.opts.forEach(function(k,i){
-    var p=PH[k], b=el('button','opt','<div class="ph"><img loading="lazy" decoding="async" src="'+p.t+'" alt="'+p.d+'"><span class="tick">✓</span></div><div class="lab">Option '+L[i]+(i===0?' (current)':'')+'<small>'+p.d+'</small></div>');
+    var p=PH[k], b=el('button','opt','<div class="ph"><img loading="lazy" decoding="async" src="'+p.t+'" alt="'+p.d+'"><span class="tick">✓</span></div><div class="lab">Option '+L[i]+(i===0?' (current)':'')+(p.nw?'<span class="new">NEW</span>':'')+'<small>'+p.d+'</small></div>');
     b.type='button'; b.dataset.i=i; b.setAttribute('aria-label','Option '+L[i]+(i===0?' (current)':'')+': '+p.d);
     b.onclick=function(){ if(picks[s.id]===L[i]) delete picks[s.id]; else picks[s.id]=L[i]; save(); update(s); };
     row.appendChild(b);
@@ -136,20 +210,29 @@ function update(s){
   var pk=picks[s.id], i=pk?L.indexOf(pk):-1;
   if(i<0||i>=s.opts.length){delete picks[s.id];i=-1;}
   var show=i<0?0:i, p=PH[s.opts[show]];
-  s._big.innerHTML='<img src="'+p.p+'" alt="'+p.d+'"><span class="tag">'+(i<0?'Now on the website':'Your pick: Option '+L[i])+'</span>';
+  var tag=i<0?'Now on the website':'Your pick: Option '+L[i];
+  if(s.live){s._big.querySelector('.tag').textContent=tag;}
+  else s._big.innerHTML='<img src="'+p.p+'" alt="'+p.d+'"><span class="tag">'+tag+'</span>';
   s._st.textContent=i<0?'Not picked yet':'Picked '+L[i];
   s._card.classList.toggle('done',i>=0);
   Array.prototype.forEach.call(s._row.children,function(b,j){var on=j===i;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on?'true':'false');});
+  if(s.live)refreshLive();
   summary();
 }
 function summary(){
   var done=[], todo=[];
   SPOTS.forEach(function(s){ if(picks[s.id]) done.push(s.title+': '+picks[s.id]); else todo.push(s.title); });
-  var txt = done.length ? 'BURN website photos\n'+done.join(' · ') + (todo.length ? '\n\nNot picked yet: '+todo.join(', ') : '') : 'Nothing picked yet. Tap Option A, B or C under each spot.';
+  var txt = done.length ? 'BURN website photos\n'+done.join(' · ') + (todo.length ? '\n\nNot picked yet: '+todo.join(', ') : '') : 'Nothing picked yet. Tap an option under each spot.';
   document.getElementById('picks').value=txt;
   document.getElementById('count').innerHTML='<b>'+done.length+'</b> of '+SPOTS.length+' picked';
 }
 SPOTS.forEach(update);
+// Load each live preview only when its card comes near the screen (keeps the page light on a phone).
+var lives=SPOTS.filter(function(s){return s.live;});
+if('IntersectionObserver' in window){
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;var s=lives.filter(function(x){return x._card===e.target;})[0];io.unobserve(e.target);if(s&&!s._mode)showMode(s,'phone');});},{rootMargin:'300px 0px'});
+  lives.forEach(function(s){io.observe(s._card);});
+} else lives.forEach(function(s){showMode(s,'phone');});
 document.getElementById('copy').onclick=function(){
   var ta=document.getElementById('picks'), msg=document.getElementById('copied'), txt=ta.value;
   function ok(){msg.textContent='Copied. Now paste it to Claude.';setTimeout(function(){msg.textContent='';},4000);}
@@ -158,7 +241,7 @@ document.getElementById('copy').onclick=function(){
     if(d)ok();else msg.textContent='Press and hold the text to copy it.';}
   if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(txt).then(ok,fallback);}else fallback();
 };
-document.getElementById('reset').onclick=function(){ if(!confirm('Clear all your picks?'))return; picks={};save();SPOTS.forEach(update); };
+document.getElementById('reset').onclick=function(){ if(!confirm('Clear all your picks?'))return; picks={_kick:1};save();SPOTS.forEach(update); };
 })();
 </script>
 </body>

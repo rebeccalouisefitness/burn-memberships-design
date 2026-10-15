@@ -597,3 +597,4 @@ body[data-page="join"] main{padding-bottom:48px}
 .billing button .sv{top:-46px;right:-30px;width:64px;height:64px;padding:12px 8px;white-space:normal;font-size:8.5px;line-height:1.05;overflow:visible}
 .billing{overflow:visible;margin-top:40px}
 .bill-switch button small{white-space:pre-line}
+html[data-burn-checkout="stripe"] .xpay{margin-bottom:16px}

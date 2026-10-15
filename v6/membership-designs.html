@@ -4,182 +4,110 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Designs: Membership &amp; upgrades in the app | BURN by Rebecca Louise</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>Designs: Your membership &amp; upgrading | BURN by Rebecca Louise</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--mauve:#956C7D;--mauveDeep:#6f4c5b;--mauveSoft:#c9adb8;--rose:#f3e6ea;--cream:#faf7f4;--appBg:#fbf8f6;--ink:#2a2326;--soft:#6d6468;--line:#ece4e7;--taupe:#a2969b}
+:root{--mauve:#956C7D;--mauveDeep:#6f4c5b;--rose:#f3e6ea;--cream:#faf7f4;--appBg:#fbf8f6;--ink:#2a2326;--soft:#6d6468;--line:#ece4e7;--taupe:#a2969b}
 *{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font:15px/1.5 Inter,system-ui,sans-serif}
-.serif{font-family:'Cormorant Garamond',serif;font-weight:600}
-.wrap{max-width:1240px;margin:0 auto;padding:44px 22px 90px}
+.wrap{max-width:1180px;margin:0 auto;padding:44px 20px 90px}
 .kick{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--mauve);font-weight:600}
-h1{font:600 clamp(36px,5vw,56px)/1.05 'Cormorant Garamond',serif;margin:8px 0 12px}
-.lede{color:var(--soft);max-width:780px;font-size:16px}
-.rule{margin:22px 0 0;display:flex;gap:14px;flex-wrap:wrap}
-.rule div{flex:1 1 240px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px;font-size:14px}
-.rule b{display:block;font:600 19px 'Cormorant Garamond',serif;color:var(--mauveDeep);margin-bottom:2px}
-section{margin-top:52px}
-h2{font:600 32px/1.1 'Cormorant Garamond',serif;margin:0}
-.who{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:4px 10px;margin-left:10px;vertical-align:middle;background:var(--mauve);color:#fff}
-.sub{color:var(--soft);margin:6px 0 20px;max-width:800px}
-.row{display:flex;gap:26px;overflow-x:auto;padding:4px 2px 16px;scroll-snap-type:x mandatory}
-.step{flex:0 0 268px;scroll-snap-align:start}
-.cap{font-size:13px;color:var(--soft);margin-top:12px;line-height:1.45}.cap b{color:var(--ink)}
-/* phone */
-.phone{width:268px;height:566px;border-radius:44px;background:#141113;padding:9px;box-shadow:0 22px 50px rgba(70,35,50,.20)}
-.scr{width:100%;height:100%;border-radius:36px;background:var(--appBg);overflow:hidden;position:relative;font-size:12px}
-.sb{height:34px;display:flex;justify-content:space-between;align-items:center;padding:4px 24px 0;font-weight:600;font-size:11.5px}
-.island{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:76px;height:22px;border-radius:12px;background:#141113}
-.pad{padding:4px 16px}
-.back{width:28px;height:28px;border-radius:50%;background:#f1ebe7;display:grid;place-items:center;font-size:13px;margin:6px 0 8px}
-.h{font:600 26px/1.05 'Cormorant Garamond',serif;margin:2px 0 4px}
-.muted{color:var(--soft);font-size:11.5px}
-.cur{background:#fff;border:1px solid var(--line);border-radius:18px;padding:13px 14px;margin:10px 0}
-.lbl{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--taupe);font-weight:600}
-.big{font:600 24px/1.1 'Cormorant Garamond',serif;margin-top:2px}
-.src{display:inline-flex;gap:5px;align-items:center;margin-top:7px;font-size:10px;font-weight:600;border-radius:999px;padding:3px 9px;background:var(--rose);color:var(--mauveDeep)}
-.plans{display:flex;flex-direction:column;gap:7px;margin:10px 0}
-.pl{border:1px solid var(--line);background:#fff;border-radius:14px;padding:9px 11px;display:flex;justify-content:space-between;align-items:center}
-.pl .n{font:600 16px 'Cormorant Garamond',serif}.pl .p{font-size:11px;color:var(--soft)}
-.pl.now{border:1.5px solid var(--mauve);background:var(--rose)}
-.pl.now .tag{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mauveDeep)}
-.pl.up{border:1.5px solid var(--ink)}
-.pl .feat{font-size:10px;color:var(--soft)}
-.cta{display:block;text-align:center;background:var(--mauve);color:#fff;border-radius:999px;padding:11px 10px;font-weight:600;font-size:12px;line-height:1.25}
-.cta small{display:block;font-weight:500;font-size:10.5px;opacity:.9}
-.cta.dark{background:#111}.cta.ghost{background:#fff;color:var(--mauveDeep);border:1px solid var(--line)}
-.lnk{display:block;text-align:center;color:var(--mauveDeep);font-weight:600;font-size:11.5px;margin-top:10px}
-.dim{position:absolute;inset:0;background:rgba(25,12,18,.38)}
-.sheet{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:22px 22px 0 0;padding:8px 16px 18px}
-.grab{width:36px;height:4px;border-radius:2px;background:#ddd;margin:0 auto 10px}
-.sitebar{display:flex;justify-content:center;font-size:10px;color:var(--soft);margin-bottom:8px}.sitebar span{background:#f3f0f1;border-radius:8px;padding:3px 9px}
-.ln{display:flex;justify-content:space-between;font-size:11.5px;padding:5px 0}.ln.t{border-top:1px solid var(--line);margin-top:3px;padding-top:9px;font-weight:700;font-size:12.5px}
-.card{display:flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:12px;padding:9px 11px;margin:10px 0;font-size:11.5px}
-.card .visa{font:700 9px Inter;color:#1a1f71;border:1px solid #d9dbe8;border-radius:4px;padding:2px 4px}
-.card .chg{margin-left:auto;color:var(--mauveDeep);font-weight:600}
-.ok{text-align:center;padding-top:84px}
-.tick{width:58px;height:58px;border-radius:50%;background:var(--mauve);color:#fff;display:grid;place-items:center;margin:0 auto 14px;font-size:27px}
-.ios{position:absolute;left:8px;right:8px;bottom:8px;background:#f2f2f7;border-radius:22px;padding:14px 14px 16px;font-family:-apple-system,system-ui,sans-serif;font-size:11.5px}
-.ios .t{font-weight:700;font-size:14px}.ios .r{display:flex;justify-content:space-between;padding:6px 0;border-bottom:.5px solid #d1d1d6}
-.gp{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:18px 18px 0 0;padding:14px 16px 18px;font-family:Roboto,system-ui,sans-serif;font-size:11.5px;box-shadow:0 -4px 18px rgba(0,0,0,.12)}
-.gp .t{font-weight:600;font-size:14px}.gp .btn{background:#01875f;color:#fff;border-radius:999px;text-align:center;padding:10px;font-weight:600;margin-top:12px}
-.wallet{display:flex;gap:8px;margin-top:8px}.wallet div{flex:1;text-align:center;border-radius:10px;padding:9px;font-weight:600;font-size:11.5px}
-.ap{background:#000;color:#fff}.gpb{background:#fff;color:#3c4043;border:1px solid #dadce0}
-.foot{margin-top:56px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px 24px}
-.foot li{margin:6px 0}
-.dev{display:inline-block;font-size:10px;font-weight:700;color:var(--soft);margin-bottom:6px;letter-spacing:.06em;text-transform:uppercase}
-.unlock{background:linear-gradient(160deg,#6f4c5b 0%,#956C7D 55%,#c9adb8 100%);color:#fff;height:100%;padding:4px 16px 16px;position:relative}
-.unlock .sb{color:#fff}.unlock .x{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.18);display:grid;place-items:center;font-size:12px;margin:2px 0 6px}
-.unlock .k{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;opacity:.85}
-.unlock .hh{font:600 25px/1.02 'Cormorant Garamond',serif;margin:4px 0 4px}
-.unlock .s{font-size:11px;opacity:.9;margin-bottom:10px}
-.ul{display:flex;flex-direction:column;gap:7px}
-.ul div{display:flex;gap:9px;align-items:flex-start;background:rgba(255,255,255,.13);border-radius:13px;padding:7px 9px}
-.ul i{flex:0 0 24px;height:24px;border-radius:50%;background:#fff;color:var(--mauveDeep);display:grid;place-items:center;font-style:normal;font-size:12px;font-weight:700}
-.ul b{display:block;font-size:11.5px}.ul span{font-size:10px;opacity:.88;line-height:1.3}
-.unlock .go{position:absolute;left:16px;right:16px;bottom:16px;background:#fff;color:var(--mauveDeep);border-radius:999px;text-align:center;padding:11px;font-weight:700;font-size:12.5px;line-height:1.2}
-.unlock .go small{display:block;font-weight:500;font-size:10px;color:var(--soft)}
-.unlock .hh{font-size:22px;margin:2px 0 2px}.unlock .s{margin-bottom:7px}.unlock .x{margin:0 0 4px}
-.ul{gap:5px}.ul div{padding:5px 8px;gap:8px}.ul i{flex-basis:20px;height:20px;font-size:10px}.ul b{font-size:11px}.ul span{font-size:9.5px;line-height:1.25}
-.unlock .go{bottom:12px;padding:9px}
+h1{font:600 clamp(34px,5vw,52px)/1.05 'Cormorant Garamond',serif;margin:8px 0 10px}
+.lede{color:var(--soft);max-width:720px}
+.row{display:flex;gap:28px;overflow-x:auto;padding:28px 2px 16px;scroll-snap-type:x mandatory}
+.step{flex:0 0 280px;scroll-snap-align:start}
+.cap{font-size:13px;color:var(--soft);margin-top:12px}.cap b{color:var(--ink)}
+.phone{width:280px;height:590px;border-radius:46px;background:#141113;padding:9px;box-shadow:0 22px 50px rgba(70,35,50,.18)}
+.scr{width:100%;height:100%;border-radius:38px;background:var(--appBg);overflow:hidden;position:relative;font-size:13px}
+.island{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:78px;height:22px;border-radius:12px;background:#141113;z-index:3}
+.sb{height:36px;display:flex;justify-content:space-between;align-items:center;padding:6px 24px 0;font-weight:600;font-size:11.5px}
+.pad{padding:6px 16px}
+.back{width:30px;height:30px;border-radius:50%;background:#f1ebe7;display:grid;place-items:center;font-size:15px;margin:4px 0 10px}
+.h{font:600 28px/1.05 'Cormorant Garamond',serif;margin:0 0 14px}
+details{background:#fff;border:1px solid var(--line);border-radius:18px;margin-bottom:10px;overflow:hidden}
+details.mine{border:1.5px solid var(--mauve)}
+summary{list-style:none;cursor:pointer;padding:13px 14px;display:flex;align-items:center;gap:10px}
+summary::-webkit-details-marker{display:none}
+.sm{flex:1}
+.lab{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mauve);font-weight:700}
+.nm{font:600 21px/1.1 'Cormorant Garamond',serif}
+.pr{font-size:12px;color:var(--soft)}
+.chev{width:24px;height:24px;border-radius:50%;background:var(--rose);color:var(--mauveDeep);display:grid;place-items:center;font-size:11px;transition:transform .2s}
+details[open] .chev{transform:rotate(180deg)}
+.hint{font-size:11px;color:var(--mauve);font-weight:600;margin-top:2px}
+details[open] .hint{display:none}
+ul{margin:0;padding:0 14px 12px;list-style:none}
+li{display:flex;gap:9px;align-items:center;padding:6px 0;border-top:1px solid var(--line);font-size:12.5px}
+li i{flex:0 0 22px;height:22px;border-radius:50%;background:var(--rose);color:var(--mauveDeep);display:grid;place-items:center;font-style:normal;font-size:11px;font-weight:700}
+.new li i{background:var(--mauve);color:#fff}
+.btn{display:block;width:100%;border:0;text-align:center;background:var(--mauve);color:#fff;border-radius:999px;padding:14px 10px;font:600 13.5px Inter,sans-serif}
+.foot{position:absolute;left:16px;right:16px;bottom:18px}
+.small{display:block;text-align:center;font-size:11.5px;color:var(--mauveDeep);font-weight:600;margin-top:10px}
+.dim{position:absolute;inset:0;background:rgba(40,25,32,.28)}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:24px 24px 0 0;padding:10px 18px 22px}
+.grab{width:38px;height:4px;border-radius:2px;background:#e3dcdf;margin:0 auto 16px}
+.big{font:600 26px/1.1 'Cormorant Garamond',serif}
+.diff{background:var(--rose);border-radius:14px;padding:12px 14px;margin:14px 0;font-size:13px;color:var(--mauveDeep)}
+.diff b{font-size:15px}
+.card{display:flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:14px;font-size:12.5px}
+.visa{font:700 9px Inter;color:#1a1f71;border:1px solid #d9dbe8;border-radius:4px;padding:2px 4px}
+.chg{margin-left:auto;color:var(--mauveDeep);font-weight:600;font-size:12px}
+.ok{text-align:center;padding-top:110px}
+.tick{width:60px;height:60px;border-radius:50%;background:var(--rose);color:var(--mauve);display:grid;place-items:center;margin:0 auto 16px;font-size:28px}
+.ios{position:absolute;left:8px;right:8px;bottom:8px;background:#f2f2f7;border-radius:24px;padding:16px;font-family:-apple-system,system-ui,sans-serif;font-size:12px}
+.ios .r{display:flex;justify-content:space-between;padding:7px 0;border-bottom:.5px solid #d1d1d6}
+.notes{margin-top:40px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 22px;font-size:14px}
+.notes li{display:list-item;border:0;padding:3px 0;font-size:14px}.notes ul{list-style:disc;padding-left:20px}
 </style>
 </head>
 <body>
 <div class="wrap" id="designs">
-  <div class="kick">BURN app &middot; designs for Rebecca&rsquo;s approval</div>
+  <div class="kick">BURN app &middot; for Rebecca&rsquo;s approval</div>
   <h1>Your membership &amp; upgrading</h1>
-  <p class="lede">Every upgrade starts with an exciting &ldquo;here&rsquo;s what you&rsquo;ll unlock&rdquo; screen showing only the new features. An upgrade always goes through the same place she first paid, so it <b>changes her existing membership</b> and never starts a second one. The app works out where she bought BURN (website, App Store or Google Play) and which phone she&rsquo;s on, and shows the right screen automatically.</p>
-  <div class="rule">
-    <div><b>Joined on the website</b>Her Stripe membership is upgraded. One tap, charged to the card she already used, priced to the day.</div>
-    <div><b>Bought in the App Store</b>Apple upgrades her Apple subscription. Apple works out the price to the day.</div>
-    <div><b>Bought on Google Play</b>Google upgrades her Google Play subscription, priced to the day.</div>
+  <p class="lede">Light and simple. Her plan on top, the next plan underneath. Tap either one to see what&rsquo;s inside. One price, one friendly line about paying only the difference, one button. (The plan rows on this page open and close, just like in the app.)</p>
+
+  <div class="row">
+    <div class="step"><div class="phone"><div class="scr"><div class="island"></div><div class="sb"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div><div class="pad">
+      <div class="back">&lsaquo;</div><div class="h">Your membership</div>
+      <details class="mine"><summary><div class="sm"><div class="lab">Your plan</div><div class="nm">BURN+</div><div class="pr">$17.99/month</div><div class="hint">See everything you&rsquo;ve got</div></div><span class="chev">&#9662;</span></summary>
+        <ul><li><i>&#10003;</i>Everything in BURN</li><li><i>&#10003;</i>Build your own workouts</li><li><i>&#10003;</i>Live classes</li><li><i>&#10003;</i>Daily Read</li><li><i>&#10003;</i>Activity &amp; Achievements</li><li><i>&#10003;</i>Cycle-aware training</li></ul></details>
+      <details><summary><div class="sm"><div class="nm">BURN COMPLETE</div><div class="pr">$27.99/month</div><div class="hint">See everything you&rsquo;ll unlock</div></div><span class="chev">&#9662;</span></summary>
+        <ul class="new"><li><i>+</i>My BURN plan</li><li><i>+</i>Ask BURN</li><li><i>+</i>Points &amp; rewards</li><li><i>+</i>Pregnancy, postpartum &amp; menopause</li><li><i>+</i>Customise Home</li></ul></details>
+      <div class="foot"><button class="btn">Upgrade to BURN COMPLETE</button><span class="small">Switch to annual &middot; save 22%</span></div>
+    </div></div></div><div class="cap"><b>1. Your membership.</b> Both plans closed. Tap to open.</div></div>
+
+    <div class="step"><div class="phone"><div class="scr"><div class="island"></div><div class="sb"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div><div class="pad">
+      <div class="back">&lsaquo;</div><div class="h">Your membership</div>
+      <details class="mine"><summary><div class="sm"><div class="lab">Your plan</div><div class="nm">BURN+</div><div class="pr">$17.99/month</div><div class="hint">See everything you&rsquo;ve got</div></div><span class="chev">&#9662;</span></summary>
+        <ul><li><i>&#10003;</i>Everything in BURN</li><li><i>&#10003;</i>Build your own workouts</li><li><i>&#10003;</i>Live classes</li><li><i>&#10003;</i>Daily Read</li><li><i>&#10003;</i>Activity &amp; Achievements</li><li><i>&#10003;</i>Cycle-aware training</li></ul></details>
+      <details open><summary><div class="sm"><div class="nm">BURN COMPLETE</div><div class="pr">$27.99/month</div><div class="hint">See everything you&rsquo;ll unlock</div></div><span class="chev">&#9662;</span></summary>
+        <ul class="new"><li><i>+</i>My BURN plan</li><li><i>+</i>Ask BURN</li><li><i>+</i>Points &amp; rewards</li><li><i>+</i>Pregnancy, postpartum &amp; menopause</li><li><i>+</i>Customise Home</li></ul></details>
+      <div class="foot"><button class="btn">Upgrade to BURN COMPLETE</button></div>
+    </div></div></div><div class="cap"><b>2. What she&rsquo;ll unlock.</b> BURN COMPLETE opened: only the new things.</div></div>
+
+    <div class="step"><div class="phone"><div class="scr"><div class="island"></div><div class="sb"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div><div class="dim"></div><div class="sheet">
+      <div class="grab"></div>
+      <div class="big">BURN COMPLETE &middot; $27.99/month</div>
+      <div class="diff">You&rsquo;ll only pay the difference for the rest of this month: <b>$5.00 today.</b></div>
+      <div class="card"><span class="visa">VISA</span><span>&bull;&bull;&bull;&bull; 4242</span><span class="chg">Change</span></div>
+      <button class="btn">Upgrade to BURN COMPLETE</button>
+    </div></div></div><div class="cap"><b>3. Confirm.</b> One price, one line, one button. Uses the card she already pays with.</div></div>
+
+    <div class="step"><div class="phone"><div class="scr"><div class="island"></div><div class="sb"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div><div class="ok pad">
+      <div class="tick">&#10003;</div><div class="big">Welcome to BURN COMPLETE</div><p style="color:var(--soft);font-size:13px;margin:8px 14px 22px">Everything&rsquo;s unlocked. Let&rsquo;s start with your plan.</p><button class="btn">Open My BURN plan</button>
+    </div></div></div><div class="cap"><b>4. Done.</b> Her plan switches straight away.</div></div>
+
+    <div class="step"><div class="phone"><div class="scr"><div class="island"></div><div class="sb"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div><div class="dim"></div><div class="ios">
+      <div style="font-weight:700;font-size:14px;margin-bottom:6px">App Store</div><div class="r"><span>BURN COMPLETE</span><span>$27.99/month</span></div><div class="r" style="border:0"><span>You only pay the difference for this month</span></div>
+      <div style="background:#111;color:#fff;border-radius:12px;text-align:center;padding:11px;margin-top:12px;font-weight:600">Double-click to upgrade</div>
+    </div></div></div><div class="cap"><b>If she joined in the app.</b> Steps 1&ndash;2 look the same; step 3 is Apple&rsquo;s (or Google&rsquo;s) own sheet.</div></div>
   </div>
 
-  <section>
-    <h2>1. Joined on the website <span class="who">Stripe</span></h2>
-    <p class="sub">Example: BURN+ monthly, upgrading halfway through her month. She confirms with the card already on file; no typing card details again. The card-change wallet matches her phone: Apple Pay on iPhone, Google Pay on Android, never both.</p>
-    <div class="row">
-      <div class="step"><div class="phone"><div class="scr"><div class="island"></div><div class="sb"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div><div class="pad">
-        <div class="back">&lsaquo;</div><div class="h">Your membership</div>
-        <div class="cur"><div class="lbl">Current plan</div><div class="big">BURN+</div><div class="muted">$17.99 a month &middot; renews 1 Nov</div><span class="src">&#9679; Joined on burnrebeccalouise.com</span></div>
-        <div class="plans">
-          <div class="pl"><div><div class="n">BURN</div><div class="feat">Workouts, challenges, recipes</div></div><div class="p">$7.99/mo</div></div>
-          <div class="pl now"><div><div class="n">BURN+</div><div class="tag">Your plan</div></div><div class="p">$17.99/mo</div></div>
-          <div class="pl up"><div><div class="n">BURN COMPLETE</div><div class="feat">My BURN plan, AI chat, points, Luna Bloom</div></div><div class="p">$27.99/mo</div></div>
-        </div>
-        <div class="cta">See what you&rsquo;ll unlock<small>BURN COMPLETE &middot; $5.00 today, then $27.99/month</small></div>
-        <span class="lnk">Switch to annual &middot; save 22%</span>
-      </div></div></div><div class="cap"><b>Membership.</b> Current plan highlighted, the next plan up outlined, and the exact price on the button.</div></div>
-      <div class="step"><div class="phone"><div class="scr"><div class="unlock"><div class="island"></div><div class="sb"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div><div class="x">&times;</div><div class="k">Upgrade to BURN COMPLETE</div><div class="hh">You&rsquo;re about to unlock so much more.</div><div class="s">Everything in BURN+, plus:</div><div class="ul"><div><i>&#10022;</i><p style="margin:0"><b>My BURN plan</b><span>Your plan, built for you, and it adjusts as you go.</span></p></div><div><i>?</i><p style="margin:0"><b>Ask BURN</b><span>Ask anything, any time: workouts, food, motivation.</span></p></div><div><i>&#9733;</i><p style="margin:0"><b>Points &amp; rewards</b><span>Earn points for showing up. Spend them in the BURN shop.</span></p></div><div><i>&#10047;</i><p style="margin:0"><b>Pregnancy, postpartum &amp; menopause</b><span>Programs for every stage of your life.</span></p></div><div><i>&#8962;</i><p style="margin:0"><b>Customise Home</b><span>Put what you love first. Your app, your way.</span></p></div></div><div class="go">Unlock COMPLETE<small>$5.00 today, then $27.99/month</small></div></div></div></div><div class="cap"><b>What you&rsquo;ll unlock.</b> Only what&rsquo;s new for her, in Rebecca&rsquo;s voice. The button leads to the confirm step.</div></div>
-
-      <div class="step"><div class="phone"><div class="scr"><div class="island"></div><div class="sb"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div><div class="dim"></div><div class="sheet">
-        <div class="grab"></div><div class="sitebar"><span>&#128274; burnrebeccalouise.com</span></div>
-        <div class="lbl">Upgrade</div><div class="big">BURN COMPLETE</div><div class="muted">Your most personalised BURN experience</div>
-        <div style="margin-top:10px"><div class="ln"><span>BURN COMPLETE, rest of this month</span><span>$14.00</span></div><div class="ln"><span>Unused BURN+ credit</span><span>&minus;$9.00</span></div><div class="ln t"><span>Due today</span><span>$5.00</span></div></div>
-        <div class="muted">Then $27.99 a month from 1 Nov. Same membership, same renewal date.</div>
-        <div class="card"><span class="visa">VISA</span><span>Visa &bull;&bull;&bull;&bull; 4242</span><span class="chg">Change</span></div>
-        <div class="cta">Confirm upgrade &middot; $5.00</div>
-      </div></div></div><div class="cap"><b>Confirm.</b> A secure sheet over the app. One tap charges her card on file; the credit for unused days is shown up front.</div></div>
-
-      <div class="step"><div class="phone"><div class="scr"><div class="island"></div><div class="sb"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div><div class="dim"></div><div class="sheet">
-        <div class="grab"></div><div class="lbl">Change card</div><div class="big" style="font-size:20px">Pay a different way</div>
-        <div class="dev">On iPhone</div><div class="wallet"><div class="ap">&#63743; Pay</div></div>
-        <div class="dev" style="margin-top:12px">On Android</div><div class="wallet"><div class="gpb"><b style="color:#4285F4">G</b> Pay</div></div>
-        <div class="muted" style="margin-top:10px">She only ever sees the one that matches her phone, plus &ldquo;Use another card&rdquo;.</div>
-      </div></div></div><div class="cap"><b>Change card (optional).</b> Only if she wants a different card. Apple Pay on iPhone, Google Pay on Android.</div></div>
-
-      <div class="step"><div class="phone"><div class="scr"><div class="island"></div><div class="sb"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div><div class="ok pad">
-        <div class="tick">&#10003;</div><div class="h">You&rsquo;re on BURN COMPLETE</div><div class="muted" style="margin:6px 10px 18px">My BURN plan, AI support chat, points and every new feature are unlocked.</div><div class="cta">Explore what&rsquo;s new</div>
-      </div></div></div><div class="cap"><b>Done.</b> The sheet closes and the app switches her plan straight away.</div></div>
-    </div>
-  </section>
-
-  <section>
-    <h2>2. Bought in the App Store <span class="who">Apple</span></h2>
-    <p class="sub">Same Membership screen; the button opens Apple&rsquo;s own sheet. Apple upgrades her existing subscription and gives the credit itself.</p>
-    <div class="row">
-      <div class="step"><div class="phone"><div class="scr"><div class="island"></div><div class="sb"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div><div class="pad">
-        <div class="back">&lsaquo;</div><div class="h">Your membership</div>
-        <div class="cur"><div class="lbl">Current plan</div><div class="big">BURN+</div><div class="muted">$17.99 a month &middot; renews 1 Nov</div><span class="src">&#63743; Bought in the App Store</span></div>
-        <div class="plans"><div class="pl now"><div><div class="n">BURN+</div><div class="tag">Your plan</div></div><div class="p">$17.99/mo</div></div><div class="pl up"><div><div class="n">BURN COMPLETE</div><div class="feat">My BURN plan, AI chat, points, Luna Bloom</div></div><div class="p">$27.99/mo</div></div></div>
-        <div class="cta">Upgrade to BURN COMPLETE<small>$27.99/month, Apple credits unused days</small></div>
-        <span class="lnk">Manage in App Store</span>
-      </div></div></div><div class="cap"><b>Membership.</b> Shows it&rsquo;s an App Store membership.</div></div>
-      <div class="step"><div class="phone"><div class="scr"><div class="unlock"><div class="island"></div><div class="sb"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div><div class="x">&times;</div><div class="k">Upgrade to BURN COMPLETE</div><div class="hh">You&rsquo;re about to unlock so much more.</div><div class="s">Everything in BURN+, plus:</div><div class="ul"><div><i>&#10022;</i><p style="margin:0"><b>My BURN plan</b><span>Your plan, built for you, and it adjusts as you go.</span></p></div><div><i>?</i><p style="margin:0"><b>Ask BURN</b><span>Ask anything, any time: workouts, food, motivation.</span></p></div><div><i>&#9733;</i><p style="margin:0"><b>Points &amp; rewards</b><span>Earn points for showing up. Spend them in the BURN shop.</span></p></div><div><i>&#10047;</i><p style="margin:0"><b>Pregnancy, postpartum &amp; menopause</b><span>Programs for every stage of your life.</span></p></div><div><i>&#8962;</i><p style="margin:0"><b>Customise Home</b><span>Put what you love first. Your app, your way.</span></p></div></div><div class="go">Unlock COMPLETE<small>$27.99/month, unused days credited</small></div></div></div></div><div class="cap"><b>What you&rsquo;ll unlock.</b> Same excitement screen, then Apple&rsquo;s sheet.</div></div>
-      <div class="step"><div class="phone"><div class="scr"><div class="island"></div><div class="sb"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div><div class="dim"></div><div class="ios">
-        <div class="t">App Store</div><div class="r"><span>BURN COMPLETE (monthly)</span><span>$27.99/mo</span></div><div class="r"><span>Replaces</span><span>BURN+</span></div><div class="r" style="border:0"><span>Account</span><span>tess@&hellip;</span></div>
-        <div class="cta dark" style="margin-top:12px">Double-click to upgrade</div>
-      </div></div></div><div class="cap"><b>Apple&rsquo;s sheet.</b> Face ID, done. No second subscription.</div></div>
-    </div>
-  </section>
-
-  <section>
-    <h2>3. Bought on Google Play <span class="who">Google</span></h2>
-    <p class="sub">The same on Android, with Google Play&rsquo;s sheet.</p>
-    <div class="row">
-      <div class="step"><div class="phone"><div class="scr"><div class="island"></div><div class="sb"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div><div class="pad">
-        <div class="back">&lsaquo;</div><div class="h">Your membership</div>
-        <div class="cur"><div class="lbl">Current plan</div><div class="big">BURN</div><div class="muted">$7.99 a month &middot; renews 1 Nov</div><span class="src">&#9654; Bought on Google Play</span></div>
-        <div class="plans"><div class="pl now"><div><div class="n">BURN</div><div class="tag">Your plan</div></div><div class="p">$7.99/mo</div></div><div class="pl up"><div><div class="n">BURN+</div><div class="feat">Live classes, Daily Read, cycle-aware</div></div><div class="p">$17.99/mo</div></div></div>
-        <div class="cta">Upgrade to BURN+<small>$17.99/month, Google credits unused days</small></div>
-        <span class="lnk">Manage in Google Play</span>
-      </div></div></div><div class="cap"><b>Membership.</b></div></div>
-      <div class="step"><div class="phone"><div class="scr"><div class="unlock"><div class="island"></div><div class="sb"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div><div class="x">&times;</div><div class="k">Upgrade to BURN+</div><div class="hh">Ready for more? Here&rsquo;s what&rsquo;s waiting.</div><div class="s">Everything in BURN, plus:</div><div class="ul"><div><i>+</i><p style="margin:0"><b>Build your own workouts</b><span>Mix your favourites and schedule your week.</span></p></div><div><i>&#9654;</i><p style="margin:0"><b>Live classes</b><span>Join live and train together in real time.</span></p></div><div><i>&#9788;</i><p style="margin:0"><b>Daily Read</b><span>A few minutes every morning to set you up.</span></p></div><div><i>&#8599;</i><p style="margin:0"><b>Activity &amp; Achievements</b><span>Watch your streaks, minutes and badges stack up.</span></p></div><div><i>&#9790;</i><p style="margin:0"><b>Cycle-aware training</b><span>Workouts that work with your cycle, not against it.</span></p></div></div><div class="go">Unlock BURN+<small>$17.99/month, unused days credited</small></div></div></div></div><div class="cap"><b>What you&rsquo;ll unlock.</b> BURN &rarr; BURN+, only the new features.</div></div>
-      <div class="step"><div class="phone"><div class="scr"><div class="island"></div><div class="sb"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div><div class="dim"></div><div class="gp">
-        <div class="t">Google Play</div><div style="margin-top:6px">BURN+ (monthly) &middot; $17.99/mo<br><span style="color:#5f6368">Replaces BURN. Unused time is credited.</span></div><div class="btn">Upgrade</div>
-      </div></div></div><div class="cap"><b>Google Play&rsquo;s sheet.</b></div></div>
-    </div>
-  </section>
-
-  <div class="foot">
-    <div class="serif" style="font-size:24px">How it works behind the scenes</div>
+  <div class="notes"><b>Behind the scenes (she never sees this)</b>
     <ul>
-      <li><b>Never two memberships.</b> The app reads where she bought BURN and only shows that upgrade. The App Store/Google Play buttons are never shown to a website member, and the website upgrade is never shown to a store member.</li>
-      <li><b>Website upgrades</b> change her existing Stripe subscription (same card, same renewal date, priced to the day). The confirm sheet is a secure web page over the app, which Apple allows in the US with no fee today (Apple has asked a court for up to 15%, not yet decided).</li>
-      <li><b>Website members on iPhone outside the US</b> (Apple doesn&rsquo;t allow the web sheet there): the app shows her plan without an upgrade button, and upgrades are offered by email instead. Same on Android outside the US.</li>
-      <li>After any change, RevenueCat updates her plan, the app refreshes, and (once emails are built) her Kajabi tag changes to match.</li>
-      <li>Example prices assume she upgrades halfway through her month.</li>
-    </ul>
-  </div>
+      <li>The app knows where she first paid (website, App Store or Google Play) and upgrades that same membership. Never a second one.</li>
+      <li>&ldquo;Pay the difference&rdquo; is worked out to the day. Example: $5.00 is halfway through her month.</li>
+      <li>Card &ldquo;Change&rdquo; shows Apple Pay on iPhone, Google Pay on Android.</li>
+    </ul></div>
 </div>
 </body>
 </html>

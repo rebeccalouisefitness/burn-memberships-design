@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>BURN home: hero options</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap">
+<style>
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:#FAF9F7;color:#292929}
+header{padding:28px 20px 8px;text-align:center}
+header img{height:34px}
+h1{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:34px;margin:14px 0 6px}
+p.sub{margin:0 auto;max-width:520px;color:#5b5b5b;font-size:15px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:28px;max-width:1180px;margin:28px auto 60px;padding:0 20px}
+.opt{text-align:center}
+.phone{width:234px;height:468px;margin:0 auto;border:8px solid #1d1d1d;border-radius:34px;overflow:hidden;position:relative;background:#fff}
+.phone iframe{width:390px;height:780px;border:0;transform:scale(.6);transform-origin:0 0;pointer-events:none}
+.phone a{position:absolute;inset:0}
+h2{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:22px;margin:14px 0 4px}
+.opt p{font-size:13.5px;color:#5b5b5b;margin:0 0 12px}
+.btn{display:inline-block;background:#956C7D;color:#fff;font-weight:600;text-decoration:none;padding:10px 22px;border-radius:999px;font-size:14px}
+.now{max-width:1180px;margin:0 auto;padding:0 20px 50px;text-align:center;font-size:14px;color:#5b5b5b}
+.now a{color:#292929}
+</style>
+</head>
+<body>
+<header>
+<img src="img/burn-logo.png" alt="BURN by Rebecca Louise">
+<h1>Pick your hero photo</h1>
+<p class="sub">Each option is the full home page with only the top photo changed. Tap one to open it and scroll.</p>
+</header>
+<div class="grid">
+<div class="opt"><div class="phone"><iframe src="hero-1.html" title="Option 1" loading="lazy" tabindex="-1"></iframe><a href="hero-1.html" aria-label="Open option 1"></a></div><h2>Option 1</h2><p>The flex photo, zoomed in close</p><a class="btn" href="hero-1.html">Open option 1</a></div>
+<div class="opt"><div class="phone"><iframe src="hero-2.html" title="Option 2" loading="lazy" tabindex="-1"></iframe><a href="hero-2.html" aria-label="Open option 2"></a></div><h2>Option 2</h2><p>Kneeling with your phone, close up</p><a class="btn" href="hero-2.html">Open option 2</a></div>
+<div class="opt"><div class="phone"><iframe src="hero-3.html" title="Option 3" loading="lazy" tabindex="-1"></iframe><a href="hero-3.html" aria-label="Open option 3"></a></div><h2>Option 3</h2><p>Smiling down at your phone</p><a class="btn" href="hero-3.html">Open option 3</a></div>
+<div class="opt"><div class="phone"><iframe src="hero-4.html" title="Option 4" loading="lazy" tabindex="-1"></iframe><a href="hero-4.html" aria-label="Open option 4"></a></div><h2>Option 4</h2><p>Smiling back over your shoulder</p><a class="btn" href="hero-4.html">Open option 4</a></div>
+</div>
+<p class="now">The current home page is <a href="index.html">here</a> for comparison.</p>
+</body>
+</html>

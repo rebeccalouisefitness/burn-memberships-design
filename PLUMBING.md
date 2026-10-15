@@ -27,6 +27,10 @@ Design can change freely. Plumbing needs a developer.
 | `data-ty-email`, `data-ty-first`, `data-ty-tier`, `data-ty-status`, `data-dl-link` | `thank-you.html` | Filled in from the real payment. |
 | Edge functions `web-checkout`, `stripe-webhook-web`, `_shared/web-billing.ts`, `revenuecat-webhook/tier.ts` | app repo `burn-mega-app` | Create the account, take payment, unlock the tier. |
 
+| `v6/upgrade.html` + `v6/js/burn-upgrade.js` (`/upgrade?t=…`) | website | In-app upgrade confirm sheet for members who joined on the website. Opened only by the app with a 10-minute signed link. Shows the real "pay the difference" amount and charges the card on file by changing the same Stripe subscription. Keep every `data-up-*` attribute. |
+| `v6/upgrade-done.html` (`/upgrade-done`) | website | Where Stripe's billing page returns after "Manage / Cancel"; sends her back to the app (`burn://membership`). |
+| Functions `/api/membership/*` (`membership.mts`, `lib/membership.ts`) | `burn-mega-app` `web-netlify/` | status, upgrade-session, preview, upgrade, portal. |
+
 Moving, restyling or rewording any of these elements is fine. Removing or
 renaming the attributes is what breaks it.
 

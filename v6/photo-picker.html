@@ -170,10 +170,12 @@ function frameFor(s,mode){
   f.style.width=vw+'px';f.style.height=vh+'px';f.style.transform='scale('+sc+')';
   f.onload=function(){try{var d=f.contentDocument;
       var st=d.createElement('style');st.textContent='.sticky-join,.preview-bar{display:none!important}html{scroll-behavior:auto!important}';d.head.appendChild(st);
-      applyAll(d,mode);
-      var t=d.querySelector(s.live),y=s.live==='#top'?0:t.getBoundingClientRect().top+f.contentWindow.scrollY-90;
-      f.contentWindow.scrollTo(0,Math.max(0,y));fr.querySelector('.ld')&&fr.querySelector('.ld').remove();
+      applyAll(d,mode);fr._ok=1;fr._go();
+      fr.querySelector('.ld')&&fr.querySelector('.ld').remove();
     }catch(e){}};
+  // Scroll the framed page to this spot. Re-run whenever the frame is shown again: a hidden frame loses its scroll position.
+  fr._go=function(){try{if(!fr._ok)return;var w=f.contentWindow,t=w.document.querySelector(s.live);
+    var y=s.live==='#top'?0:t.getBoundingClientRect().top+w.scrollY-90;w.scrollTo(0,Math.max(0,y));}catch(e){}};
   f.src='index.html';fr.appendChild(f);s._fr[mode]=f;return fr;
 }
 function showMode(s,mode){
@@ -181,7 +183,8 @@ function showMode(s,mode){
   Array.prototype.forEach.call(s._lv.querySelectorAll('.seg button'),function(b){b.classList.toggle('on',b.dataset.m===mode);});
   Array.prototype.forEach.call(box.children,function(c){c.style.display='none';});
   if(!s._fe[mode]){s._fe[mode]=frameFor(s,mode);box.appendChild(s._fe[mode]);}
-  s._fe[mode].style.display='';
+  s._fe[mode].style.display='';s._fe[mode]._go();
+  setTimeout(s._fe[mode]._go,350);
 }
 function refreshLive(){SPOTS.forEach(function(s){if(!s.live)return;['phone','desk'].forEach(function(m){var f=s._fr[m];try{if(f&&f.contentDocument&&f.contentDocument.readyState!=='loading')applyAll(f.contentDocument,m);}catch(e){}});});}
 function el(t,c,h){var e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e;}

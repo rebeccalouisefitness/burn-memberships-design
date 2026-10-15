@@ -581,5 +581,8 @@
     drawD(); document.addEventListener('burn:track', drawD);
   }
 
+  /* journey preview frames: lazy iframes don't jump to #anchors on their own */
+  if (QS.get('preview') && /^#[\w-]+$/.test(location.hash)) window.addEventListener('load', function () { var t = document.querySelector(location.hash); if (t) t.scrollIntoView(); });
+
   renderBilling();
 })();

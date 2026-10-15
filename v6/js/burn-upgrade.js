@@ -45,7 +45,10 @@
       $('data-up-price').textContent = money(d.price_cents, d.currency) + per;
       var period = d.current_billing === 'annual' ? 'year' : 'month';
       var diff = $('data-up-diff');
-      diff.textContent = 'You’ll only pay the difference for the rest of this ' + period + ': ';
+      /* Monthly → annual restarts the year today, so the line says what is taken off instead. */
+      diff.textContent = d.current_billing === 'monthly' && d.billing === 'annual'
+        ? 'We take off what’s left of this month: '
+        : 'You’ll only pay the difference for the rest of this ' + period + ': ';
       var b = document.createElement('b'); b.textContent = money(d.amount_due_cents, d.currency) + ' today.'; diff.appendChild(b);
       if (d.card && d.card.last4) {
         $('data-up-brand').textContent = d.card.wallet === 'apple_pay' ? 'Apple Pay' : d.card.wallet === 'google_pay' ? 'G Pay' : (d.card.brand || 'card');

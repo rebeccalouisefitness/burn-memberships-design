@@ -33,7 +33,10 @@
   var css = document.createElement('style');
   css.textContent = 'html[data-burn-checkout="stripe"] [data-mock-payment]{display:none!important}';
   document.head.appendChild(css);
-  var showLive = function () { document.querySelectorAll('[data-live-only]').forEach(function (x) { x.hidden = false; }); };
+  var showLive = function () {
+    document.querySelectorAll('[data-live-only]').forEach(function (x) { x.hidden = false; });
+    if (MODE === 'test') document.querySelectorAll('[data-test-only]').forEach(function (x) { x.hidden = false; });
+  };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', showLive); else showLive();
 
   var QS = new URLSearchParams(location.search);

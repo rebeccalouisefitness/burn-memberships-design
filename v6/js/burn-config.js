@@ -1,16 +1,17 @@
 /* BURN website checkout — CONFIG. ⚠️ PLUMBING: change only with a developer.
  *
  * mode:
- *   'off'  = design preview. The join page keeps the demo checkout (no card is
- *            charged, nothing is created). SAFE DEFAULT for the public preview.
- *   'test' = real Stripe TEST checkout against a TEST backend (test cards only).
- *            Only ever set in a local copy, never published.
+ *   'off'  = design preview (GitHub Pages etc.). Demo checkout, nothing is created.
+ *   'test' = real Stripe TEST checkout (test cards only, no real charges).
  *   'live' = real payments. Only at go-live, on the real domain.
- * functionsUrl: the Supabase Edge Functions base, e.g.
- *   local test:  'http://127.0.0.1:54321/functions/v1'
- *   live:        'https://<project-ref>.supabase.co/functions/v1'
+ * functionsUrl: where the checkout server functions live.
+ *
+ * On the real domain (burnrebeccalouise.com) the site runs in TEST mode against the
+ * Netlify functions at /api until Rebecca says go-live. Everywhere else: 'off'.
  */
-window.BURN_CHECKOUT_CONFIG = {
-  mode: 'off',
-  functionsUrl: ''
-};
+(function () {
+  var h = location.hostname.replace(/^www\./, '');
+  window.BURN_CHECKOUT_CONFIG = h === 'burnrebeccalouise.com'
+    ? { mode: 'test', functionsUrl: '/api' }
+    : { mode: 'off', functionsUrl: '' };
+})();

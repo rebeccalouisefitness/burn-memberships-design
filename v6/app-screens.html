@@ -5,121 +5,36 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>BURN app screens | BURN by Rebecca Louise</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<!-- Journey preview only: the BURN app's sign-in and Get started screens, using the app's own copy
-     (app/signin.tsx, app/onboarding.tsx, src/data/onboarding.ts in the Preview line). Shown one at a time with ?s=. -->
+<!-- Journey preview only: real screenshots of the BURN app (iPhone 16 Pro simulator, 15 Oct 2026),
+     taken from the app with the "finish setting up" sign-in route. Shown one at a time with ?s=. -->
 <style>
-:root{--bg:#FAF8F6;--ink:#2B2226;--soft:#6B5F63;--taupe:#A39A92;--mauve:#956C7D;--rose:#F3ECEF;--line:#ECE7E0;--serif:"Cormorant Garamond",Georgia,serif;--sans:Inter,-apple-system,"Helvetica Neue",Arial,sans-serif}
+:root{--bg:#FAF8F6}
 *{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 var(--sans);-webkit-font-smoothing:antialiased}
-.scr{display:none;min-height:100vh;padding:14px 22px 34px;flex-direction:column}
-.scr.on{display:flex}
-.sb{display:flex;justify-content:space-between;align-items:center;font:600 15px var(--sans);padding:2px 8px 18px}
-.sb i{font-style:normal;letter-spacing:1px;font-size:12px}
-.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
-.back{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;background:#fff}
-.dots{display:flex;gap:6px}.dots span{width:22px;height:4px;border-radius:2px;background:var(--line)}.dots span.on{background:var(--mauve)}
-.tag{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--taupe);font-weight:600}
-.brand{font:600 14px var(--sans);letter-spacing:.42em;color:var(--mauve);text-align:center;margin:18px 0 8px}
-h1{font:600 38px/1.08 var(--serif);margin:6px 0 10px;text-align:center}
-.q{font:600 31px/1.1 var(--serif);margin:0 0 8px}
-.sub{color:var(--soft);text-align:center;margin:0 auto 26px;max-width:300px}
-.qsub{color:var(--soft);margin:0 0 20px}
-.inp{width:100%;border:1px solid var(--line);background:#fff;border-radius:14px;padding:14px 16px;font:16px var(--sans);color:var(--ink);margin-bottom:12px;min-height:50px}
-.btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:54px;border-radius:999px;background:var(--mauve);color:#fff;font:600 16px var(--sans);letter-spacing:.02em;border:0;margin-top:8px}
-.lnk{display:block;text-align:center;color:var(--mauve);font-weight:500;margin-top:16px;font-size:14.5px}
-.opt{border:1px solid var(--line);background:#fff;border-radius:16px;padding:13px 16px;margin-bottom:10px}
-.opt b{display:block;font-weight:600;font-size:15.5px}.opt small{color:var(--soft);font-size:13px}
-.opt.on{border-color:var(--mauve);background:var(--rose)}
-.grow{flex:1}
-.photo{display:flex;gap:14px;align-items:center;margin-bottom:18px}
-.pc{width:74px;height:74px;border-radius:50%;background:var(--rose);border:1.5px dashed var(--mauve);display:flex;align-items:center;justify-content:center;color:var(--mauve);font-size:30px;flex:none}
-.fl{font-weight:600;font-size:14.5px;margin:0 0 2px}.why{color:var(--soft);font-size:12.8px;margin:0 0 8px}
-.home{position:relative;min-height:100vh;padding:0}
-.home img{display:block;width:100%;height:auto}
-.toast{position:absolute;left:14px;right:14px;top:58px;background:var(--ink);color:#fff;border-radius:16px;padding:12px 14px;display:flex;gap:10px;align-items:center;box-shadow:0 14px 30px rgba(0,0,0,.25);font-size:14px}
-.toast .tk{width:28px;height:28px;border-radius:50%;background:var(--mauve);display:flex;align-items:center;justify-content:center;flex:none}
-.toast b{font-weight:600}
+html,body{margin:0;background:var(--bg)}
+.scr{display:none}
+.scr.on{display:block}
+.scr img{display:block;width:100%;height:auto}
 </style>
 </head>
 <body>
-<!-- 1. Sign in (app/signin.tsx, "Welcome back.") -->
-<section class="scr" data-s="signin">
-  <div class="sb"><span>9:41</span><i>&#9679;&#9679;&#9679;&#9679;</i></div>
-  <div class="top"><span class="back"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2B2226" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg></span><span></span><span></span></div>
-  <div class="brand">BURN</div>
-  <h1>Welcome back.</h1>
-  <p class="sub">Use the same email and password you signed up with on the web.</p>
-  <input class="inp" value="jess@example.com" aria-label="Email" readonly>
-  <input class="inp" type="password" value="demo-pass-2026" aria-label="Password" readonly>
-  <span class="btn">Log in</span>
-  <span class="lnk">Forgot your password?</span>
-</section>
-<!-- 2. Get started welcome (app/onboarding.tsx step 0), shown right after a first sign-in -->
-<section class="scr" data-s="welcome">
-  <div class="sb"><span>9:41</span><i>&#9679;&#9679;&#9679;&#9679;</i></div>
-  <div class="top"><span></span><div class="dots"><span class="on"></span><span></span><span></span><span></span></div><span class="tag">Get started</span></div>
-  <div class="grow"></div>
-  <div class="brand">BURN</div>
-  <h1>Welcome to BURN.</h1>
-  <p class="sub">Let&rsquo;s set your account up around the stage you&rsquo;re in and the goals you&rsquo;re going for.</p>
-  <span class="btn">Get started</span>
-  <div class="grow"></div>
-</section>
-<!-- 3. Q1 life stage (src/data/onboarding.ts LIFE_STAGES) -->
-<section class="scr" data-s="stage">
-  <div class="sb"><span>9:41</span><i>&#9679;&#9679;&#9679;&#9679;</i></div>
-  <div class="top"><span class="back"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2B2226" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg></span><div class="dots"><span class="on"></span><span class="on"></span><span></span><span></span></div><span class="tag">Get started</span></div>
-  <div class="q">Where are you at right now?</div>
-  <p class="qsub">This sets your workouts, your guide and everything we show you.</p>
-  <div class="opt on"><b>General fitness</b><small>I train already and want a plan</small></div>
-  <div class="opt"><b>Beginner fitness</b><small>I&rsquo;m starting out or starting again</small></div>
-  <div class="opt"><b>Pregnancy</b><small>Training through pregnancy</small></div>
-  <div class="opt"><b>Postpartum</b><small>Rebuilding after birth</small></div>
-  <div class="opt"><b>Menopause</b><small>Perimenopause, menopause or post</small></div>
-  <span class="btn">Continue</span>
-</section>
-<!-- 4. Q2 goal, branches on Q1 (General fitness branch) -->
-<section class="scr" data-s="goal">
-  <div class="sb"><span>9:41</span><i>&#9679;&#9679;&#9679;&#9679;</i></div>
-  <div class="top"><span class="back"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2B2226" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg></span><div class="dots"><span class="on"></span><span class="on"></span><span class="on"></span><span></span></div><span class="tag">Get started</span></div>
-  <div class="q">What are you working toward?</div>
-  <p class="qsub">Pick the one that matters most right now.</p>
-  <div class="opt"><b>Lose weight</b></div>
-  <div class="opt on"><b>Tone up</b></div>
-  <div class="opt"><b>Build muscle</b></div>
-  <div class="grow"></div>
-  <span class="btn">Continue</span>
-</section>
-<!-- 5. Make it yours: photo, birthday, what to call you, why (app/onboarding.tsx S_PERSONAL) -->
-<section class="scr" data-s="yours">
-  <div class="sb"><span>9:41</span><i>&#9679;&#9679;&#9679;&#9679;</i></div>
-  <div class="top"><span class="back"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2B2226" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg></span><div class="dots"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span></div><span class="tag">Get started</span></div>
-  <div class="q">Make it yours</div>
-  <p class="qsub">All optional, and you can change any of it later. Skip the lot if you&rsquo;d rather just start training.</p>
-  <div class="photo"><span class="pc">+</span><div><p class="fl">Add a photo</p><p class="why" style="margin:0">So it feels like your app, and so I know who I&rsquo;m talking to in the community.</p></div></div>
-  <p class="fl">Your birthday</p><p class="why">So I can send you something on the day. That&rsquo;s the only thing it&rsquo;s used for.</p>
-  <input class="inp" value="1992-06-14" aria-label="Your birthday" readonly>
-  <p class="fl">What should I call you?</p><p class="why">If it&rsquo;s not the name on your account.</p>
-  <input class="inp" value="Jess" aria-label="What should I call you?" readonly>
-  <p class="fl">What made you start?</p><p class="why">One line, in your words. I&rsquo;ll show it back to you on the days it&rsquo;s hard.</p>
-  <input class="inp" value="I want to feel strong again." aria-label="What made you start?" readonly>
-  <span class="btn">Save and start</span>
-  <span class="lnk">Skip for now</span>
-</section>
-<!-- 6. In the app, membership unlocked (real Move screen screenshot) -->
-<section class="scr home" data-s="home">
-  <img src="img/app/move.jpg" alt="BURN app Move screen" width="900" height="1957">
-  <div class="toast" role="status"><span class="tk"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span>Welcome, Jess. <b>Your BURN+ is unlocked.</b></span></div>
-</section>
+<!-- 1. Opens BURN for the first time: Sign in on Home -->
+<section class="scr" data-s="open"><img src="img/app/finish/open.jpg" alt="BURN app Home with a Sign in button at the top" width="600" height="1304"></section>
+<!-- 2. Sign in with the email and password from checkout -->
+<section class="scr" data-s="signin"><img src="img/app/finish/signin.jpg" alt="BURN app sign in screen: Welcome back, email, password, Sign in" width="600" height="1304"></section>
+<!-- 3. Let's finish setting up: where she's at -->
+<section class="scr" data-s="stage"><img src="img/app/finish/stage.jpg" alt="Welcome to BURN, Jess. Let's finish setting up. Where are you at right now?" width="600" height="1304"></section>
+<!-- 4. Her goal (General fitness branch) -->
+<section class="scr" data-s="goal"><img src="img/app/finish/goal.jpg" alt="What are you working toward? Lose weight, Tone up, Build muscle" width="600" height="1304"></section>
+<!-- 5. Make it yours, with Skip for now -->
+<section class="scr" data-s="yours"><img src="img/app/finish/yours.jpg" alt="Make it yours: photo, birthday, what to call you, why you started, Skip for now" width="600" height="1304"></section>
+<!-- 6. In the app with BURN+ -->
+<section class="scr" data-s="home"><img src="img/app/finish/home.jpg" alt="BURN app Home: Good morning, Jess, with BURN+ class scheduling" width="600" height="1304"></section>
 <script>
 (function () {
-  var q = new URLSearchParams(location.search), s = q.get('s') || 'signin';
-  var tiers = { burn: 'BURN', burnplus: 'BURN+', burncomplete: 'BURN COMPLETE' };
-  var t = tiers[(q.get('tier') || '').toLowerCase()];
-  var el = document.querySelector('[data-s="' + s + '"]') || document.querySelector('[data-s="signin"]');
+  var q = new URLSearchParams(location.search), s = q.get('s') || 'open';
+  if (s === 'welcome') s = 'stage'; // older links
+  var el = document.querySelector('[data-s="' + s + '"]') || document.querySelector('[data-s="open"]');
   el.classList.add('on');
-  if (t) document.querySelectorAll('.toast b').forEach(function (b) { b.textContent = 'Your ' + t + ' is unlocked.'; });
 })();
 </script>
 </body>

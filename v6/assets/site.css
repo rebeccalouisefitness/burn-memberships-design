@@ -602,3 +602,10 @@ html[data-burn-checkout="stripe"] .xpay{margin-bottom:16px}
 /* quiz result: Does this work for you? Yes / Too much for me */
 .qz-ask{font-family:var(--serif);font-size:22px;font-weight:600;margin:4px 0 12px;color:var(--ink)}
 .qz-yesno{display:grid;gap:10px}
+
+/* 15 Oct (Rebecca): no starburst - a clean, obvious solid pill on the Annual option */
+.burst,.billing button .sv{clip-path:none!important;transform:none!important;width:auto!important;height:auto!important;display:inline-block!important;padding:4px 10px!important;border-radius:999px!important;background:var(--mauve)!important;color:#fff!important;font:700 10.5px/1.2 var(--sans)!important;letter-spacing:.08em!important;text-transform:uppercase!important;white-space:nowrap!important;box-shadow:0 2px 8px rgba(111,76,91,.25)}
+.burst{position:absolute!important;top:-11px!important;right:10px!important}
+.burst br{display:none}
+.billing button .sv{position:absolute!important;top:-14px!important;right:-8px!important;margin:0!important}
+.billing{margin-top:24px!important}

@@ -443,7 +443,7 @@
     document.querySelectorAll('[data-ty-paidnote]').forEach(function (x) { x.textContent = billing === 'annual' ? 'Billed yearly (' + money(P.annualMonthly) + ' / month)' : 'Billed monthly'; });
     document.querySelectorAll('[data-ty-bill-m]').forEach(function (x) { x.textContent = priceTxt(pageTierKey, 'monthly'); });
     document.querySelectorAll('[data-ty-bill-a]').forEach(function (x) { x.textContent = priceTxt(pageTierKey, 'annual') + '\nbilled ' + money(P.annual) + ' yearly'; });
-    document.querySelectorAll('[data-burst]').forEach(function (x) { x.innerHTML = 'SAVE<br>' + P.save + '%'; });
+    document.querySelectorAll('[data-burst]').forEach(function (x) { x.textContent = 'Save ' + P.save + '%'; });
   }
   document.addEventListener('burn:billing', paintTier);
   function showEmail(email) {

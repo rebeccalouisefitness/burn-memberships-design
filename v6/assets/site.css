@@ -581,3 +581,6 @@ html[data-billing="monthly"] .tier .alt{display:none}
 .disco:has([data-f="all"].on) + #home-grid .wcard.x{display:none}
 .wcard .im.tint{display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#EFE3E8,#E2CFD8)}
 .wcard .im.tint span{font-family:var(--serif,"Cormorant Garamond",serif);font-size:24px;font-weight:600;color:#6E4A5A}
+/* join chooser: annual Save badge (BRN-058) */
+.ch-opt .save{grid-column:1/-1;justify-self:start}
+body[data-page="join"] main{padding-bottom:48px}

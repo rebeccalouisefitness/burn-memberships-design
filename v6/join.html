@@ -7,7 +7,7 @@
 <title>Join BURN | BURN by Rebecca Louise</title>
 <meta name="description" content="Train with Rebecca Louise. Follow-along workouts, monthly challenges, recipes and mindset in one app.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=61">
+<link rel="stylesheet" href="assets/site.css?v=62">
 </head>
 <body data-page="join">
 <header class="site">
@@ -30,9 +30,9 @@
     <p class="lede" style="margin:12px auto 22px;max-width:460px">Three ways to BURN, monthly or annual. Change or cancel any time.</p>
     <div class="billing" role="group" aria-label="Billing period" style="margin-bottom:22px"><button type="button" data-bill="monthly" aria-pressed="true" class="on">Monthly</button><button type="button" data-bill="annual" aria-pressed="false">Annual<span class="sv">Save up to 33%</span></button></div>
     <div class="chooser" role="list">
-      <button type="button" class="ch-opt" role="listitem" data-choose="burn"><span class="nm">BURN</span><span class="pr"><b data-amt="burn">$7.99</b> <span data-per>/ month</span></span><span class="ds">Workouts, challenges, recipes and the BURN community.</span><span class="bl" data-billedtxt="burn"></span><span class="go">Choose BURN &rarr;</span></button>
-      <button type="button" class="ch-opt" role="listitem" data-choose="burnplus"><span class="nm">BURN+</span><span class="pr"><b data-amt="burnplus">$17.99</b> <span data-per>/ month</span></span><span class="ds">Everything in BURN, plus build your own workouts, schedule your week and your daily practice.</span><span class="bl" data-billedtxt="burnplus"></span><span class="go">Choose BURN+ &rarr;</span></button>
-      <button type="button" class="ch-opt feat" role="listitem" data-choose="burncomplete"><span class="fl">Most personalised</span><span class="nm">BURN COMPLETE</span><span class="pr"><b data-amt="burncomplete">$27.99</b> <span data-per>/ month</span></span><span class="ds">Your most personalised BURN experience.</span><span class="bl" data-billedtxt="burncomplete"></span><span class="go">Choose BURN COMPLETE &rarr;</span></button>
+      <button type="button" class="ch-opt" role="listitem" data-choose="burn"><span class="nm">BURN</span><span class="pr"><b data-amt="burn">$7.99</b> <span data-per>/ month</span></span><span class="save" data-save="burn" hidden>Save</span><span class="ds">Workouts, challenges, recipes and the BURN community.</span><span class="bl" data-billedtxt="burn"></span><span class="go">Choose BURN &rarr;</span></button>
+      <button type="button" class="ch-opt" role="listitem" data-choose="burnplus"><span class="nm">BURN+</span><span class="pr"><b data-amt="burnplus">$17.99</b> <span data-per>/ month</span></span><span class="save" data-save="burnplus" hidden>Save</span><span class="ds">Everything in BURN, plus build your own workouts, schedule your week and your daily practice.</span><span class="bl" data-billedtxt="burnplus"></span><span class="go">Choose BURN+ &rarr;</span></button>
+      <button type="button" class="ch-opt feat" role="listitem" data-choose="burncomplete"><span class="fl">Most personalised</span><span class="nm">BURN COMPLETE</span><span class="pr"><b data-amt="burncomplete">$27.99</b> <span data-per>/ month</span></span><span class="save" data-save="burncomplete" hidden>Save</span><span class="ds">Your most personalised BURN experience.</span><span class="bl" data-billedtxt="burncomplete"></span><span class="go">Choose BURN COMPLETE &rarr;</span></button>
     </div>
     <p style="font-size:14px"><a class="link" href="membership.html#compare">Compare everything that&rsquo;s included</a> &middot; <button type="button" class="textbtn" data-quiz-open="join_chooser">Take the 30-second quiz</button></p>
   </section>
@@ -67,20 +67,9 @@
     </form>
   </section>
 </div></main>
-<footer class="site">
-  <div class="wrap">
-    <div class="cols">
-      <div><a class="logo" href="index.html"><img src="img/burn-logo-footer.png" alt="BURN" height="20"></a>
-        <p style="margin:14px 0 18px;opacity:.8;max-width:320px">Workouts, recipes and mindset with Rebecca Louise, in one app.</p>
-        <div class="stores"><a href="download.html" data-store="ios"><img src="img/app-store-badge.svg" alt="Download on the App Store" width="120" height="40"></a><a href="download.html" data-store="android"><img src="img/google-play-badge.png" alt="Get it on Google Play" width="135" height="40"></a></div></div>
-      <div><h5>Explore</h5><a href="index.html">Home</a><a href="workouts.html">Workouts</a><a href="membership.html">Memberships</a><a href="about.html">About</a><a href="#find-your-burn" data-quiz-open="footer">Find your BURN</a></div>
-      <div><h5>Members</h5><a href="download.html">Already a member? Open the app</a><a href="membership.html#faq">FAQ</a><a href="mailto:customerservice@rebecca-louise.com">customerservice@rebecca-louise.com</a></div>
-    </div>
-    <div class="legal">&copy; 2026 BURN by Rebecca Louise</div>
-  </div>
-</footer>
 <script src="js/burn-config.js?v=1"></script>
 <script src="js/burn-checkout.js?v=1"></script>
 <script src="assets/site.js?v=63"></script>
+<script src="assets/prices-display.js?v=2"></script>
 </body>
 </html>

@@ -71,6 +71,15 @@ li i{flex:0 0 22px;height:22px;border-radius:50%;background:var(--rose);color:va
 .opt b{display:block;font-size:13px}.opt span{color:var(--soft);font-size:11.5px}
 .chips{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0 14px}.chips span{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 11px;font-size:12px}.chips span.on{background:var(--mauve);color:#fff;border-color:var(--mauve)}
 .sub2{font-size:13px;color:var(--soft);margin:0 0 12px}
+.radio{display:flex;gap:10px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px 11px;margin-bottom:6px;font-size:12.5px}
+.radio .rd{width:16px;height:16px;border-radius:50%;border:2px solid #c9adb8;flex:0 0 16px}.radio.on{border-color:var(--mauve);background:var(--rose)}.radio.on .rd{border:5px solid var(--mauve)}
+.other{border:1px solid var(--mauve);border-radius:10px;padding:8px 10px;font-size:12px;color:var(--soft);background:#fff;margin:-2px 0 8px;height:44px}
+.req{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mauve)}
+.btn.off{opacity:.4}
+.price2{font:600 30px/1 'Cormorant Garamond',serif;margin:6px 0 2px}.price2 s{font-size:18px;color:var(--soft);margin-left:6px}
+.admin{margin-top:40px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 20px;font-size:13px;overflow-x:auto}
+.admin table{border-collapse:collapse;width:100%;min-width:640px}.admin th,.admin td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}.admin th{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--soft)}
+.bar{height:8px;border-radius:4px;background:var(--mauve);display:inline-block;vertical-align:middle;margin-right:8px}
 </style>
 </head>
 <body>
@@ -116,7 +125,7 @@ li i{flex:0 0 22px;height:22px;border-radius:50%;background:var(--rose);color:va
     </div></div></div><div class="cap"><b>If she joined in the app.</b> Steps 1&ndash;2 look the same; step 3 is Apple&rsquo;s (or Google&rsquo;s) own sheet.</div></div>
   </div>
 
-  <div class="sec2"><div class="kick">Cancel</div><h2>Before you go</h2><p class="lede">Tapping Cancel opens a save screen first. Each plan is offered the one below it, then &ldquo;Still cancel&rdquo; asks one optional question.</p>
+  <div class="sec2"><div class="kick">Cancel</div><h2>Before you go</h2><p class="lede">Tapping Cancel opens a save screen first. COMPLETE is offered BURN+, BURN+ is offered BURN, BURN is offered a thank-you (Rebecca picks A or B). &ldquo;Still cancel&rdquo; always asks why, then cancels.</p>
 <div class="row"><div class="step"><div class="phone"><div class="scr"><div class="island"></div><div class="sb"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div><div class="pad"><div class="back">&lsaquo;</div><div class="h">Before you go</div><p class="sub2">Keep training for less. Switch plans instead of losing everything.</p>
 <div class="offer"><div class="lab">Switch to</div><div class="nm">BURN+ &middot; $17.99/month</div>
 <ul class="keep"><li><i>&#10003;</i>Build your own workouts</li><li><i>&#10003;</i>Live classes</li><li><i>&#10003;</i>Daily Read &amp; cycle-aware training</li><li><i>&#10003;</i>Your progress and achievements</li></ul>
@@ -127,19 +136,27 @@ li i{flex:0 0 22px;height:22px;border-radius:50%;background:var(--rose);color:va
 <ul class="keep"><li><i>&#10003;</i>Every BURN workout &amp; program</li><li><i>&#10003;</i>Monthly challenges</li><li><i>&#10003;</i>Recipes &amp; the Thrive library</li><li><i>&#10003;</i>Community, favourites &amp; progress photos</li></ul>
 <button class="btn">Switch to BURN</button></div>
 <p class="sub2" style="font-size:11.5px">Starts on 1 Nov, when this month ends.</p>
-<div class="foot"><button class="ghostbtn">Still cancel</button></div></div></div></div><div class="cap"><b>BURN+ member taps Cancel.</b> Offer BURN.</div></div><div class="step"><div class="phone"><div class="scr"><div class="island"></div><div class="sb"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div><div class="pad"><div class="back">&lsaquo;</div><div class="h">Before you go</div>
-<div class="ph"><div class="lab">For Rebecca to choose</div><p class="sub2" style="margin:4px 0 0">Your message was cut off here. Pick one (or two) and I&rsquo;ll design it properly:</p></div>
-<div class="opt on"><span class="rd"></span><div><b>Pause for 1 or 2 months</b><span>No charge while paused. Picks up where she left off.</span></div></div>
-<div class="opt"><span class="rd"></span><div><b>50% off your next month</b><span>One time only: $3.99 instead of $7.99.</span></div></div>
-<div class="opt"><span class="rd"></span><div><b>Next month free</b><span>One time only, then $7.99/month.</span></div></div>
-<div class="foot"><button class="btn">Pause my membership</button><button class="ghostbtn">Still cancel</button></div></div></div></div><div class="cap"><b>BURN member taps Cancel.</b> Placeholder: pause, a one-time discount or a free month.</div></div><div class="step"><div class="phone"><div class="scr"><div class="island"></div><div class="sb"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div><div class="pad"><div class="back">&lsaquo;</div><div class="h">Why are you leaving?</div><p class="sub2">Optional. It helps me make BURN better.</p>
-<div class="chips"><span>Too expensive</span><span class="on">Not using it enough</span><span>Too busy right now</span><span>Pregnant / new baby</span><span>Injury or health</span><span>Prefer another app</span><span>Something else</span></div>
-<div class="foot"><button class="btn">Cancel membership</button><button class="ghostbtn">Keep my membership</button></div></div></div></div><div class="cap"><b>Still cancel.</b> One optional question, then the cancel. Skippable.</div></div><div class="step"><div class="phone"><div class="scr"><div class="island"></div><div class="sb"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div><div class="pad"><div class="ok"><div class="tick">&#10003;</div><div class="big">You&rsquo;re all set</div><p style="color:var(--soft);font-size:13px;margin:8px 14px 22px">Your membership ends on 1 Nov. You can keep training until then, and you can come back any time.</p><button class="btn">Back to BURN</button></div></div></div></div><div class="cap"><b>Done.</b> Clear end date, no surprise.</div></div></div></div>
+<div class="foot"><button class="ghostbtn">Still cancel</button></div></div></div></div><div class="cap"><b>BURN+ member taps Cancel.</b> Offer BURN.</div></div><div class="step"><div class="phone"><div class="scr"><div class="island"></div><div class="sb"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div><div class="pad"><div class="back">&lsaquo;</div><div class="h">Before you go</div><p class="sub2">We&rsquo;d love you to stay. Here&rsquo;s a little thank you.</p>
+<div class="offer"><div class="lab">Just for you</div><div class="price2">Next month free</div><p class="sub2" style="margin:6px 0 12px">Keep everything in BURN. Your next month is on us, then $7.99/month. Cancel any time.</p><button class="btn">Claim my free month</button></div>
+<div class="foot"><button class="ghostbtn">Still cancel</button></div></div></div></div><div class="cap"><b>BURN, option A: next month free.</b> Once per member, ever.</div></div><div class="step"><div class="phone"><div class="scr"><div class="island"></div><div class="sb"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div><div class="pad"><div class="back">&lsaquo;</div><div class="h">Before you go</div><p class="sub2">We&rsquo;d love you to stay. Here&rsquo;s a little thank you.</p>
+<div class="offer"><div class="lab">Just for you</div><div class="price2">$3.99/month <s>$7.99</s></div><p class="sub2" style="margin:6px 0 12px">50% off your next 3 months, then back to $7.99/month. Cancel any time.</p><button class="btn">Claim 50% off</button></div>
+<div class="foot"><button class="ghostbtn">Still cancel</button></div></div></div></div><div class="cap"><b>BURN, option B: 50% off the next 3 months.</b> Once per member. Rebecca picks A or B.</div></div><div class="step"><div class="phone"><div class="scr"><div class="island"></div><div class="sb"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div><div class="pad"><div class="back">&lsaquo;</div><div class="h">Why are you leaving?</div><p class="sub2"><span class="req">Required</span> &middot; Pick one so we can make BURN better.</p>
+<div class="radio"><span class="rd"></span>Too expensive</div><div class="radio"><span class="rd"></span>Not using it</div><div class="radio"><span class="rd"></span>Pregnant or postpartum</div><div class="radio"><span class="rd"></span>Injury or health</div><div class="radio"><span class="rd"></span>Prefer another app</div><div class="radio on"><span class="rd"></span>Other</div><div class="other">Tell us a little more&hellip;</div>
+<div class="foot" style="bottom:12px"><button class="btn">Cancel membership</button><button class="ghostbtn" style="padding:6px">Keep my membership</button></div></div></div></div><div class="cap"><b>Every plan: why are you leaving?</b> Required, one choice, &ldquo;Other&rdquo; opens a text box. The cancel button only works once she&rsquo;s picked.</div></div><div class="step"><div class="phone"><div class="scr"><div class="island"></div><div class="sb"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div><div class="pad"><div class="ok"><div class="tick">&#10003;</div><div class="big">You&rsquo;re all set</div><p style="color:var(--soft);font-size:13px;margin:8px 14px 22px">Your membership ends on 1 Nov. You can keep training until then, and you can come back any time.</p><button class="btn">Back to BURN</button></div></div></div></div><div class="cap"><b>Done.</b> Clear end date, no surprise.</div></div></div></div>
+<div class="admin"><b style="font:600 22px 'Cormorant Garamond',serif">Cancel reasons report (admin)</b><p class="sub2" style="margin:4px 0 12px">Every cancel is saved with the reason. Download as CSV any time. Each person is also tagged <b>BURN Cancelled</b> in Kajabi for the win-back emails (when emails are built).</p>
+<table><tr><th>Reason</th><th>Last 30 days</th><th></th></tr>
+<tr><td>Not using it</td><td>12</td><td><span class="bar" style="width:120px"></span></td></tr>
+<tr><td>Too expensive</td><td>8</td><td><span class="bar" style="width:80px"></span></td></tr>
+<tr><td>Pregnant or postpartum</td><td>3</td><td><span class="bar" style="width:30px"></span></td></tr>
+<tr><td>Injury or health</td><td>2</td><td><span class="bar" style="width:20px"></span></td></tr>
+<tr><td>Prefer another app</td><td>2</td><td><span class="bar" style="width:20px"></span></td></tr>
+<tr><td>Other</td><td>1</td><td><span class="bar" style="width:10px"></span></td></tr></table>
+<p class="sub2" style="margin:12px 0 0">Sample numbers. Each row in the CSV: date, member email, plan, monthly/annual, where she paid, reason, &ldquo;other&rdquo; text, which offer she saw, whether she took it.</p></div>
 <div class="notes"><b>Behind the scenes (she never sees this)</b>
     <ul>
       <li>The app knows where she first paid (website, App Store or Google Play) and upgrades that same membership. Never a second one.</li>
       <li>&ldquo;Pay the difference&rdquo; is worked out to the day. Example: $5.00 is halfway through her month.</li>
-      <li>Switching down (COMPLETE &rarr; BURN+ &rarr; BURN) goes through wherever she first paid, keeps the same membership and starts at the end of the current month or year. Cancel also ends at the end of the period.</li>
+      <li>Switching down (COMPLETE &rarr; BURN+ &rarr; BURN) goes through wherever she first paid, keeps the same membership and starts at the end of the current month or year. Cancel also ends at the end of the period. Save offers are once per member.</li>
       <li>Card &ldquo;Change&rdquo; shows Apple Pay on iPhone, Google Pay on Android.</li>
     </ul></div>
 </div>

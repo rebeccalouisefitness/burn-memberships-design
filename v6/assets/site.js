@@ -32,7 +32,7 @@
   var PRICES = {
     burn:         { name: 'BURN',          monthly: 7.99,  annual: 83.99,  save: 12 },
     burnplus:     { name: 'BURN+',         monthly: 17.99, annual: 167.99, save: 22 },
-    burncomplete: { name: 'BURN COMPLETE', monthly: 27.99, annual: 227.99, save: 32 }
+    burncomplete: { name: 'BURN COMPLETE', monthly: 27.99, annual: 224.99, save: 33 }
   };
   /* Annual is SHOWN as a monthly equivalent (Rebecca, 14 Oct: "just put the monthly one"):
      annual / 12, rounded to cents. BURN 83.99 -> 7.00, BURN+ 167.99 -> 14.00, COMPLETE 224.99 -> 18.75.
@@ -41,7 +41,7 @@
   Object.keys(PRICES).forEach(function (k) { PRICES[k].annualMonthly = r2(PRICES[k].annual / 12); });
   window.BURN_PRICES = PRICES;
   var money = function (v) { return '$' + v.toFixed(2); };
-  /* Brief 19 Oct (item 1): show the ACTUAL annual price (Stripe burn*_annual lookup keys, checked 20 Oct: 83.99 / 167.99 / 227.99), no derived per-month figure. */
+  /* Brief 19 Oct (item 1): show the ACTUAL annual price (Stripe burn*_annual lookup keys, checked 20 Oct: 83.99 / 167.99 / 224.99 = the LIVE Stripe prices, Rebecca 20 Oct: 'Do the one that is in Stripe'), no derived per-month figure. */
   var perTxt = function (b) { return b === 'annual' ? '/ year' : '/ month'; };
   /* headline per-month figure for the current billing */
   var shownAmt = function (t, b) { return b === 'annual' ? PRICES[t].annual : PRICES[t].monthly; };

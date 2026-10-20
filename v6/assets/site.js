@@ -538,7 +538,7 @@
       if (!detailsOk()) return;
       var f = form.elements;
       track('details_submitted', { tier: pageTierKey, billing: billing });
-      document.dispatchEvent(new CustomEvent('burn:details', { detail: { first: (f.name.value || '').trim(), email: (f.email.value || '').trim(), tier: pageTierKey, billing: billing } }));
+      document.dispatchEvent(new CustomEvent('burn:details', { detail: { first: (f.name.value || '').trim(), email: (f.email.value || '').trim(), tier: pageTierKey, billing: billing, marketing_opt_in: !!(f.marketing_opt_in && f.marketing_opt_in.checked) } }));
       setSub('pay', true);
       try { f.password.focus({ preventScroll: true }); } catch (x) {}
     };

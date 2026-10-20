@@ -613,3 +613,82 @@ html[data-burn-checkout="stripe"] .xpay{margin-bottom:16px}
 /* Brief item 2: the membership she already picked, marked in the chooser */
 .ch-opt.cur{border:2px solid var(--mauve);box-shadow:0 0 0 4px rgba(0,0,0,.03)}
 .ch-opt.cur .go::before{content:'\2713  Your pick \00B7  '}
+
+/* Brief 19 Oct item 3: once she is in Join, no site navigation - logo, steps, back and help/privacy only */
+body[data-page="join"] header.site nav.main,
+body[data-page="join"] header.site .hdr-right .member-link,
+body[data-page="join"] header.site .hdr-right .btn,
+body[data-page="join"] header.site .burger,
+body[data-page="join"] header.site .mnav{display:none!important}
+.join-back{display:block;margin:0 0 14px;font-size:14px;color:var(--inkSoft)}
+.join-help{margin:34px 0 0;font-size:13px;color:var(--inkSoft);text-align:center}
+.join-help a{color:inherit;text-decoration:underline}
+/* 20 Oct (Rebecca): the Save badge overlapped the Monthly/Annual pill. It now sits clear ABOVE the pill,
+   centred over "Annual", with a small gap - same solid pill style. */
+.billing{margin-top:40px!important}
+.billing button[data-bill="annual"] .sv{top:auto!important;bottom:calc(100% + 10px)!important;left:50%!important;right:auto!important;transform:translateX(-50%)!important}
+
+/* 20 Oct (Rebecca): the Save badge overlapped the Monthly/Annual pill. It now sits clear ABOVE the pill,
+   centred over "Annual", with a small gap - same solid pill style. */
+.billing{margin-top:40px!important}
+.billing button[data-bill="annual"] .sv{top:auto!important;bottom:calc(100% + 10px)!important;left:50%!important;right:auto!important;transform:translateX(-50%)!important}
+
+/* Brief 19 Oct item 4: first name + email first ("Let's Get You Started!"), then checkout - same form, two steps */
+section[data-sub="details"] [data-only="pay"],section[data-sub="pay"] [data-only="details"]{display:none!important}
+section[data-sub="details"] form[data-checkout-form] > *:not(.tier-sum):not([data-sub-details]):not(.form-err){display:none!important}
+section[data-sub="pay"] [data-sub-details]{display:none!important}
+[data-sub-details] .btn{margin-top:6px}
+.who{margin:0 0 14px;font-size:14px;color:var(--inkSoft)}
+.who .textbtn{margin-left:6px}
+
+/* Brief 19 Oct item 6: optional, unticked marketing opt-in + short privacy note on the details step */
+.optin{display:flex;gap:10px;align-items:flex-start;margin:4px 0 16px;font-size:14px;color:var(--inkSoft);cursor:pointer;text-align:left}
+.optin input{width:18px;height:18px;margin:2px 0 0;flex:none;accent-color:var(--mauve)}
+.optin small{color:var(--taupeDeep)}
+.privacy-note{margin:12px 0 0;font-size:12.5px;color:var(--inkSoft);text-align:center}
+.privacy-note a{color:inherit;text-decoration:underline}
+
+/* Brief 19 Oct item 8: order summary - renewal date + tax line */
+.pay-card .tax-note{margin:8px 0 0;font-size:12.5px;color:var(--inkSoft)}
+
+/* Brief 19 Oct item 10: one payment button - card, Apple Pay, Google Pay and Link are chosen once, on Stripe's secure page */
+.pay-methods{margin:6px 0 0;font-size:14px;color:var(--inkSoft)}
+
+/* Brief 19 Oct item 18: features not in the app yet are labelled, never shown as live */
+.soon{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:999px;background:var(--rose);color:var(--mauveDeep);font:600 10px/1.6 var(--sans);letter-spacing:.06em;text-transform:uppercase;font-style:normal;vertical-align:middle}
+
+/* Brief 19 Oct items 15-17: BURN COMPLETE showcase on the home page */
+.complete-show .sec-head p{max-width:560px;margin:12px auto 0}
+.cs-steps{list-style:none;counter-reset:cs;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:0;margin:28px 0 18px}
+.cs-steps li{counter-increment:cs;background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 18px 20px;display:flex;flex-direction:column;gap:6px}
+.cs-steps li::before{content:counter(cs);font:600 12px var(--sans);color:var(--mauve);letter-spacing:.08em}
+.cs-steps li b{font-family:var(--serif);font-size:22px;font-weight:600}
+.cs-steps li span{font-size:14px;color:var(--inkSoft)}
+.cs-steps li.on{border:1.5px solid var(--mauve)}
+.cs-two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.cs-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px}
+.cs-card h3{margin:0 0 8px}
+.cs-card p{margin:0;color:var(--inkSoft)}
+.cs-cta{text-align:center;margin:26px 0 0}
+@media (max-width:760px){.cs-steps{grid-template-columns:1fr 1fr}.cs-two{grid-template-columns:1fr}}
+
+/* Brief 19 Oct item 11: card / Apple Pay / Google Pay on the page (Stripe Elements, mounted only when real checkout is on) */
+.xpay-el:empty,.pay-el:empty{display:none}
+.xpay-el{margin:10px 0 12px}
+.pay-el{margin:8px 0 4px}
+html[data-pay-inline="on"] .pay-methods{display:none}
+
+/* Item 34: Terms page (draft) */
+.terms-page{padding:48px 0 72px}
+.terms-page h2{font-size:26px;margin:34px 0 10px}
+.terms-page p,.terms-page li{color:var(--ink);line-height:1.65}
+.terms-page ul{padding-left:20px}
+.review-note{background:#fff4d6;border:1.5px solid #e0b84c;border-radius:14px;padding:14px 18px;margin:0 0 28px;font-size:14px;color:#5a4410}
+mark.tc{background:#fff0b3;color:#5a4410;padding:0 4px;border-radius:4px;font-size:.88em;font-weight:600}
+.terms-table{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:12px 0 16px;background:#fff}
+.terms-table .tr{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:8px;padding:12px 16px;border-top:1px solid var(--line);font-size:15px}
+.terms-table .tr:first-child{border-top:0}
+.terms-table .th{background:var(--rose);font-weight:600;font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+.legal a{color:inherit;text-decoration:underline;margin-left:4px}
+.pay-terms{margin:10px 0 0;font-size:12.5px;color:var(--inkSoft)}
+.pay-terms a{color:inherit;text-decoration:underline}

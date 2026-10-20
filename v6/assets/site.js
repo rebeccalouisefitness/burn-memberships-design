@@ -32,7 +32,7 @@
   var PRICES = {
     burn:         { name: 'BURN',          monthly: 7.99,  annual: 83.99,  save: 12 },
     burnplus:     { name: 'BURN+',         monthly: 17.99, annual: 167.99, save: 22 },
-    burncomplete: { name: 'BURN COMPLETE', monthly: 27.99, annual: 227.99, save: 32 }
+    burncomplete: { name: 'BURN COMPLETE', monthly: 27.99, annual: 224.99, save: 33 }
   };
   /* Annual is SHOWN as a monthly equivalent (Rebecca, 14 Oct: "just put the monthly one"):
      annual / 12, rounded to cents. BURN 83.99 -> 7.00, BURN+ 167.99 -> 14.00, COMPLETE 224.99 -> 18.75.
@@ -41,12 +41,12 @@
   Object.keys(PRICES).forEach(function (k) { PRICES[k].annualMonthly = r2(PRICES[k].annual / 12); });
   window.BURN_PRICES = PRICES;
   var money = function (v) { return '$' + v.toFixed(2); };
-  /* Brief 19 Oct (item 1): show the ACTUAL annual price (Stripe burn*_annual lookup keys, checked 20 Oct: 83.99 / 167.99 / 227.99), no derived per-month figure. */
+  /* Brief 19 Oct (item 1): show the ACTUAL annual price (Stripe burn*_annual lookup keys, checked 20 Oct: 83.99 / 167.99 / 224.99 = the LIVE Stripe prices, Rebecca 20 Oct: 'Do the one that is in Stripe'), no derived per-month figure. */
   var perTxt = function (b) { return b === 'annual' ? '/ year' : '/ month'; };
   /* headline per-month figure for the current billing */
   var shownAmt = function (t, b) { return b === 'annual' ? PRICES[t].annual : PRICES[t].monthly; };
   var priceTxt = function (t, b) { return money(shownAmt(t, b)) + (b === 'annual' ? '/year' : '/month'); };
-  var billedTxt = function (t, b) { return b === 'annual' ? 'Billed ' + money(PRICES[t].annual) + ' yearly' : 'Billed monthly'; };
+  var billedTxt = function (t, b) { return b === 'annual' ? 'One payment a year' : 'Billed monthly'; };
 
   /* ---------------- ANALYTICS: GA4 + Meta Pixel, host-gated ----------------
      IDs below are not BURN's real IDs yet. Tags load ONLY on the production host AND only once both IDs
@@ -121,6 +121,7 @@
       } catch (e) {}
     });
   }
+  window.burnTrack = function (e, p) { track(e, p); };
   function track(event, params) {
     if (QS.get('preview')) return; /* journey previews never track */
     params = params || {};
@@ -326,7 +327,8 @@
   var GOAL_TXT = { stronger: 'getting stronger', tone: 'toning and sculpting', weight: 'losing weight', energy: 'feeling more energised', habit: 'building a habit that sticks' };
   function quizResult(a) {
     if (a.stage === 'pregnant' || a.stage === 'postpartum' || a.guide === 'personal') return 'burncomplete';
-    if (a.guide === 'schedule' || a.daily === 'yes' || a.stats === 'yes') return 'burnplus';
+    /* Brief item 29: map fairly - one soft 'yes' is not enough to move her up a tier; wanting control, or BOTH daily mindset and stats, is. */
+    if (a.guide === 'schedule' || (a.daily === 'yes' && a.stats === 'yes')) return 'burnplus';
     return 'burn';
   }
   window.burnQuizResult = quizResult; // exposed for testing all paths
@@ -336,7 +338,7 @@
     var g = !dropped && GOAL_TXT[a.goal] ? 'For ' + GOAL_TXT[a.goal] + ': ' : '';
     if (tier === 'burncomplete') {
       if (a.stage === 'pregnant' || a.stage === 'postpartum') return g + 'Rebecca’s Luna Bloom pregnancy and postpartum programs are part of BURN COMPLETE, with My BURN plan and everything in BURN+.';
-      return g + 'BURN COMPLETE is the ultimate: My BURN plan built around you, AI support chat and points for the store, plus everything in BURN+.';
+      return g + 'BURN COMPLETE is the ultimate: My BURN plan built around you, Ask BURN AI and points for the store (coming soon), plus everything in BURN+.';
     }
     if (tier === 'burnplus') return g + 'BURN+ gives you more control: build your own workouts, schedule your week and join live classes, with the Daily Read, your gratitude journal and your progress.';
     return g + 'BURN gives you 40+ programs, a new challenge every month, recipes and the community. Follow along with everyone else.';
@@ -344,7 +346,7 @@
   var QUIZ_FEATS = {
     burn: ['Monthly challenges', '40+ workout programs', 'Recipes and the Thrive library', 'Favourites and community chat', 'Daily quote and progress photos'],
     burnplus: ['Everything in BURN', 'Build your own workouts & schedule your week', 'Join live classes', 'Daily Read and gratitude journal', 'Your progress, stats and achievements'],
-    burncomplete: ['Everything in BURN+', 'My BURN plan, built for you', 'AI support chat', 'Points for the store', 'Luna Bloom pregnancy & postpartum']
+    burncomplete: ['Everything in BURN+', 'My BURN plan, built for you (coming soon)', 'Ask BURN AI (coming soon)', 'Points for the store (coming soon)', 'Luna Bloom pregnancy & postpartum']
   };
   var dlg = null, step = 0, answers = {}, quizEntry = 'unknown', resultTier = null, offerTier = null;
   function el(tag, attrs, html) { var x = document.createElement(tag); if (attrs) Object.keys(attrs).forEach(function (k) { x.setAttribute(k, attrs[k]); }); if (html != null) x.innerHTML = html; return x; }
@@ -447,7 +449,12 @@
     document.querySelectorAll('[data-ty-price]').forEach(function (x) { x.textContent = priceTxt(pageTierKey, billing); });
     document.querySelectorAll('[data-ty-billed]').forEach(function (x) { x.textContent = billedTxt(pageTierKey, billing); });
     document.querySelectorAll('[data-ty-due]').forEach(function (x) { x.textContent = money(P[billing]); });
-    document.querySelectorAll('[data-ty-then]').forEach(function (x) { x.textContent = billing === 'annual' ? money(P.annual) + ' every year' : money(P.monthly) + ' every month'; });
+    /* Brief item 8: renewal amount AND date (a subscription started today renews on the same day next month / year) */
+    document.querySelectorAll('[data-ty-then]').forEach(function (x) {
+      var d = new Date(); if (billing === 'annual') d.setFullYear(d.getFullYear() + 1); else d.setMonth(d.getMonth() + 1);
+      var when = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      x.textContent = billing === 'annual' ? money(P.annual) + ' on ' + when + ', then every year' : money(P.monthly) + ' on ' + when + ', then every month';
+    });
     document.querySelectorAll('[data-ty-paidnote]').forEach(function (x) { x.textContent = billing === 'annual' ? 'Billed yearly' : 'Billed monthly'; });
     document.querySelectorAll('[data-ty-bill-m]').forEach(function (x) { x.textContent = priceTxt(pageTierKey, 'monthly'); });
     document.querySelectorAll('[data-ty-bill-a]').forEach(function (x) { x.textContent = priceTxt(pageTierKey, 'annual') + '\nsave ' + P.save + '%'; });
@@ -465,10 +472,25 @@
     var errEl = document.querySelector('[data-form-err]');
     var stepChoose = document.querySelector('[data-join-step=choose]'), stepPay = document.querySelector('[data-join-step=pay]');
     var indC = document.querySelector('[data-step-ind=choose]'), indP = document.querySelector('[data-step-ind=pay]');
+    var indD = document.querySelector('[data-step-ind=details]');
+    /* Brief item 35: keep what she typed (first name, email, opt-in; never the password) through Back, refresh
+       and a cancelled/failed payment, for this visit only. */
+    var FKEY = 'burn_v5_details';
+    try {
+      var saved = JSON.parse(sessionStorage.getItem(FKEY) || '{}'), fe = form.elements;
+      if (saved.first && !fe.name.value) fe.name.value = saved.first;
+      if (saved.email && !fe.email.value) fe.email.value = saved.email;
+      if (fe.marketing_opt_in && saved.optin) fe.marketing_opt_in.checked = true;
+    } catch (e) {}
+    form.addEventListener('input', function () {
+      var fe = form.elements;
+      try { sessionStorage.setItem(FKEY, JSON.stringify({ first: fe.name.value, email: fe.email.value, optin: !!(fe.marketing_opt_in && fe.marketing_opt_in.checked) })); } catch (e) {}
+    });
+    form.addEventListener('change', function () { form.dispatchEvent(new Event('input')); });
     var joinSrc = QS.get('src') || 'direct', paying = false;
     var setUrl = function (tier, push) {
       var q = new URLSearchParams(location.search);
-      if (tier) q.set('tier', tier); else q.delete('tier');
+      if (tier) q.set('tier', tier); else { q.delete('tier'); q.delete('step'); }
       q.set('billing', billing);
       var u = location.pathname + '?' + q.toString();
       try { push ? history.pushState({ tier: tier || '' }, '', u) : history.replaceState({ tier: tier || '' }, '', u); } catch (e) {}
@@ -481,28 +503,73 @@
         var on = b.getAttribute('data-choose') === cur;
         b.classList.toggle('cur', on); if (on) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current');
       });
-      indC.className = 'on'; indP.className = '';
+      indC.className = 'on'; indP.className = ''; if (indD) indD.className = '';
       if (push !== false) setUrl('', push === true);
       track('plan_chooser_view', { source: source || joinSrc, billing: billing });
       window.scrollTo(0, 0);
     };
-    var showCheckout = function (tier, source, push) {
+    /* Brief item 4: the checkout section has two steps - 'details' (first name + email) then 'pay'. */
+    var detailsOk = function (quiet) {
+      var f = form.elements, first = (f.name.value || '').trim(), email = (f.email.value || '').trim(), err = '';
+      if (!first) err = 'Please add your first name.';
+      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) err = 'Please enter a valid email address.';
+      if (!quiet) { errEl.textContent = err; if (err) try { (first ? f.email : f.name).focus(); } catch (x) {} }
+      return !err;
+    };
+    var setSub = function (sub, push) {
+      stepPay.setAttribute('data-sub', sub);
+      indC.className = 'done'; if (indD) indD.className = sub === 'pay' ? 'done' : 'on'; indP.className = sub === 'pay' ? 'on' : '';
+      var q = new URLSearchParams(location.search);
+      if (sub === 'pay') q.set('step', 'pay'); else q.delete('step');
+      var u = location.pathname + '?' + q.toString(), st = { tier: pageTierKey, step: sub };
+      try { push ? history.pushState(st, '', u) : history.replaceState(st, '', u); } catch (e) {}
+      if (sub === 'pay') {
+        var f = form.elements, w = document.querySelector('[data-who]');
+        if (w) w.textContent = (f.name.value || '').trim() + ' · ' + (f.email.value || '').trim();
+      }
+      errEl.textContent = '';
+      track(sub === 'pay' ? 'payment_view' : 'details_view', { tier: pageTierKey, billing: billing });
+      window.scrollTo(0, 0);
+    };
+    var showCheckout = function (tier, source, push, sub) {
       pageTierKey = TIER_OK(tier); paintTier(); rememberTier(pageTierKey);
       stepChoose.hidden = true; stepPay.hidden = false;
-      indC.className = 'done'; indP.className = 'on';
       if (push !== false) setUrl(pageTierKey, push === true);
       track('checkout_view', { tier: pageTierKey, billing: billing, source: source, entry: joinSrc });
-      window.scrollTo(0, 0);
+      setSub(sub === 'pay' && detailsOk(true) ? 'pay' : 'details', false);
     };
     window.burnShowChooser = function (src) { showChooser(src, true); };
     document.querySelectorAll('[data-choose]').forEach(function (b) {
       b.addEventListener('click', function () { showCheckout(b.getAttribute('data-choose'), 'chooser', true); });
     });
     document.querySelector('[data-change-plan]').addEventListener('click', function (e) { e.preventDefault(); showChooser('change_plan', true); });
+    /* Brief item 3: one Back, because the site menu is hidden in Join. Checkout -> membership step; membership step -> the page she came from. */
+    var backBtn = document.querySelector('[data-join-back]');
+    if (backBtn) backBtn.addEventListener('click', function () {
+      if (!stepPay.hidden) { if (stepPay.getAttribute('data-sub') === 'pay') setSub('details', true); else showChooser('back_button', true); return; }
+      var ref = ''; try { ref = new URL(document.referrer).host; } catch (x) {}
+      if (ref === location.host && history.length > 1) history.back(); else location.href = 'index.html';
+    });
     window.addEventListener('popstate', function () {
       var t = (new URLSearchParams(location.search).get('tier') || '').toLowerCase();
-      if (PRICES[t]) showCheckout(t, 'back', false); else showChooser('back', false);
+      if (PRICES[t]) showCheckout(t, 'back', false, new URLSearchParams(location.search).get('step')); else showChooser('back', false);
     });
+    /* Brief item 4: Continue to Checkout. Fires 'burn:details' so the server step (item 5: save the lead before payment) can hook in. */
+    var goPay = function () {
+      if (!detailsOk()) return;
+      var f = form.elements;
+      track('details_submitted', { tier: pageTierKey, billing: billing });
+      document.dispatchEvent(new CustomEvent('burn:details', { detail: { first: (f.name.value || '').trim(), email: (f.email.value || '').trim(), tier: pageTierKey, billing: billing, marketing_opt_in: !!(f.marketing_opt_in && f.marketing_opt_in.checked) } }));
+      setSub('pay', true);
+      try { f.password.focus({ preventScroll: true }); } catch (x) {}
+    };
+    var contBtn = document.querySelector('[data-details-continue]');
+    if (contBtn) contBtn.addEventListener('click', goPay);
+    form.querySelectorAll('[data-sub-details] input').forEach(function (i) {
+      i.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); goPay(); } });
+    });
+    var editBtn = document.querySelector('[data-edit-details]');
+    if (editBtn) editBtn.addEventListener('click', function () { setSub('details', true); });
     /* show / hide password */
     var pwT = document.querySelector('[data-pw-toggle]');
     pwT.addEventListener('click', function () {
@@ -538,7 +605,7 @@
     form.addEventListener('submit', function (e) { e.preventDefault(); pay('card', document.querySelector('[data-pay-submit]')); });
     document.querySelectorAll('[data-wallet]').forEach(function (w) { w.addEventListener('click', function () { pay(w.getAttribute('data-wallet'), w); }); });
     /* entry: a tier in the URL (tier button, quiz result) = straight to checkout; no tier (generic Join Now) = chooser */
-    if (PRICES[pageTierRaw]) showCheckout(pageTierRaw, 'tier_button', false);
+    if (PRICES[pageTierRaw]) showCheckout(pageTierRaw, 'tier_button', false, QS.get('step') || (QS.get('preview') === 'pay' || QS.get('cancelled') === '1' ? 'pay' : ''));
     else showChooser(joinSrc, false);
   }
 
@@ -568,16 +635,32 @@
     var sid = QS.get('session_id');
     var DONE = 'burn_v5_reg_done', done = [];
     try { done = JSON.parse(localStorage.getItem(DONE) || '[]'); } catch (e) {}
-    if (sid && done.indexOf(sid) > -1) {
-      try { console.log('[BURN track] registration_complete skipped: already recorded for session ' + sid); } catch (e) {}
-    } else {
-      track('registration_complete', { tier: pageTierKey, billing: billing, value: PRICES[pageTierKey][billing], currency: 'USD', event_id: sid || newEventId('demo_checkout') });
-      if (sid) { done.push(sid); try { localStorage.setItem(DONE, JSON.stringify(done.slice(-20))); } catch (e) {} }
-    }
+    var recordPaid = function () {
+      if (sid && done.indexOf(sid) > -1) {
+        try { console.log('[BURN track] registration_complete skipped: already recorded for session ' + sid); } catch (e) {}
+      } else {
+        track('registration_complete', { tier: pageTierKey, billing: billing, value: PRICES[pageTierKey][billing], currency: 'USD', event_id: sid || newEventId('demo_checkout') });
+        if (sid) { done.push(sid); try { localStorage.setItem(DONE, JSON.stringify(done.slice(-20))); } catch (e) {} }
+      }
+    };
+    /* Brief item 30: with real checkout on, count the purchase only once Stripe says it was paid; count failures too. */
+    var rootEl = document.documentElement;
+    if (rootEl.getAttribute('data-burn-checkout') === 'stripe') {
+      var seen = false;
+      var onState = function () {
+        var st = rootEl.getAttribute('data-checkout-state');
+        if (seen || !st || st === 'confirming') return;
+        seen = true;
+        if (st === 'ready' || st === 'pending') recordPaid();
+        else track('payment_failed', { tier: pageTierKey, billing: billing, state: st });
+      };
+      new MutationObserver(onState).observe(rootEl, { attributes: true, attributeFilter: ['data-checkout-state'] });
+      onState();
+    } else recordPaid();
   }
 
   /* ---------------- debug counters ---------------- */
-  var EVENTS = ['join_now_click', 'pricing_view', 'plan_chooser_view', 'checkout_view', 'quiz_start', 'quiz_complete', 'quiz_result_join_click', 'registration_complete'];
+  var EVENTS = ['join_now_click', 'pricing_view', 'plan_chooser_view', 'checkout_view', 'quiz_start', 'quiz_complete', 'quiz_result_join_click', 'details_view', 'details_submitted', 'payment_view', 'payment_started', 'payment_cancelled', 'payment_failed', 'registration_complete'];
   function readLog() { try { return JSON.parse(localStorage.getItem(LS) || '{"counts":{},"log":[]}'); } catch (e) { return { counts: {}, log: [] }; } }
   var counter = document.querySelector('[data-debug]');
   if (counter) {

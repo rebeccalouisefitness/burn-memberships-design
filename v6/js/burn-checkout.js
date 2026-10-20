@@ -107,7 +107,7 @@
           var st = window.Stripe(c.publishable_key);
           var els = st.elements({ mode: 'subscription', amount: cents() || 100, currency: 'usd', paymentMethodTypes: ['card'],
             appearance: { theme: 'stripe', variables: { colorPrimary: '#6f4c5b', borderRadius: '12px' } } });
-          els.create('payment', { layout: 'tabs', fields: { billingDetails: { email: 'never' } } }).mount(host);
+          els.create('payment', { layout: 'tabs', fields: { billingDetails: { email: 'never' } }, terms: { card: 'never' } }).mount(host);
           var xh = document.querySelector('[data-express-element]');
           if (xh) {
             var xe = els.create('expressCheckout', { buttonType: { applePay: 'subscribe', googlePay: 'subscribe' } });

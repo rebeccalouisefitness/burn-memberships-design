@@ -86,12 +86,15 @@
       energy: ['cardio', 'cardio & hiit', 'hiit', 'burn', 'full body', 'kickboxing'], habit: ['beginner', 'full body', 'no equipment', 'bodyweight'] };
     var DAYS = { 2: ['Mon', 'Thu'], 3: ['Mon', 'Wed', 'Fri'], 4: ['Mon', 'Tue', 'Thu', 'Sat'], 5: ['Mon', 'Tue', 'Wed', 'Fri', 'Sat'] };
     var FOCUS = ['legs', 'arms', 'core', 'glutes', 'full body', 'upper body', 'lower body', 'back'];
-    function fits(w, T) { return T <= 10 ? w.m <= 15 : (w.m >= T - 8 && w.m <= T + 6); }
-    function score(w) { var gs = GOAL[pick.goal]; return w.g.filter(function (t) { return gs.indexOf(t) > -1; }).length; }
+    function fits(w, T) { return T <= 10 ? (w.m >= 8 && w.m <= 15) : (w.m >= T - 8 && w.m <= T + 6); }
+    function h(str) { var x = 7; for (var i = 0; i < str.length; i++) x = (x * 31 + str.charCodeAt(i)) % 100003; return x; }
+    var SKIP = /pain|stretch|yoga|meditat|mobility|cool ?down|warm ?up/i;
+    function score(w) { if (pick.goal === 'habit' && (w.g.indexOf('advanced') > -1 || /advanced|extreme/i.test(w.t))) return -1; var gs = GOAL[pick.goal]; return w.g.filter(function (t) { return gs.indexOf(t) > -1; }).length; }
     function build() {
-      var T = +pick.time, N = +pick.days, list = data.filter(function (w) { return fits(w, T); });
-      if (list.length < N) list = data.slice().sort(function (a, b) { return Math.abs(a.m - T) - Math.abs(b.m - T); }).slice(0, 20);
-      list.sort(function (a, b) { return score(b) - score(a) || a.t.localeCompare(b.t); });
+      var T = +pick.time, N = +pick.days, pool = data.filter(function (w) { return !SKIP.test(w.t) && w.g.indexOf('stretch') < 0; }), list = pool.filter(function (w) { return fits(w, T); });
+      var good = list.filter(function (w) { return score(w) > 0; }); if (good.length >= N) list = good;
+      if (list.length < N) list = pool.slice().sort(function (a, b) { return Math.abs(a.m - T) - Math.abs(b.m - T); }).slice(0, 20);
+      list.sort(function (a, b) { return score(b) - score(a) || h(a.t + pick.goal + T) - h(b.t + pick.goal + T); });
       var chosen = [], used = {};
       for (var i = 0; i < list.length && chosen.length < N; i++) {      /* vary the focus day to day */
         var f = FOCUS.filter(function (x) { return list[i].g.indexOf(x) > -1; })[0] || 'other';

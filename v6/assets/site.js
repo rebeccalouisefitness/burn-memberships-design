@@ -499,6 +499,13 @@
       b.addEventListener('click', function () { showCheckout(b.getAttribute('data-choose'), 'chooser', true); });
     });
     document.querySelector('[data-change-plan]').addEventListener('click', function (e) { e.preventDefault(); showChooser('change_plan', true); });
+    /* Brief item 3: one Back, because the site menu is hidden in Join. Checkout -> membership step; membership step -> the page she came from. */
+    var backBtn = document.querySelector('[data-join-back]');
+    if (backBtn) backBtn.addEventListener('click', function () {
+      if (!stepPay.hidden) { showChooser('back_button', true); return; }
+      var ref = ''; try { ref = new URL(document.referrer).host; } catch (x) {}
+      if (ref === location.host && history.length > 1) history.back(); else location.href = 'index.html';
+    });
     window.addEventListener('popstate', function () {
       var t = (new URLSearchParams(location.search).get('tier') || '').toLowerCase();
       if (PRICES[t]) showCheckout(t, 'back', false); else showChooser('back', false);

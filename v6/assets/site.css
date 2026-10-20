@@ -613,3 +613,13 @@ html[data-burn-checkout="stripe"] .xpay{margin-bottom:16px}
 /* Brief item 2: the membership she already picked, marked in the chooser */
 .ch-opt.cur{border:2px solid var(--mauve);box-shadow:0 0 0 4px rgba(0,0,0,.03)}
 .ch-opt.cur .go::before{content:'\2713  Your pick \00B7  '}
+
+/* Brief 19 Oct item 3: once she is in Join, no site navigation - logo, steps, back and help/privacy only */
+body[data-page="join"] header.site nav.main,
+body[data-page="join"] header.site .hdr-right .member-link,
+body[data-page="join"] header.site .hdr-right .btn,
+body[data-page="join"] header.site .burger,
+body[data-page="join"] header.site .mnav{display:none!important}
+.join-back{display:block;margin:0 0 14px;font-size:14px;color:var(--inkSoft)}
+.join-help{margin:34px 0 0;font-size:13px;color:var(--inkSoft);text-align:center}
+.join-help a{color:inherit;text-decoration:underline}

@@ -4,10 +4,8 @@
  * site.js sends to checkout - the plumbing owns those (window.BURN_PRICES, Stripe). */
 (function () {
   'use strict';
-  var MAP = [
-    ['$7.00', '$6.99'], ['$14.00', '$13.99'], ['$18.75', '$18.99'], ['$19.00', '$18.99'], ['$224.99', '$227.99'],
-    ['Save 33%', 'Save 32%'], ['save 33%', 'save 32%'], ['up to 33%', 'up to 32%']
-  ];
+  /* Brief 19 Oct (item 1): retired - the pages now show the actual annual prices, so nothing is rewritten. */
+  var MAP = [];
   function fix(node) {
     var t = node.nodeValue, n = t;
     for (var i = 0; i < MAP.length; i++) if (n.indexOf(MAP[i][0]) > -1) n = n.split(MAP[i][0]).join(MAP[i][1]);

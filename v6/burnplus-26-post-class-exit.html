@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BURN+ #26 — Post-class room: a way out (before / after)</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAF9F7;--card:#fff;--cream:#F2EDE7;--cream2:#EDE7DF;--mauve:#956C7D;--mauveSoft:#CBB4BB;--mauveDeep:#7E5A6A;--ink:#292929;--taupe:#A49A93;--line:#ECE7E0;--roseTint:#F3ECEF}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,-apple-system,sans-serif;background:#EEEAE5;color:var(--ink);padding:28px 14px 60px}
+h1{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:32px;text-align:center}
+.lead{max-width:760px;margin:8px auto 26px;text-align:center;font-size:14px;line-height:1.55;color:#5B534F}
+.wrap{display:flex;gap:34px;justify-content:center;flex-wrap:wrap;align-items:flex-start}
+.col{display:flex;flex-direction:column;align-items:center;gap:12px}
+.pill{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:6px 14px;border-radius:99px}
+.pill.b{background:#E4DED7;color:#7E736C}.pill.a{background:var(--mauve);color:#fff}
+.phone{width:375px;height:780px;background:var(--bg);border:9px solid #1b1b1b;border-radius:46px;overflow:hidden;position:relative;display:flex;flex-direction:column;box-shadow:0 14px 40px rgba(60,40,50,.18)}
+.sb{height:44px;display:flex;justify-content:space-between;align-items:center;padding:0 26px;font-size:14px;font-weight:600;flex-shrink:0}
+.scroll{flex:1;overflow:auto;padding:12px 20px 14px}
+.toprow{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.ri{width:38px;height:38px;border-radius:50%;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center}
+.ri svg{width:16px;height:16px;stroke:var(--ink);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tag{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--taupe);border:1px solid var(--line);border-radius:99px;padding:5px 11px;background:#fff}
+.stats{display:flex;gap:10px;margin-top:10px}
+.stat{flex:1;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 14px 12px}
+.stat b{display:block;font-family:"Cormorant Garamond",serif;font-weight:600;font-size:30px;line-height:1}
+.stat span{display:block;font-size:9.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--taupe);margin-top:6px;white-space:pre-line;line-height:1.35}
+.between{display:flex;justify-content:space-between;align-items:baseline;margin-top:22px}
+.st{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:22px}
+.see{font-size:11.5px;font-weight:600;color:var(--mauve)}
+.chat{display:flex;flex-direction:column;gap:11px;margin-top:13px}
+.sys{text-align:center;font-size:10.5px;color:var(--taupe);letter-spacing:.04em}
+.react{display:flex;gap:9px;align-items:center;font-size:12.5px;color:var(--ink)}
+.react i{font-style:normal;font-size:16px}
+.mile{display:flex;gap:9px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:14px;padding:9px 10px}
+.av{width:28px;height:28px;border-radius:50%;background:var(--mauveSoft);color:#fff;font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center}
+.mile div{flex:1}.mile b{display:block;font-size:12.5px;font-weight:600}.mile small{font-size:11px;color:var(--taupe)}
+.btn{display:block;text-align:center;border-radius:99px;padding:14px;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.btn.soft{background:var(--roseTint);color:var(--mauveDeep);margin-top:16px}
+.btn.primary{background:var(--mauve);color:#fff}
+.dock{background:#fff;border-top:1px solid var(--line);padding:12px 18px 26px;flex-shrink:0}
+.emo{display:flex;justify-content:space-between}
+.emo span{width:46px;height:46px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:21px}
+.emo span.hot{background:var(--roseTint);box-shadow:inset 0 0 0 1.5px var(--mauveSoft)}
+.note{text-align:center;font-size:10.5px;color:var(--taupe);margin-top:8px}
+.trap{position:absolute;left:12px;right:12px;top:52px;border:2px dashed #C2574A;border-radius:14px;height:48px;display:flex;align-items:center;justify-content:center;color:#C2574A;font-size:11.5px;font-weight:600;background:rgba(255,255,255,.7)}
+.new{outline:2px solid #5E8A6B;outline-offset:3px;border-radius:12px;position:relative}
+.new:after{content:"NEW";position:absolute;top:-9px;right:-6px;background:#5E8A6B;color:#fff;font-size:8.5px;font-weight:700;letter-spacing:.1em;padding:2px 6px;border-radius:6px}
+.notes{width:340px;background:#fff;border-radius:18px;padding:18px 20px;font-size:13.5px;line-height:1.55;box-shadow:0 4px 16px rgba(0,0,0,.05)}
+.notes h3{font-family:"Cormorant Garamond",serif;font-size:20px;margin-bottom:6px}
+.notes ul{margin:0 0 12px 18px}.notes li{margin-bottom:5px}
+.q{background:#FBF6EE;border:1px solid #EADFCC}
+</style></head><body>
+<h1>BURN+ #26 · The post-class room needs a way out</h1>
+<p class="lead">After the class ends, the room screen has no back button and no tabs, so members get stuck. The fix keeps everything on the screen exactly as it is and adds only two things: the same round back button the class screens already use, and one <b>Done</b> button that is always visible at the bottom. Green outlines mark the only changes.</p>
+
+<div class="wrap">
+ <div class="col"><div class="pill b">Before · today</div>
+  <div class="phone">
+   <div class="sb"><span>9:11</span><span>●●● ◔</span></div>
+   <div class="trap">No back button · no tabs · no way out</div>
+   <div class="scroll" style="padding-top:70px">
+    <div class="stats"><div class="stat"><b>1</b><span>Days
+in a row</span></div><div class="stat"><b>7/30</b><span>Challenge
+days done</span></div></div>
+    <div class="between"><div class="st">The room's still open</div><div class="see">1h left</div></div>
+    <div class="chat">
+     <div class="sys">— The 9 AM class started —</div>
+     <div class="react"><i>🔥</i><span><b>You</b> cheered</span></div>
+     <div class="react"><i>👏</i><span><b>You</b> cheered</span></div>
+     <div class="sys">— Class ended 9:11 AM —</div>
+    </div>
+    <div class="btn soft">Book tomorrow · 9 AM again</div>
+   </div>
+   <div class="dock">
+    <div class="emo"><span class="hot">❤️</span><span>🔥</span><span>👏</span><span>💪</span><span>🙌</span><span>😅</span></div>
+    <div class="note">Tap to cheer. Only Rebecca posts words.</div>
+   </div>
+  </div>
+ </div>
+
+ <div class="col"><div class="pill a">After · proposed</div>
+  <div class="phone">
+   <div class="sb"><span>9:11</span><span>●●● ◔</span></div>
+   <div class="scroll">
+    <div class="toprow">
+     <div class="ri new" title="Back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></div>
+     <div class="tag">Class finished</div>
+     <div style="width:38px"></div>
+    </div>
+    <div class="stats"><div class="stat"><b>1</b><span>Days
+in a row</span></div><div class="stat"><b>7/30</b><span>Challenge
+days done</span></div></div>
+    <div class="between"><div class="st">The room's still open</div><div class="see">1h left</div></div>
+    <div class="chat">
+     <div class="sys">— The 9 AM class started —</div>
+     <div class="react"><i>🔥</i><span><b>You</b> cheered</span></div>
+     <div class="react"><i>👏</i><span><b>You</b> cheered</span></div>
+     <div class="sys">— Class ended 9:11 AM —</div>
+    </div>
+    <div class="btn soft">Book tomorrow · 9 AM again</div>
+   </div>
+   <div class="dock">
+    <div class="emo"><span class="hot">❤️</span><span>🔥</span><span>👏</span><span>💪</span><span>🙌</span><span>😅</span></div>
+    <div class="note">Tap to cheer. Only Rebecca posts words.</div>
+    <div class="btn primary new" style="margin-top:12px">Done</div>
+   </div>
+  </div>
+ </div>
+
+ <div class="col"><div class="pill a">What changes</div>
+  <div class="notes">
+   <h3>Added</h3>
+   <ul>
+    <li><b>Back button</b> (top left): the same round button the waiting room already has. It goes back to wherever she came from, usually Today.</li>
+    <li><b>Done</b> (bottom): always visible under the cheers, so she can leave without scrolling. It also goes back to Today.</li>
+    <li>The phone's swipe-back and Android's back button do the same thing.</li>
+   </ul>
+   <h3>Kept exactly as is</h3>
+   <ul>
+    <li>Stats, "The room's still open", the cheers, "Book tomorrow", the emoji bar.</li>
+    <li>Leaving <b>doesn't undo anything</b>: her completed workout, attendance and cheers are all saved first. She can go back into the room from Today while it's still open.</li>
+   </ul>
+   <h3>Not in this change</h3>
+   <ul><li>The celebration (#25), the recap and the completion tick on Today (#27), and the copy (#24/#25). Each comes later as its own before/after.</li></ul>
+  </div>
+  <div class="notes q">
+   <h3>Your OK needed on</h3>
+   <ul style="margin-bottom:0">
+    <li>The button word: <b>Done</b> (already used in the app), or <b>Back to BURN</b> (from your notes)?</li>
+    <li>The small "Class finished" label at the top. Keep it, or leave the top bare apart from the back button?</li>
+   </ul>
+  </div>
+ </div>
+</div>
+</body></html>

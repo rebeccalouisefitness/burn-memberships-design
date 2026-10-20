@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BURN+ #29 · "In Sync" badge + badge audit (before / after)</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAF9F7;--cream:#F2EDE7;--cream2:#EDE7DF;--mauve:#956C7D;--mauveSoft:#CBB4BB;--mauveDeep:#7E5A6A;--ink:#292929;--taupe:#A49A93;--line:#ECE7E0;--gold:#C9AE8C;--mind:#9C8BB5}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,-apple-system,sans-serif;background:#EEEAE5;color:var(--ink);padding:28px 14px 60px}
+h1{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:32px;text-align:center}
+h2{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:26px;text-align:center;margin:40px 0 6px}
+.lead{max-width:800px;margin:8px auto 26px;text-align:center;font-size:14px;line-height:1.55;color:#5B534F}
+.wrap{display:flex;gap:30px;justify-content:center;flex-wrap:wrap;align-items:flex-start}
+.col{display:flex;flex-direction:column;align-items:center;gap:12px}
+.pill{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:6px 14px;border-radius:99px}
+.pill.b{background:#E4DED7;color:#7E736C}.pill.a{background:var(--mauve);color:#fff}
+.phone{width:360px;height:740px;background:var(--bg);border:9px solid #1b1b1b;border-radius:44px;overflow:hidden;box-shadow:0 14px 40px rgba(60,40,50,.18);padding:56px 26px 26px;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative}
+.eye{font-size:10.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--mauve)}
+.art{width:170px;height:170px;border-radius:50%;margin:26px 0 18px;position:relative;display:flex;align-items:center;justify-content:center}
+.art:before{content:"";position:absolute;inset:-18px;border-radius:50%;background:var(--mind);opacity:.18;filter:blur(14px)}
+.medal{width:150px;height:150px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#E9E2F1,#B9A9CF);border:6px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:58px;color:#fff;position:relative}
+.ut{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:34px;line-height:1.05}
+.sm{font-size:11.8px;color:var(--taupe);line-height:1.5;margin-top:6px}
+.q{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:18px;color:#5B534F;margin-top:12px;line-height:1.3}
+.what{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin-top:14px;text-align:left;width:100%}
+.what b{display:block;font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mauve);margin-bottom:4px}
+.what p{font-size:13px;line-height:1.45}
+.what small{display:block;font-size:11.5px;color:var(--taupe);margin-top:5px}
+.btn{width:100%;border-radius:99px;padding:14px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-top:10px}
+.btn.p{background:var(--mauve);color:#fff;margin-top:auto}.btn.o{border:1.5px solid var(--mauve);color:var(--mauve)}
+.bad{outline:2px dashed #C2574A;outline-offset:3px;border-radius:10px;position:relative}
+.bad[data-n]:after{content:attr(data-n);position:absolute;top:-11px;right:-8px;background:#C2574A;color:#fff;font-size:8.5px;font-weight:700;letter-spacing:.06em;padding:2px 6px;border-radius:6px;white-space:nowrap}
+.new{outline:2px solid #5E8A6B;outline-offset:3px;border-radius:12px;position:relative}
+.new:after{content:"NEW";position:absolute;top:-10px;right:-6px;background:#5E8A6B;color:#fff;font-size:8.5px;font-weight:700;letter-spacing:.1em;padding:2px 6px;border-radius:6px}
+.notes{width:340px;background:#fff;border-radius:18px;padding:18px 20px;font-size:13.5px;line-height:1.55}
+.notes h3{font-family:"Cormorant Garamond",serif;font-size:21px;margin-bottom:6px}.notes ul{margin:0 0 12px 18px}.notes li{margin-bottom:5px}
+.yel{background:#FBF6EE;border:1px solid #EADFCC}
+table{border-collapse:collapse;max-width:1150px;margin:14px auto 0;background:#fff;border-radius:16px;overflow:hidden;font-size:12.8px;line-height:1.45}
+th{background:var(--cream);text-align:left;padding:10px 12px;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#7E736C}
+td{padding:9px 12px;border-top:1px solid var(--line);vertical-align:top}
+td:first-child{font-weight:600;white-space:nowrap}
+.ok{color:#5E8A6B;font-weight:600}.fix{color:#C2574A;font-weight:600}.ask{color:#A07A2E;font-weight:600}
+.legend{text-align:center;font-size:12.5px;color:#5B534F}
+</style></head><body>
+<h1>BURN+ #29 · The "In Sync" badge</h1>
+<p class="lead">A member got "In Sync" and didn't know what it meant or what she'd done. Looking at how it's counted, <b>it was also given wrongly</b>: it's awarded as soon as there are <b>two</b> period-start dates, even if they're only 8 days apart (for example a period logged on 9 Oct and logged again on 17 Oct). The unlock screen stays the same; it just explains itself, and the badge is only given for a real cycle.</p>
+
+<div class="wrap">
+ <div class="col"><div class="pill b">Before · today</div>
+  <div class="phone">
+   <div class="eye">Badge unlocked</div>
+   <div class="art"><div class="medal">◐</div></div>
+   <div class="ut bad" data-n="WHAT DOES IT MEAN?">In Sync</div>
+   <div class="sm">Logged one full cycle · Mind · Gold</div>
+   <div class="q">"You're learning your own rhythm."</div>
+   <div class="sm bad" data-n="UNRELATED" style="margin-top:12px;padding:2px 6px">Next: Mindful Month · 18 more reads</div>
+   <div class="btn p">Share</div><div class="btn o">Keep going</div>
+  </div>
+ </div>
+
+ <div class="col"><div class="pill a">After · proposed</div>
+  <div class="phone">
+   <div class="eye">Badge unlocked</div>
+   <div class="art"><div class="medal">◐</div></div>
+   <div class="ut new">My First Cycle</div>
+   <div class="sm">Mind · Gold · Earned 14 Nov</div>
+   <div class="what new"><b>What you did</b><p>You tracked one full cycle in BURN, from the start of one period to the start of the next.</p><small>Only you can see your cycle details. They're never on a share card.</small></div>
+   <div class="q">"You're learning your own rhythm."</div>
+   <div class="sm new" style="margin-top:10px;padding:2px 6px">Also close: Mindful Month · 18 more Daily Reads</div>
+   <div class="btn p">Share</div><div class="btn o">Keep going</div>
+  </div>
+ </div>
+
+ <div class="col"><div class="pill a">What changes</div>
+  <div class="notes">
+   <h3>The rule (the real fix)</h3>
+   <ul>
+    <li>Today: two period-start dates = "one full cycle", however close together.</li>
+    <li><b>Proposed:</b> it counts only when two period starts are <b>21 to 45 days apart</b>, the normal range for a cycle. Logging the same period twice, or an accidental log a week later, no longer counts.</li>
+    <li>Setting up Cycle, one period entry, or an estimated phase never counts. Members who don't track their cycle are never nudged to.</li>
+   </ul>
+   <h3>The screen</h3>
+   <ul>
+    <li>Same unlock screen, same confetti, Share and Keep going.</li>
+    <li>The name says what it is, and a short "What you did" box explains it, with the date it was earned.</li>
+    <li>The bottom line is labelled "Also close:" so it no longer reads as the next step <i>after</i> cycle tracking, and it says "Daily Reads" instead of just "reads".</li>
+    <li>The badge detail sheet (tapping it in the collection) gets the same explanation.</li>
+   </ul>
+  </div>
+  <div class="notes yel">
+   <h3>Your OK needed on</h3>
+   <ul style="margin-bottom:0">
+    <li><b>Name:</b> "My First Cycle", "Cycle Tracker", or keep "In Sync" with the explanation underneath?</li>
+    <li>The <b>"What you did"</b> sentence and the privacy line under it.</li>
+    <li><b>21–45 days</b> as "a real cycle"? Perimenopause cycles can be longer. Should perimenopause mode allow up to 90 days?</li>
+    <li>Members who already got it wrongly (two logs close together): <b>take it back quietly</b>, or let them keep it? Your rule so far has been "earned badges are never taken away".</li>
+   </ul>
+  </div>
+ </div>
+</div>
+
+<h2>The audit: all 24 badges against what the app really records</h2>
+<p class="legend"><span class="ok">OK</span> = clear and counted correctly · <span class="fix">FIX</span> = counted wrongly or can't be earned · <span class="ask">NAME?</span> = counted right, but the name or wording is unclear (your notes #16/#17). I'll fix the <span class="fix">FIX</span> rows with this item; renames wait for your picks.</p>
+<table>
+<tr><th>Badge</th><th>How it's earned today</th><th>Verdict</th><th>What I found / suggest</th></tr>
+<tr><td>Start Messy</td><td>First workout finished</td><td class="ok">OK</td><td>Clear enough with its line "Not perfect. Done."</td></tr>
+<tr><td>High Five · Ten Down · Quarter Century · Half Century · The Hundred Club</td><td>5 / 10 / 25 / 50 / 100 workouts finished</td><td class="ok">OK</td><td>Counted from finished workouts only (90% watched), never just pressing play.</td></tr>
+<tr><td>Three In A Row · Seven Straight · 14-Day Streak · 30-Day Streak</td><td>That many calendar days in a row with a workout</td><td class="ask">NAME?</td><td>Correct. The detail sheet should say "days in a row" every time, so they're not confused with weekly consistency.</td></tr>
+<tr><td>Never Miss A Monday</td><td>A workout on 4 Mondays in a row</td><td class="ask">NAME?</td><td>The name promises "never", but it's 4 Mondays. Suggest "Four Mondays Strong", or similar.</td></tr>
+<tr><td>The Boring Middle</td><td>At least one workout in each of 4 weeks in a row</td><td class="fix">FIX</td><td>The <b>badge art shows "30" but the rule is 4 weeks</b>; I'll make the art say 4. Your notes call the name unclear and suggest "Finding Your Rhythm".</td></tr>
+<tr><td>Back Again</td><td>A workout after 7+ days off</td><td class="ok">OK</td><td>Clear, and kind.</td></tr>
+<tr><td>Full Challenge Week</td><td>Every challenge workout scheduled Mon–Sun done</td><td class="ask">NAME?</td><td>Correct, but it has no explanation line. Suggest "Every challenge workout in one week" on the badge itself.</td></tr>
+<tr><td>All In</td><td>Joined a monthly challenge</td><td class="ok">OK</td><td>The app doesn't record the joining date, so it shows the first day the badge was seen.</td></tr>
+<tr><td>Never Quit</td><td>Every scheduled day of a monthly challenge done</td><td class="ok">OK</td><td>Counted from real completions, not from joining.</td></tr>
+<tr><td>Programme Complete</td><td>Every day of a programme done</td><td class="ok">OK</td><td></td></tr>
+<tr><td>Grateful Heart · Grace And Grit</td><td>1st / 21 gratitude entries</td><td class="fix">FIX</td><td>Entries are only counted on <b>the phone they were written on</b>. A new phone or reinstall starts at 0. Should count from her account.</td></tr>
+<tr><td>Mindful Month</td><td>20 Daily Reads marked in one month</td><td class="fix">FIX</td><td><b>Can't be earned right now</b>: "Mark as Read" doesn't work (your note #13). It's also phone-only like gratitude. Fixed together with #13.</td></tr>
+<tr><td>Front Row · Class Regular</td><td>1st / 10 live classes</td><td class="fix">FIX</td><td>Counts <b>opening the class room</b>, not taking part. Should use the same rule as #27: the class counts once she's done it.</td></tr>
+<tr><td><b>In Sync</b></td><td>Two period-start dates</td><td class="fix">FIX</td><td>See above: 8 days apart counted as a full cycle.</td></tr>
+<tr><td>Plan It, Do It</td><td>5 days with a scheduled workout and any workout done</td><td class="ask">NAME?</td><td>Counts any workout on a scheduled day, not necessarily the one she planned. Probably fine, but the rule text should say so.</td></tr>
+<tr><td>Community badges</td><td>None live</td><td class="ok">OK</td><td>Correctly hidden until Community badges launch.</td></tr>
+</table>
+</body></html>

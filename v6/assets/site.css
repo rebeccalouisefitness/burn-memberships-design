@@ -613,3 +613,8 @@ html[data-burn-checkout="stripe"] .xpay{margin-bottom:16px}
 /* Brief item 2: the membership she already picked, marked in the chooser */
 .ch-opt.cur{border:2px solid var(--mauve);box-shadow:0 0 0 4px rgba(0,0,0,.03)}
 .ch-opt.cur .go::before{content:'\2713  Your pick \00B7  '}
+
+/* 20 Oct (Rebecca): the Save badge overlapped the Monthly/Annual pill. It now sits clear ABOVE the pill,
+   centred over "Annual", with a small gap - same solid pill style. */
+.billing{margin-top:40px!important}
+.billing button[data-bill="annual"] .sv{top:auto!important;bottom:calc(100% + 10px)!important;left:50%!important;right:auto!important;transform:translateX(-50%)!important}

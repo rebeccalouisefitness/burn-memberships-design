@@ -692,3 +692,40 @@ mark.tc{background:#fff0b3;color:#5a4410;padding:0 4px;border-radius:4px;font-si
 .legal a{color:inherit;text-decoration:underline;margin-left:4px}
 .pay-terms{margin:10px 0 0;font-size:12.5px;color:var(--inkSoft)}
 .pay-terms a{color:inherit;text-decoration:underline}
+
+/* ===== Part B (draft): life and motion. Layout unchanged. ===== */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+.tour{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:44px;align-items:center;max-width:1120px;margin:0 auto}
+.tour-video .device{animation:floaty 6s ease-in-out infinite}
+.tour-vid{display:block;width:100%;height:auto;aspect-ratio:390/844;object-fit:cover;background:#f6f3ef}
+.tour-cap{text-align:center;margin:14px 0 0;font-family:var(--serif);font-size:20px}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.carousel{min-width:0}
+.carousel .screens{display:flex;grid-template-columns:none;gap:26px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:6px 4px 14px;max-width:none;-webkit-overflow-scrolling:touch}
+.carousel .screens::-webkit-scrollbar{display:none}
+.carousel .screen{flex:0 0 210px;scroll-snap-align:center;transition:transform .4s ease}
+.carousel .screen:hover{transform:translateY(-6px)}
+.dots{display:flex;justify-content:center;gap:8px;margin-top:6px}
+.dots button{width:8px;height:8px;border-radius:99px;border:0;padding:0;background:var(--line);cursor:pointer;transition:width .3s,background .3s}
+.dots button.on{width:22px;background:var(--mauve)}
+@media (max-width:860px){.tour{grid-template-columns:1fr;gap:28px}.tour-video{max-width:240px;margin:0 auto}.carousel .screen{flex-basis:62vw;max-width:250px}}
+.pb{background:#fff;border:1px solid var(--line);border-radius:22px;padding:22px 22px 24px;margin:26px auto 18px;max-width:760px;display:grid;gap:16px}
+.pb-q b{display:block;font-family:var(--serif);font-size:21px;font-weight:600;margin-bottom:8px}
+.pb-chips{display:flex;flex-wrap:wrap;gap:8px}
+.pb-chips button{appearance:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 16px;min-height:44px;font:500 14px var(--sans);color:var(--ink);cursor:pointer;transition:background .2s,color .2s,border-color .2s,transform .15s}
+.pb-chips button:hover{border-color:var(--mauveSoft)}
+.pb-chips button:active{transform:scale(.97)}
+.pb-chips button.on{background:var(--mauve);border-color:var(--mauve);color:#fff}
+.pb [data-pb-go]{justify-self:start}
+.pb-out h3{margin:4px 0 10px}
+.pb-week{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.pb-week li{display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center;background:var(--cream);border-radius:14px;padding:12px 14px;animation:pbIn .45s both}
+.pb-week .d{font-weight:600;color:var(--mauve);letter-spacing:.04em}
+.pb-week .m{font-size:13px;color:var(--taupeDeep);white-space:nowrap}
+.pb-note{font-size:13px;color:var(--inkSoft);margin:10px 0 0}
+@keyframes pbIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.wcard,.tier,.ccard{transition:transform .25s ease,box-shadow .25s ease}
+@media (hover:hover){.wcard:hover,.ccard:hover{transform:translateY(-4px)}}
+html.review [data-new-copy]{outline:2px dashed #e0b84c;outline-offset:3px;background:#fff6d6}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.tour-video .device{animation:none}.pb-week li{animation:none}.carousel .screen,.wcard,.ccard{transition:none}}

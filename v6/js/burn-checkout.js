@@ -59,6 +59,20 @@
     if (QS.get('cancelled') === '1') {
       document.addEventListener('DOMContentLoaded', function () { say('Payment cancelled. Nothing was charged. You can try again whenever you like.'); });
     }
+    /* Brief item 5: save first name + email + plan BEFORE payment (server: /api/checkout-lead, Netlify Blobs,
+       not the member database). Fire-and-forget: never blocks her. The lead id goes on the Stripe session. */
+    var LKEY = 'burn_v5_lead_id';
+    var leadId = function () { try { return sessionStorage.getItem(LKEY) || ''; } catch (e) { return ''; } };
+    document.addEventListener('burn:details', function (e) {
+      var d = (e && e.detail) || {};
+      fetch(BASE + '/checkout-lead', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ first: d.first, email: d.email, tier: d.tier, billing: d.billing,
+          marketing_opt_in: !!d.marketing_opt_in, lead_id: leadId() })
+      }).then(function (r) { return r.json().catch(function () { return {}; }); }).then(function (j) {
+        if (j && j.ok && j.lead_id) try { sessionStorage.setItem(LKEY, j.lead_id); } catch (x) {}
+      }).catch(function () {});
+    });
     var start = function (form, btn) {
       if (busy) return;
       var f = form.elements;
@@ -75,7 +89,7 @@
       fetch(BASE + '/web-checkout/create', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: name, email: email, password: pw, tier: tier, billing: billing,
-          success_url: success.href, cancel_url: cancel.href })
+          success_url: success.href, cancel_url: cancel.href, lead_id: leadId() })
       }).then(function (r) { return r.json().catch(function () { return {}; }); }).then(function (j) {
         if (j && j.ok && j.url) { location.href = j.url; return; }
         busy = false;

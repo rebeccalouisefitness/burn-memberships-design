@@ -46,7 +46,7 @@
   /* headline per-month figure for the current billing */
   var shownAmt = function (t, b) { return b === 'annual' ? PRICES[t].annual : PRICES[t].monthly; };
   var priceTxt = function (t, b) { return money(shownAmt(t, b)) + (b === 'annual' ? '/year' : '/month'); };
-  var billedTxt = function (t, b) { return b === 'annual' ? 'Billed ' + money(PRICES[t].annual) + ' yearly' : 'Billed monthly'; };
+  var billedTxt = function (t, b) { return b === 'annual' ? 'One payment a year' : 'Billed monthly'; };
 
   /* ---------------- ANALYTICS: GA4 + Meta Pixel, host-gated ----------------
      IDs below are not BURN's real IDs yet. Tags load ONLY on the production host AND only once both IDs

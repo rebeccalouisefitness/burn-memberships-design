@@ -71,26 +71,36 @@ section .why{font-size:13.5px;color:#5B534F;margin:4px 0 16px;line-height:1.5}
 </style></head><body>
 <h1>BURN+ scheduling · items 1–9 in one go</h1>
 <p class="lead">Every scheduling note from your BURN+ document, each with your real screenshot on the left (<b>before</b>) and the improvement on the right (<b>after</b>). Nothing is rebuilt: same screens, same style, only what each note asks for. Green outlines mark what's new. <b>Yellow boxes are the wording for you to approve</b>; until you do, those lines stay as they are. You can approve the lot, or by number ("all yes except 5").</p>
+<div style="max-width:900px;margin:0 auto 16px;background:#fff;border:2px solid #5E8A6B;border-radius:18px;padding:14px 18px;font-size:13.5px;line-height:1.55">
+<b style="font-family:'Cormorant Garamond',serif;font-size:20px">Updated after your feedback: two separate things</b><br>
+Your words: <i>"there's like difference between setting reminders and then actually joining a class… you can set a reminder of when you want to do your workout, or like you join one of the four classes."</i><br>
+So everywhere on this page there are now <b>two clearly separate actions</b>:
+<div style="display:flex;gap:10px;margin-top:8px;flex-wrap:wrap">
+<div style="flex:1;min-width:220px;background:#F3ECEF;border-radius:12px;padding:10px 12px"><b>Schedule a class</b><br>Join one of the 4 live classes (6 AM · 9 AM · 12 PM · 6 PM) and do it together.</div>
+<div style="flex:1;min-width:220px;background:#F2EDE7;border-radius:12px;padding:10px 12px"><b>Set a reminder</b><br>Pick when you'll do the workout on your own, and we'll remind you. No class, no booking.</div>
+</div></div>
 <nav><a href="#i1">1 Schedule on unbooked days</a><a href="#i2">2 Cancel / change</a><a href="#i3">3 Reminder + time picker</a><a href="#i4">4 Extra workout on Today</a><a href="#i5">5 Filters</a><a href="#i6">6 Change-time button</a><a href="#i7">7 My Schedule on Move</a><a href="#i8">8 Classes only for the challenge</a><a href="#i9">9 Final review</a><a href="#time">Timing</a></nav>
 
 <!-- 1 -->
-<section id="i1"><h2>1 · Schedule a class on a day with nothing booked</h2>
+<section id="i1"><h2>1 · On a day with nothing booked: Schedule a class, or Set a reminder</h2>
 <p class="why">On a day with no class booked, nothing sits under the workout. Booked days have the "Your class" panel. Your note asks for the same panel on unbooked days, so booking is right there.</p>
 <div class="row">
  <div class="col"><div class="pill b">Before</div><img class="shot" src="b1.jpg"></div>
  <div class="col"><div class="pill a">After</div>
   <div class="ph">
    <div class="hero"><small>You're on · Day 19 of 30</small><b>Sweat or Treat</b></div>
-   <div class="att new"><div class="top"><div class="badge plus">+</div><div style="flex:1"><div class="eyeb">Day 19 class</div><div class="at">Schedule a class</div><div class="as">6 AM · 9 AM · 12 PM · 6 PM · or your own time</div></div><div class="act">Book ›</div></div></div>
+   <div class="att new"><div class="eyeb" style="margin-bottom:6px">Day 19</div>
+     <div class="top"><div class="badge plus" style="width:36px;height:36px;font-size:16px">+</div><div style="flex:1"><div class="at" style="font-size:12.5px">Schedule a class</div><div class="as">Join a live class · 6 AM · 9 AM · 12 PM · 6 PM</div></div><div class="act">›</div></div>
+     <div class="top" style="margin-top:9px;padding-top:9px;border-top:1px solid var(--lineSoft)"><div class="badge plus" style="width:36px;height:36px;font-size:15px;border-style:solid;border-width:1.5px">◷</div><div style="flex:1"><div class="at" style="font-size:12.5px">Set a reminder</div><div class="as">Do it on your own time · we'll remind you</div></div><div class="act">›</div></div></div>
    <div class="btn o">Complete Day 19</div>
-   <div class="note">Once booked, this becomes the "Your class" panel you already have ("You're in the 9:00 AM class · Change"), in the same spot.</div>
+   <div class="note">Book a class → this becomes the "Your class" panel you already have ("You're in the 9:00 AM class · Change"). Set a reminder → it becomes "Reminder set · 8:15 PM · Change".</div>
   </div></div>
  <div class="notes"><h3>What changes</h3><ul>
-  <li>The same attached panel as "Your class", in the same place and style, on any day with no class booked.</li>
-  <li>Tapping it opens the class-times sheet you already have for that day: pick a class, or "your own time".</li>
+  <li>The same attached panel as "Your class", in the same place and style, on any day with nothing booked, with <b>two separate rows</b>: "Schedule a class" opens the 4 class times for that day; "Set a reminder" opens the reminder sheet (item 3).</li>
+  <li>The two never mix: a class is a booking with other people, a reminder is just a nudge for her own workout.</li>
   <li>The separate "Schedule a class" card lower on Today stays as it is.</li>
   <li>Past days show nothing (you can't book the past).</li></ul>
-  <div class="copy"><b>Wording to approve:</b> eyebrow "Day 19 class" · title "Schedule a class" · line "6 AM · 9 AM · 12 PM · 6 PM · or your own time" (the real times for that day) · "Book ›"</div>
+  <div class="copy"><b>Wording to approve:</b> "Schedule a class" · "Join a live class · 6 AM · 9 AM · 12 PM · 6 PM" (the real times) · "Set a reminder" · "Do it on your own time · we'll remind you" · "Reminder set · 8:15 PM"</div>
   <p style="margin-top:8px"><span class="tag">App update only</span> no new build needed</p></div>
 </div></section>
 
@@ -124,26 +134,28 @@ section .why{font-size:13.5px;color:#5B534F;margin:4px 0 16px;line-height:1.5}
 </div></section>
 
 <!-- 3 -->
-<section id="i3"><h2>3 · A clear reminder, and an easier time picker</h2>
+<section id="i3"><h2>3 · "Set a reminder" for your own workout, with an easier time picker</h2>
 <p class="why">"Remind me at this time" is unclear, and the hour chips scroll sideways, cutting off times and hiding PM.</p>
 <div class="row">
  <div class="col"><div class="pill b">Before</div><img class="shot" src="b3.jpg"></div>
  <div class="col"><div class="pill a">After</div>
   <div class="ph">
    <div class="eyeb" style="text-align:center">Day 17 · Sat 17 Oct</div>
-   <div class="disp" style="font-size:22px;text-align:center;margin:2px 0 8px">Schedule your workout</div>
-   <div class="sec">Your own time</div>
+   <div class="disp new" style="font-size:22px;text-align:center;margin:2px 0 8px">Set a reminder</div>
+   <div class="as" style="text-align:center;margin-bottom:4px">When will you do your workout?</div>
    <div class="card"><div class="tog"><div><div class="as">Workout</div><div class="at" style="font-size:12.5px">Ab Shred</div></div><div class="act">Change</div></div></div>
    <div class="wheel new"><div>7<b>8</b>9</div><div>00<b>15</b>30</div><div>AM<b>PM</b></div></div>
-   <div class="card new"><div class="tog"><div><div class="at" style="font-size:12px">Send me a reminder</div><div class="as">We'll remind you at 8:15 PM.</div></div><div class="sw"></div></div></div>
-   <div class="btn p">Schedule for 8:15 PM</div>
+   <div class="as" style="text-align:center;margin-top:8px">We'll send you a reminder at 8:15 PM.</div>
+   <div class="btn p new">Remind me at 8:15 PM</div>
+   <div class="link">Want to work out with others? Schedule a class</div>
   </div></div>
  <div class="notes"><h3>What changes</h3><ul>
   <li>One compact wheel: hour · minutes (00/15/30/45) · AM/PM. Nothing scrolls sideways and PM is obvious. The button updates as she turns it ("Schedule for 8:15 PM").</li>
-  <li>The checkbox becomes a switch, "Send me a reminder", with a line saying exactly when it arrives.</li>
+  <li>This sheet is now only <b>Set a reminder</b>: pick the workout and a time, and the button says exactly what happens ("Remind me at 8:15 PM"). The confusing checkbox is gone, because setting the reminder <i>is</i> the action.</li>
+  <li>Classes are no longer underneath it. A small link, "Schedule a class", takes her to the class times if she'd rather join one.</li>
   <li><b>Before building I'll confirm</b> the reminder really arrives as a phone notification at the chosen time. If she has turned notifications off, the switch asks for permission. If she says no, it shows "Notifications are off — turn them on in Settings" instead of pretending.</li>
   <li>Edits move the reminder, cancelling removes it, and a time in the past can't be picked for today.</li></ul>
-  <div class="copy"><b>Wording to approve:</b> "Send me a reminder" · "We'll remind you at 8:15 PM." · "Notifications are off — turn them on in Settings"</div>
+  <div class="copy"><b>Wording to approve:</b> "Set a reminder" · "When will you do your workout?" · "We'll send you a reminder at 8:15 PM." · "Remind me at 8:15 PM" · "Want to work out with others? Schedule a class" · "Notifications are off — turn them on in Settings"</div>
   <p style="margin-top:8px"><span class="tag">App update only</span> the wheel is built in BURN's own style, so <b>no new build</b> (the phone's own wheel would need one).</p></div>
 </div></section>
 
@@ -157,7 +169,7 @@ section .why{font-size:13.5px;color:#5B534F;margin:4px 0 16px;line-height:1.5}
    <div class="hero"><small>You're on · Day 17 of 30</small><b>Sweat or Treat</b></div>
    <div class="att"><div class="top"><div class="badge">9:00<small>AM</small></div><div style="flex:1"><div class="eyeb">Your class</div><div class="at">You're in the 9:00 AM class</div></div><div class="act">Change ›</div></div></div>
    <div class="btn o">Complete Day 17</div>
-   <div class="card new"><div class="eyeb">Your extra workout</div><div class="tog" style="margin-top:4px"><div><div class="at" style="font-size:12.5px">Back Fat Burn</div><div class="as">8:15 PM · 34 min</div></div><div class="act">Change time ›</div></div></div>
+   <div class="card new"><div class="eyeb">Reminder set · your extra workout</div><div class="tog" style="margin-top:4px"><div><div class="at" style="font-size:12.5px">Back Fat Burn</div><div class="as">8:15 PM · 34 min</div></div><div class="act">Change time ›</div></div></div>
   </div></div>
  <div class="notes"><h3>What changes</h3><ul>
   <li>The challenge workout card stays exactly where it is. Under it, a separate "Your extra workout" card shows the title, time, and "Change time" (which also lets her cancel). Tapping the card opens the workout.</li>
@@ -241,21 +253,21 @@ section .why{font-size:13.5px;color:#5B534F;margin:4px 0 16px;line-height:1.5}
 </div></section>
 
 <!-- 8 -->
-<section id="i8"><h2>8 · Group classes only for this month's challenge workouts</h2>
+<section id="i8"><h2>8 · Classes only for this month's challenge (reminders for any workout)</h2>
 <p class="why">She can schedule any library workout for herself, but classes only run for the current challenge. Today, a non-challenge workout shows an empty or "Finished" class grid, which looks broken.</p>
 <div class="row">
  <div class="col"><div class="pill b">Before</div><img class="shot" src="b8.jpg"></div>
  <div class="col"><div class="pill a">After · non-challenge workout</div>
   <div class="ph">
-   <div class="disp" style="font-size:20px;text-align:center">Schedule your workout</div>
-   <div class="sec">Your own time</div>
+   <div class="disp" style="font-size:20px;text-align:center">Set a reminder</div>
+   <div class="sec">Your workout</div>
    <div class="card"><div class="as">Workout</div><div class="at" style="font-size:12px">Beautiful Body Pilates Strength Training</div></div>
    <div class="wheel"><div>7<b>8</b>9</div><div>00<b>15</b>30</div><div>AM<b>PM</b></div></div>
-   <div class="btn p">Schedule for 8:15 PM</div>
-   <div class="card new" style="text-align:center;background:var(--cream)"><div class="disp" style="font-size:16px">Or join a class</div><div class="as" style="font-size:10.5px;color:#5B534F;margin-top:3px">Want to work out with others? Group classes are available for workouts in our current challenge.</div><div class="btn o" style="margin-top:8px">See challenge classes</div></div>
+   <div class="btn p">Remind me at 8:15 PM</div>
+   <div class="card new" style="text-align:center;background:var(--cream)"><div class="disp" style="font-size:16px">Schedule a class instead?</div><div class="as" style="font-size:10.5px;color:#5B534F;margin-top:3px">Want to work out with others? Group classes are available for workouts in our current challenge.</div><div class="btn o" style="margin-top:8px">See challenge classes</div></div>
   </div></div>
  <div class="notes"><h3>What changes</h3><ul>
-  <li>Personal scheduling still works for <b>any</b> workout.</li>
+  <li>"Set a reminder" works for <b>any</b> workout in the library. "Schedule a class" is only for this month's challenge workouts.</li>
   <li>The class grid only appears when the chosen workout is in the <b>active</b> month's challenge on that date. Otherwise it's replaced by a short note and "See challenge classes", which opens Book a class. Her own workout choice is kept if she comes back.</li>
   <li>Never shows class times that can't be booked. A workout that was in an older challenge doesn't get classes.</li></ul>
   <div class="copy"><b>Wording to approve</b> (from your note): "Want to work out with others? Group classes are available for workouts in our current challenge." · "See challenge classes"</div>
@@ -271,7 +283,7 @@ section .why{font-size:13.5px;color:#5B534F;margin:4px 0 16px;line-height:1.5}
   <div class="ph">
    <div class="disp" style="font-size:22px">Book a class</div>
    <div class="as new" style="font-size:10.5px;margin-top:3px;padding:2px">Pick a day, then a time. Press play at the same time as other members.</div>
-   <div class="card"><div class="tog"><div><div class="at" style="font-size:12px">My Schedule</div><div class="as">3 classes booked · 1 workout scheduled</div></div><div class="act">›</div></div></div>
+   <div class="card"><div class="tog"><div><div class="at" style="font-size:12px">My Schedule</div><div class="as">3 classes booked · 1 reminder set</div></div><div class="act">›</div></div></div>
    <div class="chips"><div class="chip on">Today</div><div class="chip">Sun 18</div><div class="chip">Mon 19</div><div class="chip">Tue 20</div></div>
    <div class="sec">Day 17 · Sat 17 Oct</div>
    <div class="card" style="border:1.5px solid var(--mauveSoft)"><div class="tog"><div><div class="at" style="font-size:12px">12 PM · Ab Shred</div><div class="as">34 min · 1 booked</div></div><span class="chip on" style="font-size:8px">You're booked</span></div></div>
@@ -288,19 +300,19 @@ section .why{font-size:13.5px;color:#5B534F;margin:4px 0 16px;line-height:1.5}
  <div class="col"><div class="pill a">After · My Schedule</div>
   <div class="ph">
    <div class="disp" style="font-size:22px">My Schedule</div>
-   <div class="grid new" style="grid-template-columns:1fr 1fr"><div class="slot" style="text-align:center"><b>3</b><i>Group classes booked</i></div><div class="slot" style="text-align:center"><b>1</b><i>Workouts scheduled</i></div></div>
-   <div class="sec">Group classes</div>
+   <div class="grid new" style="grid-template-columns:1fr 1fr"><div class="slot" style="text-align:center"><b>3</b><i>Classes booked</i></div><div class="slot" style="text-align:center"><b>1</b><i>Reminders set</i></div></div>
+   <div class="sec">Classes</div>
    <div class="li">Sun 18 · Abs &amp; Calves<i>9 AM · 1 booked</i></div><div class="li">Tue 20 · Blast Lower Belly<i>6 PM · 1 booked</i></div>
-   <div class="sec">Your own workouts</div>
+   <div class="sec">Reminders</div>
    <div class="li">Sun 18 · Barre Definition<i>7 AM</i></div>
   </div></div>
  <div class="notes" style="min-width:100%;margin-top:6px"><h3>What changes</h3><ul>
-  <li><b>Book a class</b> shows only group classes. Her own scheduled workout moves into My Schedule, labelled "Your own workouts".</li>
+  <li><b>Book a class</b> shows only classes. Her reminders move into My Schedule under "Reminders".</li>
   <li><b>Past days:</b> no "Pick a time" button. Instead, "These classes have finished" and "See upcoming classes".</li>
-  <li><b>"Your classes" becomes "My Schedule"</b>, with separate counts for group classes and her own workouts. Her own workouts no longer count as classes.</li>
+  <li><b>"Your classes" becomes "My Schedule"</b>, with separate counts: "Classes booked" and "Reminders set". A reminder never counts as a class.</li>
   <li><b>One set of words everywhere:</b> "1 booked" (coming up), "1 completed" (finished), "You're booked" (hers). This replaces "1 going", "1 person booked" and "1 took it".</li>
   <li><b>Behind the scenes:</b> booking, changing or cancelling updates Today, the calendar dots, My Schedule, the counts and reminders straight away. Double-bookings are blocked, and a failed save says so and can be retried.</li></ul>
-  <div class="copy"><b>Wording to approve</b> (from your note): "Press play at the same time as other members." (replaces "Same workout, done live with everyone") · "You can do any challenge workout on your own time. Booking a class is optional." · "These classes have finished" · "You can still do this workout any time." · "See upcoming classes" · "My Schedule" · "Group classes booked" · "Workouts scheduled" · "Your own workouts" · "1 booked / 1 completed / You're booked"</div>
+  <div class="copy"><b>Wording to approve</b> (from your note): "Press play at the same time as other members." (replaces "Same workout, done live with everyone") · "You can do any challenge workout on your own time. Booking a class is optional." · "These classes have finished" · "You can still do this workout any time." · "See upcoming classes" · "My Schedule" · "Classes booked" · "Reminders set" · "Classes" · "Reminders" · "1 booked / 1 completed / You're booked"</div>
   <p style="margin-top:8px"><span class="tag">App update only</span></p></div>
 </div></section>
 

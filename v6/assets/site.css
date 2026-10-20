@@ -653,3 +653,6 @@ section[data-sub="pay"] [data-sub-details]{display:none!important}
 
 /* Brief 19 Oct item 10: one payment button - card, Apple Pay, Google Pay and Link are chosen once, on Stripe's secure page */
 .pay-methods{margin:6px 0 0;font-size:14px;color:var(--inkSoft)}
+
+/* Brief 19 Oct item 18: features not in the app yet are labelled, never shown as live */
+.soon{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:999px;background:var(--rose);color:var(--mauveDeep);font:600 10px/1.6 var(--sans);letter-spacing:.06em;text-transform:uppercase;font-style:normal;vertical-align:middle}

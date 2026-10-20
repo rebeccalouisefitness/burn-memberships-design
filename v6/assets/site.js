@@ -336,7 +336,7 @@
     var g = !dropped && GOAL_TXT[a.goal] ? 'For ' + GOAL_TXT[a.goal] + ': ' : '';
     if (tier === 'burncomplete') {
       if (a.stage === 'pregnant' || a.stage === 'postpartum') return g + 'Rebecca’s Luna Bloom pregnancy and postpartum programs are part of BURN COMPLETE, with My BURN plan and everything in BURN+.';
-      return g + 'BURN COMPLETE is the ultimate: My BURN plan built around you, AI support chat and points for the store, plus everything in BURN+.';
+      return g + 'BURN COMPLETE is the ultimate: My BURN plan built around you, Ask BURN AI and points for the store (coming soon), plus everything in BURN+.';
     }
     if (tier === 'burnplus') return g + 'BURN+ gives you more control: build your own workouts, schedule your week and join live classes, with the Daily Read, your gratitude journal and your progress.';
     return g + 'BURN gives you 40+ programs, a new challenge every month, recipes and the community. Follow along with everyone else.';
@@ -344,7 +344,7 @@
   var QUIZ_FEATS = {
     burn: ['Monthly challenges', '40+ workout programs', 'Recipes and the Thrive library', 'Favourites and community chat', 'Daily quote and progress photos'],
     burnplus: ['Everything in BURN', 'Build your own workouts & schedule your week', 'Join live classes', 'Daily Read and gratitude journal', 'Your progress, stats and achievements'],
-    burncomplete: ['Everything in BURN+', 'My BURN plan, built for you', 'AI support chat', 'Points for the store', 'Luna Bloom pregnancy & postpartum']
+    burncomplete: ['Everything in BURN+', 'My BURN plan, built for you (coming soon)', 'Ask BURN AI (coming soon)', 'Points for the store (coming soon)', 'Luna Bloom pregnancy & postpartum']
   };
   var dlg = null, step = 0, answers = {}, quizEntry = 'unknown', resultTier = null, offerTier = null;
   function el(tag, attrs, html) { var x = document.createElement(tag); if (attrs) Object.keys(attrs).forEach(function (k) { x.setAttribute(k, attrs[k]); }); if (html != null) x.innerHTML = html; return x; }

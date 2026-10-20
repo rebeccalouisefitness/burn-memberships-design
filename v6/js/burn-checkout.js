@@ -57,7 +57,7 @@
     var errEl = function () { return document.querySelector('[data-form-err]'); };
     var say = function (m) { var e = errEl(); if (e) e.textContent = m || ''; };
     if (QS.get('cancelled') === '1') {
-      document.addEventListener('DOMContentLoaded', function () { say('Payment cancelled. Nothing was charged. You can try again whenever you like.'); });
+      document.addEventListener('DOMContentLoaded', function () { say('Payment cancelled. Nothing was charged. You can try again whenever you like.'); if (window.burnTrack) window.burnTrack('payment_cancelled', { tier: tierNow(), billing: billingNow() }); });
     }
     /* Brief item 5: save first name + email + plan BEFORE payment (server: /api/checkout-lead, Netlify Blobs,
        not the member database). Fire-and-forget: never blocks her. The lead id goes on the Stripe session. */
@@ -81,6 +81,7 @@
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { say('Please enter a valid email address.'); f.email.focus(); return; }
       if (pw.length < 8) { say('Your password needs at least 8 characters.'); f.password.focus(); return; }
       busy = true; say('');
+      if (window.burnTrack) window.burnTrack('payment_started', { tier: tierNow(), billing: billingNow() });
       var label = btn ? btn.innerHTML : '';
       if (btn) { btn.setAttribute('data-state', 'loading'); btn.disabled = true; if (btn.matches('[data-pay-submit]')) btn.textContent = 'Opening secure payment…'; }
       var tier = tierNow(), billing = billingNow();

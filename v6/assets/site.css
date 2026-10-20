@@ -656,3 +656,18 @@ section[data-sub="pay"] [data-sub-details]{display:none!important}
 
 /* Brief 19 Oct item 18: features not in the app yet are labelled, never shown as live */
 .soon{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:999px;background:var(--rose);color:var(--mauveDeep);font:600 10px/1.6 var(--sans);letter-spacing:.06em;text-transform:uppercase;font-style:normal;vertical-align:middle}
+
+/* Brief 19 Oct items 15-17: BURN COMPLETE showcase on the home page */
+.complete-show .sec-head p{max-width:560px;margin:12px auto 0}
+.cs-steps{list-style:none;counter-reset:cs;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:0;margin:28px 0 18px}
+.cs-steps li{counter-increment:cs;background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 18px 20px;display:flex;flex-direction:column;gap:6px}
+.cs-steps li::before{content:counter(cs);font:600 12px var(--sans);color:var(--mauve);letter-spacing:.08em}
+.cs-steps li b{font-family:var(--serif);font-size:22px;font-weight:600}
+.cs-steps li span{font-size:14px;color:var(--inkSoft)}
+.cs-steps li.on{border:1.5px solid var(--mauve)}
+.cs-two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.cs-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px}
+.cs-card h3{margin:0 0 8px}
+.cs-card p{margin:0;color:var(--inkSoft)}
+.cs-cta{text-align:center;margin:26px 0 0}
+@media (max-width:760px){.cs-steps{grid-template-columns:1fr 1fr}.cs-two{grid-template-columns:1fr}}

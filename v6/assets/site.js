@@ -121,6 +121,7 @@
       } catch (e) {}
     });
   }
+  window.burnTrack = function (e, p) { track(e, p); };
   function track(event, params) {
     if (QS.get('preview')) return; /* journey previews never track */
     params = params || {};
@@ -326,7 +327,8 @@
   var GOAL_TXT = { stronger: 'getting stronger', tone: 'toning and sculpting', weight: 'losing weight', energy: 'feeling more energised', habit: 'building a habit that sticks' };
   function quizResult(a) {
     if (a.stage === 'pregnant' || a.stage === 'postpartum' || a.guide === 'personal') return 'burncomplete';
-    if (a.guide === 'schedule' || a.daily === 'yes' || a.stats === 'yes') return 'burnplus';
+    /* Brief item 29: map fairly - one soft 'yes' is not enough to move her up a tier; wanting control, or BOTH daily mindset and stats, is. */
+    if (a.guide === 'schedule' || (a.daily === 'yes' && a.stats === 'yes')) return 'burnplus';
     return 'burn';
   }
   window.burnQuizResult = quizResult; // exposed for testing all paths
@@ -471,6 +473,20 @@
     var stepChoose = document.querySelector('[data-join-step=choose]'), stepPay = document.querySelector('[data-join-step=pay]');
     var indC = document.querySelector('[data-step-ind=choose]'), indP = document.querySelector('[data-step-ind=pay]');
     var indD = document.querySelector('[data-step-ind=details]');
+    /* Brief item 35: keep what she typed (first name, email, opt-in; never the password) through Back, refresh
+       and a cancelled/failed payment, for this visit only. */
+    var FKEY = 'burn_v5_details';
+    try {
+      var saved = JSON.parse(sessionStorage.getItem(FKEY) || '{}'), fe = form.elements;
+      if (saved.first && !fe.name.value) fe.name.value = saved.first;
+      if (saved.email && !fe.email.value) fe.email.value = saved.email;
+      if (fe.marketing_opt_in && saved.optin) fe.marketing_opt_in.checked = true;
+    } catch (e) {}
+    form.addEventListener('input', function () {
+      var fe = form.elements;
+      try { sessionStorage.setItem(FKEY, JSON.stringify({ first: fe.name.value, email: fe.email.value, optin: !!(fe.marketing_opt_in && fe.marketing_opt_in.checked) })); } catch (e) {}
+    });
+    form.addEventListener('change', function () { form.dispatchEvent(new Event('input')); });
     var joinSrc = QS.get('src') || 'direct', paying = false;
     var setUrl = function (tier, push) {
       var q = new URLSearchParams(location.search);
@@ -589,7 +605,7 @@
     form.addEventListener('submit', function (e) { e.preventDefault(); pay('card', document.querySelector('[data-pay-submit]')); });
     document.querySelectorAll('[data-wallet]').forEach(function (w) { w.addEventListener('click', function () { pay(w.getAttribute('data-wallet'), w); }); });
     /* entry: a tier in the URL (tier button, quiz result) = straight to checkout; no tier (generic Join Now) = chooser */
-    if (PRICES[pageTierRaw]) showCheckout(pageTierRaw, 'tier_button', false, QS.get('step') || (QS.get('preview') === 'pay' ? 'pay' : ''));
+    if (PRICES[pageTierRaw]) showCheckout(pageTierRaw, 'tier_button', false, QS.get('step') || (QS.get('preview') === 'pay' || QS.get('cancelled') === '1' ? 'pay' : ''));
     else showChooser(joinSrc, false);
   }
 
@@ -619,16 +635,32 @@
     var sid = QS.get('session_id');
     var DONE = 'burn_v5_reg_done', done = [];
     try { done = JSON.parse(localStorage.getItem(DONE) || '[]'); } catch (e) {}
-    if (sid && done.indexOf(sid) > -1) {
-      try { console.log('[BURN track] registration_complete skipped: already recorded for session ' + sid); } catch (e) {}
-    } else {
-      track('registration_complete', { tier: pageTierKey, billing: billing, value: PRICES[pageTierKey][billing], currency: 'USD', event_id: sid || newEventId('demo_checkout') });
-      if (sid) { done.push(sid); try { localStorage.setItem(DONE, JSON.stringify(done.slice(-20))); } catch (e) {} }
-    }
+    var recordPaid = function () {
+      if (sid && done.indexOf(sid) > -1) {
+        try { console.log('[BURN track] registration_complete skipped: already recorded for session ' + sid); } catch (e) {}
+      } else {
+        track('registration_complete', { tier: pageTierKey, billing: billing, value: PRICES[pageTierKey][billing], currency: 'USD', event_id: sid || newEventId('demo_checkout') });
+        if (sid) { done.push(sid); try { localStorage.setItem(DONE, JSON.stringify(done.slice(-20))); } catch (e) {} }
+      }
+    };
+    /* Brief item 30: with real checkout on, count the purchase only once Stripe says it was paid; count failures too. */
+    var rootEl = document.documentElement;
+    if (rootEl.getAttribute('data-burn-checkout') === 'stripe') {
+      var seen = false;
+      var onState = function () {
+        var st = rootEl.getAttribute('data-checkout-state');
+        if (seen || !st || st === 'confirming') return;
+        seen = true;
+        if (st === 'ready' || st === 'pending') recordPaid();
+        else track('payment_failed', { tier: pageTierKey, billing: billing, state: st });
+      };
+      new MutationObserver(onState).observe(rootEl, { attributes: true, attributeFilter: ['data-checkout-state'] });
+      onState();
+    } else recordPaid();
   }
 
   /* ---------------- debug counters ---------------- */
-  var EVENTS = ['join_now_click', 'pricing_view', 'plan_chooser_view', 'checkout_view', 'quiz_start', 'quiz_complete', 'quiz_result_join_click', 'registration_complete'];
+  var EVENTS = ['join_now_click', 'pricing_view', 'plan_chooser_view', 'checkout_view', 'quiz_start', 'quiz_complete', 'quiz_result_join_click', 'details_view', 'details_submitted', 'payment_view', 'payment_started', 'payment_cancelled', 'payment_failed', 'registration_complete'];
   function readLog() { try { return JSON.parse(localStorage.getItem(LS) || '{"counts":{},"log":[]}'); } catch (e) { return { counts: {}, log: [] }; } }
   var counter = document.querySelector('[data-debug]');
   if (counter) {

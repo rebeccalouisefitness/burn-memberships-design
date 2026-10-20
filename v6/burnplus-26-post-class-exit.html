@@ -48,12 +48,35 @@ h1{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:32px;text-al
 .notes h3{font-family:"Cormorant Garamond",serif;font-size:20px;margin-bottom:6px}
 .notes ul{margin:0 0 12px 18px}.notes li{margin-bottom:5px}
 .q{background:#FBF6EE;border:1px solid #EADFCC}
+</style><style>
+.ov{position:absolute;inset:44px 0 0 0;background:var(--bg);padding:10px 20px 20px;display:flex;flex-direction:column}
+.x{width:34px;height:34px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:15px;color:#5B534F}
+.ring{width:96px;height:96px;border-radius:50%;border:3px solid var(--mauve);display:flex;align-items:center;justify-content:center;margin:6px auto 0}
+.ring svg{width:40px;height:40px;stroke:var(--mauve);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.eye{font-size:10.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--mauve);text-align:center;margin-top:14px}
+.h1{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:34px;line-height:1.1;text-align:center;margin-top:6px}
+.sub{font-size:13px;color:var(--taupe);text-align:center;margin-top:4px;line-height:1.45}
+.sc{display:flex;background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 0;margin-top:14px}
+.sc div{flex:1;text-align:center}.sc b{display:block;font-family:"Cormorant Garamond",serif;font-size:24px}.sc span{font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--taupe)}
+.cards{display:flex;gap:10px;justify-content:center;margin-top:14px}
+.story{width:92px;height:164px;border-radius:12px;background:linear-gradient(170deg,#B69AA3,#7E5A6A);color:#fff;padding:10px 9px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 6px 16px rgba(60,40,50,.18)}
+.post{width:131px;height:164px;border-radius:12px;background:#F2EDE7;color:var(--ink);padding:10px;display:flex;flex-direction:column;justify-content:space-between;border:1px solid var(--line)}
+.story small,.post small{font-size:6.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;opacity:.9}
+.story b,.post b{font-family:"Cormorant Garamond",serif;font-size:17px;line-height:1.05}
+.story i,.post i{font-style:normal;font-size:7.5px;opacity:.85;line-height:1.4}
+.btn2{display:flex;align-items:center;justify-content:center;gap:8px;border-radius:14px;padding:14px;font-size:14px;font-weight:600;margin-top:10px}
+.btn2.pri{background:var(--mauveDeep);color:#fff}.btn2.out{border:1px solid var(--line);background:#fff;color:var(--ink)}
+.opts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:1080px;margin:26px auto 0}
+.opt{background:#fff;border-radius:16px;padding:16px;text-align:center}
+.opt small{font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--mauve)}
+.opt b{display:block;font-family:"Cormorant Garamond",serif;font-size:30px;margin:4px 0}
+.opt p{font-size:12.5px;color:#5B534F}
+.yel{background:#FBF6EE;border:1px solid #EADFCC}
 </style></head><body>
-<h1>BURN+ #26 · The post-class room needs a way out</h1>
-<p class="lead">After the class ends, the room screen has no back button and no tabs, so members get stuck. The fix keeps everything on the screen exactly as it is and adds only two things: the same round back button the class screens already use, and one <b>Done</b> button that is always visible at the bottom. Green outlines mark the only changes.</p>
-
+<h1>BURN+ #26 · Class finished: celebrate, share, then back to BURN</h1>
+<p class="lead">Your words: "it should have a pop-up to say, congratulations, you did that class… with a sharing graphic… once they've shared it, they come back and… there's either a back button or back to burn… I don't like done though." So: a celebration pop-up the moment the class ends, with the share graphic, then a clear way back. Green outlines mark what's new.</p>
 <div class="wrap">
- <div class="col"><div class="pill b">Before · today</div>
+<div class="col"><div class="pill b">Before · today</div>
   <div class="phone">
    <div class="sb"><span>9:11</span><span>●●● ◔</span></div>
    <div class="trap">No back button · no tabs · no way out</div>
@@ -77,13 +100,31 @@ days done</span></div></div>
   </div>
  </div>
 
- <div class="col"><div class="pill a">After · proposed</div>
+ <div class="col"><div class="pill a">After · 1. the moment it ends</div>
+  <div class="phone">
+   <div class="sb"><span>9:11</span><span>●●● ◔</span></div>
+   <div class="ov">
+    <div class="x">✕</div>
+    <div class="ring"><svg viewBox="0 0 24 24"><path d="M5 12.5l4 4 10-10"/></svg></div>
+    <div class="eye">Class complete</div>
+    <div class="h1 new" style="display:inline-block;align-self:center;padding:0 8px">Awesome job!</div>
+    <div class="sub">You did the 9:00 AM class, Abs &amp; Calves, with 3 others.</div>
+    <div class="sc"><div><b>11</b><span>Minutes</span></div><div><b>18</b><span>Of 30 days</span></div><div><b>2</b><span>Day streak</span></div></div>
+    <div class="cards new">
+     <div class="story"><small>Class complete</small><div><b>Abs &amp; Calves</b><br><i>9:00 AM class · 11 min<br>Day 18 of 30 · Sweat or Treat</i></div><small>BURN by Rebecca Louise</small></div>
+     <div class="post"><small>Class complete</small><div><b>Abs &amp; Calves</b><br><i>9:00 AM class · 11 min · Day 18 of 30</i></div><small>BURN by Rebecca Louise</small></div>
+    </div>
+    <div style="margin-top:auto"><div class="btn2 pri">⇪&nbsp; Share your class</div><div class="btn2 out">Back to BURN</div></div>
+   </div>
+  </div>
+ </div>
+<div class="col"><div class="pill a">After · 2. back in the room</div>
   <div class="phone">
    <div class="sb"><span>9:11</span><span>●●● ◔</span></div>
    <div class="scroll">
     <div class="toprow">
      <div class="ri new" title="Back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></div>
-     <div class="tag">Class finished</div>
+     <div class="tag">Class complete</div>
      <div style="width:38px"></div>
     </div>
     <div class="stats"><div class="stat"><b>1</b><span>Days
@@ -101,34 +142,35 @@ days done</span></div></div>
    <div class="dock">
     <div class="emo"><span class="hot">❤️</span><span>🔥</span><span>👏</span><span>💪</span><span>🙌</span><span>😅</span></div>
     <div class="note">Tap to cheer. Only Rebecca posts words.</div>
-    <div class="btn primary new" style="margin-top:12px">Done</div>
+    <div class="btn primary new" style="margin-top:12px">Back to BURN</div>
    </div>
   </div>
  </div>
 
- <div class="col"><div class="pill a">What changes</div>
+ <div class="col"><div class="pill a">How it works</div>
   <div class="notes">
-   <h3>Added</h3>
+   <h3>1 · The moment the class ends</h3>
    <ul>
-    <li><b>Back button</b> (top left): the same round button the waiting room already has. It goes back to wherever she came from, usually Today.</li>
-    <li><b>Done</b> (bottom): always visible under the cheers, so she can leave without scrolling. It also goes back to Today.</li>
-    <li>The phone's swipe-back and Android's back button do the same thing.</li>
+    <li>Her finish and attendance are <b>saved first</b>, then the pop-up opens. Closing it never undoes anything.</li>
+    <li>It shows only when she actually did the class (90%, your rule). If she left early she gets the #27 "Finish it" path instead, never a celebration.</li>
+    <li>It reuses the parts of the "Workout complete" screen you already have (tick ring, three numbers, the Story and Post share cards and the share sheet), with "Class complete" and the class time on them.</li>
+    <li><b>Share your class</b> opens the existing share sheet (Instagram Stories, Facebook, save image…). <b>Back to BURN</b> or ✕ skips it.</li>
    </ul>
-   <h3>Kept exactly as is</h3>
+   <h3>2 · After sharing (or skipping)</h3>
    <ul>
-    <li>Stats, "The room's still open", the cheers, "Book tomorrow", the emoji bar.</li>
-    <li>Leaving <b>doesn't undo anything</b>: her completed workout, attendance and cheers are all saved first. She can go back into the room from Today while it's still open.</li>
+    <li>She's back in the room while it's still open, with the round back button top left and a <b>Back to BURN</b> button that's always visible. No "Done" anywhere.</li>
+    <li>Both take her to Today, where the day is already ticked (#27, live in Preview 204).</li>
    </ul>
-   <h3>Not in this change</h3>
-   <ul><li>The celebration (#25), the recap and the completion tick on Today (#27), and the copy (#24/#25). Each comes later as its own before/after.</li></ul>
   </div>
-  <div class="notes q">
-   <h3>Your OK needed on</h3>
-   <ul style="margin-bottom:0">
-    <li>The button word: <b>Done</b> (already used in the app), or <b>Back to BURN</b> (from your notes)?</li>
-    <li>The small "Class finished" label at the top. Keep it, or leave the top bare apart from the back button?</li>
-   </ul>
+  <div class="notes yel">
+   <h3>Your pick</h3>
+   <ul style="margin-bottom:0"><li>The headline: one of the three options below, or your own words.</li><li>The line under it ("You did the 9:00 AM class… with 3 others"). It only mentions others when someone else really was there.</li></ul>
   </div>
  </div>
+</div>
+<div class="opts">
+ <div class="opt"><small>Class complete</small><b>Awesome job!</b><p>Short and happy, the words you used.</p></div>
+ <div class="opt"><small>Class complete</small><b>You did that!</b><p>A bit more personal and proud.</p></div>
+ <div class="opt"><small>Class complete</small><b>You showed up!</b><p>Celebrates turning up.</p></div>
 </div>
 </body></html>

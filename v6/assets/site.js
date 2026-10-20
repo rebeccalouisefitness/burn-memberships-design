@@ -157,7 +157,7 @@
     document.querySelectorAll('[data-amt]').forEach(function (el) { var t = el.getAttribute('data-amt'); if (PRICES[t]) el.textContent = money(shownAmt(t, billing)); });
     document.querySelectorAll('[data-per]').forEach(function (el) { el.textContent = perTxt(billing); });
     document.querySelectorAll('[data-pricetxt]').forEach(function (el) { var t = el.getAttribute('data-pricetxt'); if (PRICES[t]) el.textContent = priceTxt(t, billing); });
-    document.querySelectorAll('[data-billedtxt]').forEach(function (el) { var t = el.getAttribute('data-billedtxt'); if (PRICES[t]) el.textContent = billing === 'annual' ? 'billed ' + money(PRICES[t].annual) + ' yearly' : ''; });
+    document.querySelectorAll('[data-billedtxt]').forEach(function (el) { var t = el.getAttribute('data-billedtxt'); if (PRICES[t]) el.textContent = billing === 'annual' ? 'One payment a year' : ''; });
     document.querySelectorAll('[data-save]').forEach(function (el) {
       var t = el.getAttribute('data-save'); el.textContent = 'Save ' + PRICES[t].save + '%'; el.hidden = billing !== 'annual';
     });

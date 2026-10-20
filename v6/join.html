@@ -58,22 +58,13 @@
       <div class="fld"><label for="ck-pw"><span>Create a password</span></label><span class="pw-wrap"><input id="ck-pw" name="password" type="password" autocomplete="new-password" minlength="8" required aria-describedby="ck-pw-help"><button type="button" class="pw-toggle" data-pw-toggle aria-controls="ck-pw" aria-pressed="false">Show</button></span><small id="ck-pw-help">At least 8 characters. You&rsquo;ll use this to sign in to the new BURN app. Heads up: this is a brand-new app, so your old BURN login won&rsquo;t work here.</small></div>
       <div class="pay-sec" id="pay" aria-label="Payment" data-mock-payment>
         <div class="pay-h">Payment <span class="card-brands" aria-hidden="true"><i>VISA</i><i>MC</i><i>AMEX</i><i>DISC</i></span></div>
-        <div class="xpay">
-          <button type="button" class="xbtn apple" data-wallet="apple_pay" aria-label="Pay with Apple Pay"><svg width="15" height="18" viewBox="0 0 17 20" fill="currentColor" aria-hidden="true"><path d="M14.1 10.6c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.7-2-1.6-.2-3.1.9-3.9.9-.8 0-2-.9-3.4-.9-1.7 0-3.3 1-4.2 2.6-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.2 2.6 1.3-.1 1.8-.8 3.3-.8 1.6 0 2 .8 3.4.8 1.4 0 2.3-1.3 3.1-2.5 1-1.4 1.4-2.8 1.4-2.9 0 0-2.7-1-2.7-4.1zM11.6 3c.7-.8 1.2-2 1-3.1-1 0-2.2.7-2.9 1.5-.6.7-1.2 1.9-1 3 1.1.1 2.2-.6 2.9-1.4z"/></svg>Pay</button>
-          <button type="button" class="xbtn gpay" data-wallet="google_pay" aria-label="Pay with Google Pay"><svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.4h6.5a5.6 5.6 0 0 1-2.4 3.6v3h3.9c2.2-2.1 3.5-5.1 3.5-8.7z"/><path fill="#34A853" d="M12 24c3.2 0 6-1.1 8-2.9l-3.9-3c-1.1.7-2.5 1.2-4.1 1.2-3.1 0-5.8-2.1-6.7-5H1.3v3.1A12 12 0 0 0 12 24z"/><path fill="#FBBC05" d="M5.3 14.3a7.2 7.2 0 0 1 0-4.6V6.6h-4a12 12 0 0 0 0 10.8l4-3.1z"/><path fill="#EA4335" d="M12 4.8c1.8 0 3.3.6 4.6 1.8l3.4-3.4A12 12 0 0 0 1.3 6.6l4 3.1c.9-2.9 3.6-4.9 6.7-4.9z"/></svg>Pay</button>
-          <button type="button" class="xbtn lnk" data-wallet="link" aria-label="Pay with Link">link</button>
-        </div>
-        <div class="or-line">or pay by card</div>
-        <div class="card-el" aria-label="Card details">
-          <input name="card" inputmode="numeric" autocomplete="cc-number" aria-label="Card number" value="4242 4242 4242 4242">
-          <div class="r2"><input name="exp" inputmode="numeric" autocomplete="cc-exp" aria-label="Expiry date" value="12 / 28"><input name="cvc" inputmode="numeric" autocomplete="cc-csc" aria-label="Security code" value="123"><input name="zip" inputmode="numeric" autocomplete="postal-code" aria-label="ZIP code" value="10001"></div>
-        </div>
+        <p class="pay-methods">Pay by card, Apple Pay, Google Pay or Link on Stripe&rsquo;s secure page next.</p>
       </div>
       <div class="pay-card" style="margin-bottom:14px"><div class="row"><span class="muted">Due today</span><b data-ty-due>$17.99</b></div><div class="row"><span class="muted">Renews</span><span data-ty-then>$17.99 every month</span></div><p class="tax-note">Any sales tax is added on the secure payment page.</p></div>
       <p class="form-err" role="alert" data-form-err></p>
       <button class="btn block" type="submit" data-pay-submit>Pay <span data-ty-due>$17.99</span> &amp; join</button>
       <p class="pay-fine" data-mock-payment>Secure payment by Stripe. Cancel any time. </p>
-      <p class="pay-fine" data-live-only hidden>Next: Stripe&rsquo;s secure payment page (card, Apple Pay, Google Pay or Link). Cancel any time.</p>
+      <p class="pay-fine" data-live-only hidden>Secure payment by Stripe. Cancel any time.</p>
       <p class="pay-fine" data-test-only hidden style="opacity:.7">Test mode &middot; no real charges</p>
     </form>
   </section>

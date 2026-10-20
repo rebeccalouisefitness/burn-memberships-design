@@ -447,7 +447,12 @@
     document.querySelectorAll('[data-ty-price]').forEach(function (x) { x.textContent = priceTxt(pageTierKey, billing); });
     document.querySelectorAll('[data-ty-billed]').forEach(function (x) { x.textContent = billedTxt(pageTierKey, billing); });
     document.querySelectorAll('[data-ty-due]').forEach(function (x) { x.textContent = money(P[billing]); });
-    document.querySelectorAll('[data-ty-then]').forEach(function (x) { x.textContent = billing === 'annual' ? money(P.annual) + ' every year' : money(P.monthly) + ' every month'; });
+    /* Brief item 8: renewal amount AND date (a subscription started today renews on the same day next month / year) */
+    document.querySelectorAll('[data-ty-then]').forEach(function (x) {
+      var d = new Date(); if (billing === 'annual') d.setFullYear(d.getFullYear() + 1); else d.setMonth(d.getMonth() + 1);
+      var when = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      x.textContent = billing === 'annual' ? money(P.annual) + ' on ' + when + ', then every year' : money(P.monthly) + ' on ' + when + ', then every month';
+    });
     document.querySelectorAll('[data-ty-paidnote]').forEach(function (x) { x.textContent = billing === 'annual' ? 'Billed yearly' : 'Billed monthly'; });
     document.querySelectorAll('[data-ty-bill-m]').forEach(function (x) { x.textContent = priceTxt(pageTierKey, 'monthly'); });
     document.querySelectorAll('[data-ty-bill-a]').forEach(function (x) { x.textContent = priceTxt(pageTierKey, 'annual') + '\nsave ' + P.save + '%'; });

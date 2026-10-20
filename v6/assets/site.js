@@ -157,7 +157,7 @@
     document.querySelectorAll('[data-amt]').forEach(function (el) { var t = el.getAttribute('data-amt'); if (PRICES[t]) el.textContent = money(shownAmt(t, billing)); });
     document.querySelectorAll('[data-per]').forEach(function (el) { el.textContent = perTxt(billing); });
     document.querySelectorAll('[data-pricetxt]').forEach(function (el) { var t = el.getAttribute('data-pricetxt'); if (PRICES[t]) el.textContent = priceTxt(t, billing); });
-    document.querySelectorAll('[data-billedtxt]').forEach(function (el) { var t = el.getAttribute('data-billedtxt'); if (PRICES[t]) el.textContent = billing === 'annual' ? 'billed ' + money(PRICES[t].annual) + ' yearly' : ''; });
+    document.querySelectorAll('[data-billedtxt]').forEach(function (el) { var t = el.getAttribute('data-billedtxt'); if (PRICES[t]) el.textContent = billing === 'annual' ? 'One payment a year' : ''; });
     document.querySelectorAll('[data-save]').forEach(function (el) {
       var t = el.getAttribute('data-save'); el.textContent = 'Save ' + PRICES[t].save + '%'; el.hidden = billing !== 'annual';
     });
@@ -187,11 +187,18 @@
   var PREVIEW_Q = QS.get('preview') ? '&preview=1' : '';
   var JOIN_PAGE = 'join.html';
   /* tier button -> straight to checkout for THAT tier + the billing currently selected */
+  /* Brief 19 Oct item 2: the membership she picked is remembered for this visit (like billing),
+     so a later Join Now takes her straight back to it instead of asking again. */
+  var TKEY = 'burn_v5_tier';
+  var rememberTier = function (t) { if (PRICES[t]) try { sessionStorage.setItem(TKEY, t); } catch (e) {} };
+  var savedTier = function () { try { var t = sessionStorage.getItem(TKEY); return PRICES[t] ? t : ''; } catch (e) { return ''; } };
   function joinUrl(tier, src) {
+    rememberTier(tier);
     return JOIN_PAGE + '?tier=' + encodeURIComponent(tier) + '&billing=' + encodeURIComponent(billing) + (src ? '&src=' + encodeURIComponent(src) : '') + PREVIEW_Q;
   }
   /* generic Join Now -> the three-option chooser (tiers + monthly/annual), then checkout */
   function chooserUrl(src) {
+    if (savedTier()) return joinUrl(savedTier(), src);
     return JOIN_PAGE + '?billing=' + encodeURIComponent(billing) + (src ? '&src=' + encodeURIComponent(src) : '') + PREVIEW_Q;
   }
 
@@ -469,13 +476,18 @@
     /* one view per screen shown */
     var showChooser = function (source, push) {
       stepChoose.hidden = false; stepPay.hidden = true;
+      var cur = savedTier();
+      document.querySelectorAll('[data-choose]').forEach(function (b) {
+        var on = b.getAttribute('data-choose') === cur;
+        b.classList.toggle('cur', on); if (on) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current');
+      });
       indC.className = 'on'; indP.className = '';
       if (push !== false) setUrl('', push === true);
       track('plan_chooser_view', { source: source || joinSrc, billing: billing });
       window.scrollTo(0, 0);
     };
     var showCheckout = function (tier, source, push) {
-      pageTierKey = TIER_OK(tier); paintTier();
+      pageTierKey = TIER_OK(tier); paintTier(); rememberTier(pageTierKey);
       stepChoose.hidden = true; stepPay.hidden = false;
       indC.className = 'done'; indP.className = 'on';
       if (push !== false) setUrl(pageTierKey, push === true);

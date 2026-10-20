@@ -609,3 +609,7 @@ html[data-burn-checkout="stripe"] .xpay{margin-bottom:16px}
 .burst br{display:none}
 .billing button .sv{position:absolute!important;top:-14px!important;right:-8px!important;margin:0!important}
 .billing{margin-top:24px!important}
+
+/* Brief item 2: the membership she already picked, marked in the chooser */
+.ch-opt.cur{border:2px solid var(--mauve);box-shadow:0 0 0 4px rgba(0,0,0,.03)}
+.ch-opt.cur .go::before{content:'\2713  Your pick \00B7  '}

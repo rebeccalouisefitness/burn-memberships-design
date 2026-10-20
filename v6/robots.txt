@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /thank-you
+Disallow: /upgrade
+Disallow: /upgrade-done
+Disallow: /journey
+Disallow: /app-screens
+Disallow: /membership-designs
+Disallow: /coming-soon
+
+Sitemap: https://burnrebeccalouise.com/sitemap.xml

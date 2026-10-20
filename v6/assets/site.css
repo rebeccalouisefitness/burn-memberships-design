@@ -623,3 +623,12 @@ body[data-page="join"] header.site .mnav{display:none!important}
 .join-back{display:block;margin:0 0 14px;font-size:14px;color:var(--inkSoft)}
 .join-help{margin:34px 0 0;font-size:13px;color:var(--inkSoft);text-align:center}
 .join-help a{color:inherit;text-decoration:underline}
+/* 20 Oct (Rebecca): the Save badge overlapped the Monthly/Annual pill. It now sits clear ABOVE the pill,
+   centred over "Annual", with a small gap - same solid pill style. */
+.billing{margin-top:40px!important}
+.billing button[data-bill="annual"] .sv{top:auto!important;bottom:calc(100% + 10px)!important;left:50%!important;right:auto!important;transform:translateX(-50%)!important}
+
+/* 20 Oct (Rebecca): the Save badge overlapped the Monthly/Annual pill. It now sits clear ABOVE the pill,
+   centred over "Annual", with a small gap - same solid pill style. */
+.billing{margin-top:40px!important}
+.billing button[data-bill="annual"] .sv{top:auto!important;bottom:calc(100% + 10px)!important;left:50%!important;right:auto!important;transform:translateX(-50%)!important}

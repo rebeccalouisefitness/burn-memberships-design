@@ -13,7 +13,10 @@
   var h = location.hostname.replace(/^www\./, '');
   /* Journey preview frames (?preview=…) always show the design exactly as it will look live, with no test-mode line. */
   if (/[?&]preview=/.test(location.search)) h = '';
-  window.BURN_CHECKOUT_CONFIG = h === 'burnrebeccalouise.com'
+  /* Brief item 11: a Netlify DRAFT of this site can run the real Stripe TEST checkout with ?checkout=test.
+     Draft servers never create accounts (Stripe test objects only), so nothing reaches the member database. */
+  var draftTest = /^[0-9a-f]{24}--burn-rebecca-louise\.netlify\.app$/.test(h) && /[?&]checkout=test\b/.test(location.search);
+  window.BURN_CHECKOUT_CONFIG = h === 'burnrebeccalouise.com' || draftTest
     ? { mode: 'test', functionsUrl: '/api' }
     : { mode: 'off', functionsUrl: '' };
 })();

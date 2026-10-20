@@ -671,3 +671,9 @@ section[data-sub="pay"] [data-sub-details]{display:none!important}
 .cs-card p{margin:0;color:var(--inkSoft)}
 .cs-cta{text-align:center;margin:26px 0 0}
 @media (max-width:760px){.cs-steps{grid-template-columns:1fr 1fr}.cs-two{grid-template-columns:1fr}}
+
+/* Brief 19 Oct item 11: card / Apple Pay / Google Pay on the page (Stripe Elements, mounted only when real checkout is on) */
+.xpay-el:empty,.pay-el:empty{display:none}
+.xpay-el{margin:10px 0 12px}
+.pay-el{margin:8px 0 4px}
+html[data-pay-inline="on"] .pay-methods{display:none}

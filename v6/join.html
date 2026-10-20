@@ -24,7 +24,7 @@
 </header>
 <main><div class="centre" style="max-width:560px">
   <button type="button" class="textbtn join-back" data-join-back>&larr; Back</button>
-  <div class="steps-bar" aria-label="Join steps"><span data-step-ind="choose">1 &middot; Membership</span><span data-step-ind="pay">2 &middot; Checkout</span></div>
+  <div class="steps-bar" aria-label="Join steps"><span data-step-ind="choose">1 &middot; Membership</span><span data-step-ind="details">2 &middot; Your details</span><span data-step-ind="pay">3 &middot; Checkout</span></div>
   <section data-join-step="choose" hidden style="padding:0">
     <div class="kick">Join BURN</div>
     <h1 style="margin:10px 0 0;font-size:clamp(36px,5.4vw,54px)">Choose your membership</h1>
@@ -37,15 +37,22 @@
     </div>
     <p style="font-size:14px"><a class="link" href="membership.html#compare">Compare everything that&rsquo;s included</a> &middot; <button type="button" class="textbtn" data-quiz-open="join_chooser">Take the 30-second quiz</button></p>
   </section>
-  <section data-join-step="pay" hidden style="padding:0">
-    <div class="kick">Secure checkout</div>
-    <h1 style="margin:10px 0 0;font-size:clamp(36px,5.4vw,54px)">Join <span data-ty-tier>BURN+</span></h1>
-    <p class="lede" style="margin:12px auto 24px;max-width:460px">Create your account and you&rsquo;re in.</p>
+  <section data-join-step="pay" data-sub="details" hidden style="padding:0">
+    <div class="kick" data-only="details">Join <span data-ty-tier>BURN+</span></div>
+    <h1 data-only="details" style="margin:10px 0 0;font-size:clamp(36px,5.4vw,54px)">Let&rsquo;s Get You Started!</h1>
+    <p data-only="details" class="lede" style="margin:12px auto 24px;max-width:460px">Just your first name and email, then we&rsquo;ll take you to checkout.</p>
+    <div class="kick" data-only="pay">Secure checkout</div>
+    <h1 data-only="pay" style="margin:10px 0 0;font-size:clamp(36px,5.4vw,54px)">Join <span data-ty-tier>BURN+</span></h1>
+    <p data-only="pay" class="lede" style="margin:12px auto 24px;max-width:460px">Create your account and you&rsquo;re in.</p>
     <form class="box" data-checkout-form novalidate style="text-align:left">
       <div class="tier-sum"><div><div class="muted" style="font-size:12.5px">Your membership</div><div class="nm" data-ty-tier>BURN+</div></div><div style="text-align:right"><div style="font-weight:600" data-ty-price>$17.99 / month</div><div class="muted" style="font-size:12.5px" data-ty-billed>Billed monthly</div><a class="link" href="join.html" data-change-plan>Change plan</a></div></div>
       <div class="bill-switch" role="group" aria-label="Billing period"><button type="button" data-bill="monthly" aria-pressed="true" class="on">Monthly<small data-ty-bill-m>$17.99 / month</small></button><button type="button" data-bill="annual" aria-pressed="false"><span class="burst" data-burst aria-hidden="true">Save 22%</span>Annual<small data-ty-bill-a>$167.99/year &middot; save 22%</small></button></div>
-      <label class="fld"><span>Name</span><input name="name" autocomplete="name" autocapitalize="words" required></label>
-      <label class="fld"><span>Email</span><input name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required><small>You&rsquo;ll sign in to the BURN app with this email.</small></label>
+      <div data-sub-details>
+      <label class="fld"><span>First name</span><input name="name" autocomplete="given-name" autocapitalize="words" required></label>
+      <label class="fld"><span>Email address</span><input name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required><small>You&rsquo;ll sign in to the BURN app with this email.</small></label>
+      <button type="button" class="btn block" data-details-continue>Continue to Checkout</button>
+      </div>
+      <p class="who" data-only="pay"><span data-who></span> <button type="button" class="textbtn" data-edit-details>Edit</button></p>
       <div class="fld"><label for="ck-pw"><span>Create a password</span></label><span class="pw-wrap"><input id="ck-pw" name="password" type="password" autocomplete="new-password" minlength="8" required aria-describedby="ck-pw-help"><button type="button" class="pw-toggle" data-pw-toggle aria-controls="ck-pw" aria-pressed="false">Show</button></span><small id="ck-pw-help">At least 8 characters. You&rsquo;ll use this to sign in to the new BURN app. Heads up: this is a brand-new app, so your old BURN login won&rsquo;t work here.</small></div>
       <div class="pay-sec" id="pay" aria-label="Payment" data-mock-payment>
         <div class="pay-h">Payment <span class="card-brands" aria-hidden="true"><i>VISA</i><i>MC</i><i>AMEX</i><i>DISC</i></span></div>

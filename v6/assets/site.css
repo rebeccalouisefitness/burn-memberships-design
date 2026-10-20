@@ -632,3 +632,11 @@ body[data-page="join"] header.site .mnav{display:none!important}
    centred over "Annual", with a small gap - same solid pill style. */
 .billing{margin-top:40px!important}
 .billing button[data-bill="annual"] .sv{top:auto!important;bottom:calc(100% + 10px)!important;left:50%!important;right:auto!important;transform:translateX(-50%)!important}
+
+/* Brief 19 Oct item 4: first name + email first ("Let's Get You Started!"), then checkout - same form, two steps */
+section[data-sub="details"] [data-only="pay"],section[data-sub="pay"] [data-only="details"]{display:none!important}
+section[data-sub="details"] form[data-checkout-form] > *:not(.tier-sum):not([data-sub-details]):not(.form-err){display:none!important}
+section[data-sub="pay"] [data-sub-details]{display:none!important}
+[data-sub-details] .btn{margin-top:6px}
+.who{margin:0 0 14px;font-size:14px;color:var(--inkSoft)}
+.who .textbtn{margin-left:6px}

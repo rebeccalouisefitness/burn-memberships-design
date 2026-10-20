@@ -465,10 +465,11 @@
     var errEl = document.querySelector('[data-form-err]');
     var stepChoose = document.querySelector('[data-join-step=choose]'), stepPay = document.querySelector('[data-join-step=pay]');
     var indC = document.querySelector('[data-step-ind=choose]'), indP = document.querySelector('[data-step-ind=pay]');
+    var indD = document.querySelector('[data-step-ind=details]');
     var joinSrc = QS.get('src') || 'direct', paying = false;
     var setUrl = function (tier, push) {
       var q = new URLSearchParams(location.search);
-      if (tier) q.set('tier', tier); else q.delete('tier');
+      if (tier) q.set('tier', tier); else { q.delete('tier'); q.delete('step'); }
       q.set('billing', billing);
       var u = location.pathname + '?' + q.toString();
       try { push ? history.pushState({ tier: tier || '' }, '', u) : history.replaceState({ tier: tier || '' }, '', u); } catch (e) {}
@@ -481,18 +482,40 @@
         var on = b.getAttribute('data-choose') === cur;
         b.classList.toggle('cur', on); if (on) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current');
       });
-      indC.className = 'on'; indP.className = '';
+      indC.className = 'on'; indP.className = ''; if (indD) indD.className = '';
       if (push !== false) setUrl('', push === true);
       track('plan_chooser_view', { source: source || joinSrc, billing: billing });
       window.scrollTo(0, 0);
     };
-    var showCheckout = function (tier, source, push) {
+    /* Brief item 4: the checkout section has two steps - 'details' (first name + email) then 'pay'. */
+    var detailsOk = function (quiet) {
+      var f = form.elements, first = (f.name.value || '').trim(), email = (f.email.value || '').trim(), err = '';
+      if (!first) err = 'Please add your first name.';
+      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) err = 'Please enter a valid email address.';
+      if (!quiet) { errEl.textContent = err; if (err) try { (first ? f.email : f.name).focus(); } catch (x) {} }
+      return !err;
+    };
+    var setSub = function (sub, push) {
+      stepPay.setAttribute('data-sub', sub);
+      indC.className = 'done'; if (indD) indD.className = sub === 'pay' ? 'done' : 'on'; indP.className = sub === 'pay' ? 'on' : '';
+      var q = new URLSearchParams(location.search);
+      if (sub === 'pay') q.set('step', 'pay'); else q.delete('step');
+      var u = location.pathname + '?' + q.toString(), st = { tier: pageTierKey, step: sub };
+      try { push ? history.pushState(st, '', u) : history.replaceState(st, '', u); } catch (e) {}
+      if (sub === 'pay') {
+        var f = form.elements, w = document.querySelector('[data-who]');
+        if (w) w.textContent = (f.name.value || '').trim() + ' · ' + (f.email.value || '').trim();
+      }
+      errEl.textContent = '';
+      track(sub === 'pay' ? 'payment_view' : 'details_view', { tier: pageTierKey, billing: billing });
+      window.scrollTo(0, 0);
+    };
+    var showCheckout = function (tier, source, push, sub) {
       pageTierKey = TIER_OK(tier); paintTier(); rememberTier(pageTierKey);
       stepChoose.hidden = true; stepPay.hidden = false;
-      indC.className = 'done'; indP.className = 'on';
       if (push !== false) setUrl(pageTierKey, push === true);
       track('checkout_view', { tier: pageTierKey, billing: billing, source: source, entry: joinSrc });
-      window.scrollTo(0, 0);
+      setSub(sub === 'pay' && detailsOk(true) ? 'pay' : 'details', false);
     };
     window.burnShowChooser = function (src) { showChooser(src, true); };
     document.querySelectorAll('[data-choose]').forEach(function (b) {
@@ -502,14 +525,30 @@
     /* Brief item 3: one Back, because the site menu is hidden in Join. Checkout -> membership step; membership step -> the page she came from. */
     var backBtn = document.querySelector('[data-join-back]');
     if (backBtn) backBtn.addEventListener('click', function () {
-      if (!stepPay.hidden) { showChooser('back_button', true); return; }
+      if (!stepPay.hidden) { if (stepPay.getAttribute('data-sub') === 'pay') setSub('details', true); else showChooser('back_button', true); return; }
       var ref = ''; try { ref = new URL(document.referrer).host; } catch (x) {}
       if (ref === location.host && history.length > 1) history.back(); else location.href = 'index.html';
     });
     window.addEventListener('popstate', function () {
       var t = (new URLSearchParams(location.search).get('tier') || '').toLowerCase();
-      if (PRICES[t]) showCheckout(t, 'back', false); else showChooser('back', false);
+      if (PRICES[t]) showCheckout(t, 'back', false, new URLSearchParams(location.search).get('step')); else showChooser('back', false);
     });
+    /* Brief item 4: Continue to Checkout. Fires 'burn:details' so the server step (item 5: save the lead before payment) can hook in. */
+    var goPay = function () {
+      if (!detailsOk()) return;
+      var f = form.elements;
+      track('details_submitted', { tier: pageTierKey, billing: billing });
+      document.dispatchEvent(new CustomEvent('burn:details', { detail: { first: (f.name.value || '').trim(), email: (f.email.value || '').trim(), tier: pageTierKey, billing: billing } }));
+      setSub('pay', true);
+      try { f.password.focus({ preventScroll: true }); } catch (x) {}
+    };
+    var contBtn = document.querySelector('[data-details-continue]');
+    if (contBtn) contBtn.addEventListener('click', goPay);
+    form.querySelectorAll('[data-sub-details] input').forEach(function (i) {
+      i.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); goPay(); } });
+    });
+    var editBtn = document.querySelector('[data-edit-details]');
+    if (editBtn) editBtn.addEventListener('click', function () { setSub('details', true); });
     /* show / hide password */
     var pwT = document.querySelector('[data-pw-toggle]');
     pwT.addEventListener('click', function () {
@@ -545,7 +584,7 @@
     form.addEventListener('submit', function (e) { e.preventDefault(); pay('card', document.querySelector('[data-pay-submit]')); });
     document.querySelectorAll('[data-wallet]').forEach(function (w) { w.addEventListener('click', function () { pay(w.getAttribute('data-wallet'), w); }); });
     /* entry: a tier in the URL (tier button, quiz result) = straight to checkout; no tier (generic Join Now) = chooser */
-    if (PRICES[pageTierRaw]) showCheckout(pageTierRaw, 'tier_button', false);
+    if (PRICES[pageTierRaw]) showCheckout(pageTierRaw, 'tier_button', false, QS.get('step') || (QS.get('preview') === 'pay' ? 'pay' : ''));
     else showChooser(joinSrc, false);
   }
 

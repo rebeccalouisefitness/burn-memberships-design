@@ -618,3 +618,8 @@ html[data-burn-checkout="stripe"] .xpay{margin-bottom:16px}
    centred over "Annual", with a small gap - same solid pill style. */
 .billing{margin-top:40px!important}
 .billing button[data-bill="annual"] .sv{top:auto!important;bottom:calc(100% + 10px)!important;left:50%!important;right:auto!important;transform:translateX(-50%)!important}
+
+/* 20 Oct (Rebecca): the Save badge overlapped the Monthly/Annual pill. It now sits clear ABOVE the pill,
+   centred over "Annual", with a small gap - same solid pill style. */
+.billing{margin-top:40px!important}
+.billing button[data-bill="annual"] .sv{top:auto!important;bottom:calc(100% + 10px)!important;left:50%!important;right:auto!important;transform:translateX(-50%)!important}

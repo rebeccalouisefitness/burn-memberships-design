@@ -135,7 +135,8 @@
     function typeInto(b, txt, done) { if (reduced) { b.textContent = txt; return done(); } var i = 0; (function step() { b.textContent = txt.slice(0, ++i); if (i < txt.length) setTimeout(step, 18); else done(); })(); }
     function convo() {
       if (!DATA) return;
-      var w = DATA.w.filter(function (x) { return x.g.indexOf('no equipment') > -1 && x.m >= 15 && x.m <= 24 && !SKIP.test(x.t); })[0] || DATA.w[0];
+      var ne = DATA.w.filter(function (x) { return (x.g.indexOf('no equipment') > -1 || x.g.indexOf('bodyweight') > -1) && !SKIP.test(x.t) && x.m <= 22; }).sort(function (a, b) { return Math.abs(a.m - 20) - Math.abs(b.m - 20); });
+      var w = ne[0]; if (!w) return;
       var r = DATA.rec.slice().sort(function (a, b) { return b.p - a.p; })[0];
       var script = [
         ['me', 'I’ve only got 20 minutes and no equipment today. What should I do?'],

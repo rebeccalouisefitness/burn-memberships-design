@@ -11,7 +11,7 @@
 
   /* 1. Scroll-in reveal */
   if (!reduced && IO) {
-    var els = document.querySelectorAll('.sec-head, .pillar, .pillar2, .plan-copy, .plan-card, .quiz2, .ai2, .rw-card, .cphone, .faq-photo, .pb-out, .wcard, .ccard, .tier, .tour-video, .carousel, .pb, .cs-card, .chall-phone, .faq details, .final .copy, .meet-copy, .review-card');
+    var els = document.querySelectorAll('.sec-head, .pillar, .pillar2, .plan-copy, .plan-card, .quiz2, .ai2, .rw-card, .cy-visual, .cy-copy, .cphone, .faq-photo, .pb-out, .wcard, .ccard, .tier, .tour-video, .carousel, .pb, .cs-card, .chall-phone, .faq details, .final .copy, .meet-copy, .review-card');
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
@@ -135,35 +135,56 @@
     if (IO) { var io2 = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { io2.disconnect(); run(false); } }, { rootMargin: '300px' }); io2.observe(pb); } else run(false);
   }
 
-  /* 5. Ask BURN AI: a little live chat demo, built from real BURN content, plays when the card is on screen */
+  /* 5. Ask BURN AI: the whole conversation is laid out from the start (no empty gap);
+        the animation only reveals each bubble and types the words into a space already reserved. */
   var chat = document.querySelector('[data-ai-chat]');
   if (chat) {
-    var running = false;
-    function bubble(cls, txt) { var b = el('div', 'ai-b ' + cls); b.textContent = txt || ''; chat.appendChild(b); while (chat.children.length > 4) chat.removeChild(chat.firstChild); return b; }
-    function typeInto(b, txt, done) { if (reduced) { b.textContent = txt; return done(); } var i = 0; (function step() { b.textContent = txt.slice(0, ++i); if (i < txt.length) setTimeout(step, 18); else done(); })(); }
-    function convo() {
-      if (!DATA) return;
-      var ne = DATA.w.filter(function (x) { return (x.g.indexOf('no equipment') > -1 || x.g.indexOf('bodyweight') > -1) && !SKIP.test(x.t) && x.m <= 22; }).sort(function (a, b) { return Math.abs(a.m - 20) - Math.abs(b.m - 20); });
-      var w = ne[0]; if (!w) return;
-      var r = DATA.rec.slice().sort(function (a, b) { return b.p - a.p; })[0];
-      var script = [
+    var running = false, visible = false, built = false;
+    function bub(cls, txt) {
+      var b = el('div', 'ai-b ' + cls); var g = el('span', 'gh', txt); var l = el('span', 'lv'); b.appendChild(g); b.appendChild(l);
+      if (cls === 'ai') { var d = el('span', 'dots'); d.innerHTML = '<i></i><i></i><i></i>'; b.appendChild(d); }
+      chat.appendChild(b); return b;
+    }
+    function lines() {
+      var ne = DATA.w.filter(function (x) { return (x.g.indexOf('no equipment') > -1 || x.g.indexOf('bodyweight') > -1) && !SKIP.test(x.t) && x.m <= 22 && x.g.indexOf('advanced') < 0 && !/advanced/i.test(x.t); }).sort(function (a, b) { return Math.abs(a.m - 20) - Math.abs(b.m - 20); });
+      var w = ne[0];
+      var gentle = DATA.w.filter(function (x) { return x.t === 'Stress Less Stretches'; })[0] || { t: 'Stress Less Stretches', m: 29 };
+      return [
         ['me', 'I’ve only got 20 minutes and no equipment today. What should I do?'],
-        ['ai', 'Try ' + w.t + '. It’s ' + w.m + ' minutes and you don’t need any equipment. Want me to add it to today?'],
-        ['me', 'Yes please! What should I eat after?'],
-        ['ai', r.t + ' is a great one: ' + r.p + 'g of protein, ready in ' + r.m + ' minutes.']
+        ['ai', w ? 'Try ' + w.t + '. It’s ' + w.m + ' minutes and you don’t need any equipment. Want me to add it to today?' : 'Let’s find you a 20-minute workout with no equipment. Want me to add one to today?'],
+        ['me', 'I’m on my period and feeling low. Should I still work out?'],
+        ['ai', 'Go gentle today. Try ' + gentle.t + ', ' + gentle.m + ' minutes of easy stretching. Modify, don’t skip, and always go by how you feel.']
       ];
-      var k = 0; chat.innerHTML = '';
+    }
+    function build() { if (built || !DATA) return; built = true; chat.innerHTML = ''; lines().forEach(function (l) { bub(l[0], l[1]); }); if (reduced || !IO) chat.querySelectorAll('.ai-b').forEach(function (b) { b.classList.add('in'); b.querySelector('.gh').style.visibility = 'visible'; }); }
+    function play() {
+      var bs = [].slice.call(chat.querySelectorAll('.ai-b')); if (!bs.length) { running = false; return; }
+      bs.forEach(function (b) { b.classList.remove('in', 'typing-now'); b.querySelector('.lv').textContent = ''; });
+      var k = 0;
       (function next() {
-        if (k >= script.length) { setTimeout(function () { running = false; if (visible) start(); }, 6000); return; }
-        var line = script[k++];
-        if (line[0] === 'me') { bubble('me', line[1]); setTimeout(next, 700); }
-        else { var t = bubble('ai typing'); t.innerHTML = '<i></i><i></i><i></i>'; setTimeout(function () { t.className = 'ai-b ai'; typeInto(t, line[1], function () { setTimeout(next, 900); }); }, reduced ? 0 : 1100); }
+        if (k >= bs.length) { setTimeout(function () { running = false; if (visible) start(); }, 7000); return; }
+        var b = bs[k++], txt = b.querySelector('.gh').textContent, lv = b.querySelector('.lv');
+        b.classList.add('in');
+        if (b.classList.contains('me')) { lv.textContent = txt; setTimeout(next, 800); return; }
+        b.classList.add('typing-now');
+        setTimeout(function () { b.classList.remove('typing-now'); var i = 0; (function step() { lv.textContent = txt.slice(0, ++i); if (i < txt.length) setTimeout(step, 16); else setTimeout(next, 1000); })(); }, 1000);
       })();
     }
-    var visible = false;
-    function start() { if (running) return; running = true; data().then(convo).catch(function () { running = false; }); }
-    if (IO) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; if (visible) start(); }, { threshold: 0.4 }).observe(chat);
-    else start();
+    function start() { if (running || reduced) return; running = true; data().then(function () { build(); play(); }).catch(function () { running = false; }); }
+    data().then(build).catch(function () {});
+    if (IO && !reduced) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; if (visible) start(); }, { threshold: 0.4 }).observe(chat);
+  }
+
+  /* 5b. Train with your cycle: the marker moves round the ring and the matching phase lights up */
+  var ring = document.querySelector('[data-cycle-ring]');
+  if (ring) {
+    var PH = [{ n: 'Menstrual', d: 3, a: 30 }, { n: 'Follicular', d: 9, a: 115 }, { n: 'Ovulatory', d: 15, a: 195 }, { n: 'Luteal', d: 22, a: 285 }];
+    var cards = document.querySelectorAll('.cy-phases li'), dot = ring.querySelector('.cy-dot'), dayEl = ring.querySelector('[data-cy-day]'), phEl = ring.querySelector('[data-cy-phase]');
+    var idx = 0, timer = null;
+    function show(i) { idx = i; var p = PH[i]; dot.style.transform = 'rotate(' + p.a + 'deg)'; dayEl.textContent = 'Day ' + p.d; phEl.textContent = p.n; cards.forEach(function (c, j) { c.classList.toggle('on', j === i); }); }
+    cards.forEach(function (c, j) { c.addEventListener('mouseenter', function () { show(j); }); c.addEventListener('click', function () { show(j); }); });
+    show(0);
+    if (!reduced && IO) new IntersectionObserver(function (es) { if (es[0].isIntersecting) { if (!timer) timer = setInterval(function () { show((idx + 1) % PH.length); }, 3200); } else { clearInterval(timer); timer = null; } }, { threshold: 0.3 }).observe(ring);
   }
 
   /* 6. "Find your perfect workout": tapping a category opens real BURN workouts in it */

@@ -924,3 +924,6 @@ html[data-burn-checkout="stripe"] .promo{display:block}
 .rw-grid{grid-template-columns:repeat(4,1fr)}
 @media (max-width:860px){.rw-card{grid-template-columns:1fr}.rw-grid{grid-template-columns:repeat(2,1fr)}.rw-grid li:nth-child(7){grid-column:auto}}
 @media (max-width:860px){.rw-grid{grid-auto-flow:dense}}
+/* NEW badge (Rebecca 21 Oct): small mauve pill */
+.new-badge{display:inline-block;vertical-align:2px;margin-left:6px;background:var(--mauve);color:#fff;border-radius:999px;padding:2px 7px;font:600 9.5px/1.4 var(--sans);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+.cmp td .new-badge{vertical-align:1px}

@@ -827,3 +827,7 @@ html[data-burn-checkout="stripe"] .promo{display:block}
 .hero .lede-2{margin-top:10px}
 .hero .lede-2 strong{font-weight:600}
 .hero .lede-2 em{font-style:italic;color:var(--mauve)}
+.hero .lede strong{font-weight:600}
+.hero .lede em{font-style:italic;color:var(--mauve)}
+.appstrip h2 em,.complete-show .sec-head em{font-style:italic;color:var(--mauve)}
+.complete-show .sec-head strong{font-weight:600;color:var(--ink)}

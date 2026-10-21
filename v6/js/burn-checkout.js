@@ -105,19 +105,28 @@
         if (!c || !c.ok || !c.publishable_key) return;
         return loadStripe().then(function () {
           var st = window.Stripe(c.publishable_key);
-          var els = st.elements({ mode: 'subscription', amount: cents() || 100, currency: 'usd', paymentMethodTypes: ['card'],
-            appearance: { theme: 'stripe', variables: { colorPrimary: '#6f4c5b', borderRadius: '12px' } } });
-          els.create('payment', { layout: 'tabs', fields: { billingDetails: { email: 'never' } }, terms: { card: 'never' } }).mount(host);
-          var xh = document.querySelector('[data-express-element]');
-          if (xh) {
-            var xe = els.create('expressCheckout', { buttonType: { applePay: 'subscribe', googlePay: 'subscribe' } });
-            xe.on('click', function (ev) { if (details(formEl())) ev.resolve(); });
-            xe.on('confirm', function () { payInline(formEl(), document.querySelector('[data-pay-submit]')); });
-            xe.mount(xh);
-          }
-          EL = { stripe: st, elements: els };
+          /* (Re)build the card form. A free-trial promo needs mode 'setup' (save the card, nothing charged);
+             elements.update() cannot change the payment methods, so the form is rebuilt instead. */
+          var pe = null, xe = null;
+          window.__burnBuildEls = function (opts) {
+            if (pe) { try { pe.destroy(); } catch (x) {} } if (xe) { try { xe.destroy(); } catch (x) {} }
+            var o = { currency: 'usd', paymentMethodTypes: ['card'], appearance: { theme: 'stripe', variables: { colorPrimary: '#6f4c5b', borderRadius: '12px' } } };
+            if (opts.mode === 'setup') o.mode = 'setup'; else { o.mode = 'subscription'; o.amount = opts.amount || 100; }
+            var els = st.elements(o);
+            pe = els.create('payment', { layout: 'tabs', fields: { billingDetails: { email: 'never' } }, terms: { card: 'never' } }); pe.mount(host);
+            var xh = document.querySelector('[data-express-element]');
+            if (xh) {
+              xe = els.create('expressCheckout', { buttonType: { applePay: opts.mode === 'setup' ? 'plain' : 'subscribe', googlePay: opts.mode === 'setup' ? 'plain' : 'subscribe' } });
+              xe.on('click', function (ev) { if (details(formEl())) ev.resolve(); });
+              xe.on('confirm', function () { payInline(formEl(), document.querySelector('[data-pay-submit]')); });
+              xe.mount(xh);
+            }
+            EL = { stripe: st, elements: els };
+            return els;
+          };
+          var els = window.__burnBuildEls({ mode: 'subscription', amount: cents() || 100 });
           root.setAttribute('data-pay-inline', 'on');
-          document.addEventListener('burn:billing', function () { if (!PROMO) { var a = cents(); if (a) els.update({ amount: a }); } });
+          document.addEventListener('burn:billing', function () { if (!PROMO && EL) { var a = cents(); if (a) EL.elements.update({ amount: a }); } });
           setupPromo();
         });
       }).catch(function () {});
@@ -142,7 +151,7 @@
           .then(function (r) { return r.json().catch(function () { return {}; }); })
           .then(function (j) {
             applyB.disabled = false; lastSub = null;
-            if (!j || !j.ok) { PROMO = null; msg.className = 'promo-msg'; msg.textContent = (j && j.message) || 'That code didn’t work. Please check it and try again.'; restoreAmount(); return; }
+            if (!j || !j.ok) { var had = !!PROMO; PROMO = null; msg.className = 'promo-msg'; msg.textContent = (j && j.message) || 'That code didn’t work. Please check it and try again.'; if (had) restoreAmount(); return; }
             PROMO = j;
             var then = money(j.then_cents) + ' a ' + j.interval;
             var d = new Date(); d.setDate(d.getDate() + (j.trial_days || 0));
@@ -151,14 +160,12 @@
             msg.innerHTML = '';
             var b1 = document.createElement('b'); b1.textContent = 'Code applied!'; msg.appendChild(b1);
             msg.appendChild(document.createTextNode(j.trial_days ? ' Today $0.00, then ' + then + ' from ' + when + '.' : ' ' + money(j.today_cents) + ' today, then ' + then + '.'));
-            if (EL) {
-              if (j.trial_days) EL.elements.update({ mode: 'setup', currency: 'usd' });
-              else EL.elements.update({ mode: 'subscription', amount: j.today_cents || 100, currency: 'usd' });
-            }
+            /* Stay in 'subscription' mode (card only). With a free trial Stripe hands back a SetupIntent and we call confirmSetup; the amount is the first real charge after the trial. */
+            if (window.__burnBuildEls) window.__burnBuildEls({ mode: 'subscription', amount: (j.trial_days ? j.then_cents : j.today_cents) || 100 });
           })
           .catch(function () { applyB.disabled = false; msg.className = 'promo-msg'; msg.textContent = 'That didn’t work. Please try again.'; });
       });
-      function restoreAmount() { if (EL) EL.elements.update({ mode: 'subscription', amount: cents() || 100, currency: 'usd' }); }
+      function restoreAmount() { if (window.__burnBuildEls) window.__burnBuildEls({ mode: 'subscription', amount: cents() || 100 }); }
     };
     var payInline = function (form, btn) {
       if (busy) return;
@@ -269,7 +276,7 @@
           set('[data-ty-email]', j.email); set('[data-ty-first]', j.first_name); set('[data-ty-tier]', j.tier_name);
           if (j.email) document.querySelectorAll('[data-dl-link]').forEach(function (a) { a.href = 'download.html?email=' + encodeURIComponent(j.email); });
           var w = document.querySelector('[data-dl-email-wrap]'); if (w && j.email) w.hidden = false;
-          if (subId && !j.paid && j.status === 'incomplete' && tries < 8) { setTimeout(poll, 1500); return; }   // Stripe is still finishing the first invoice
+          if (subId && !j.paid && (j.status === 'incomplete' || j.status === 'trialing') && tries < 10) { setTimeout(poll, 1500); return; }   // Stripe is still finishing the first invoice
           if (j.status !== 'complete' || !j.paid) { root.setAttribute('data-checkout-state', 'not-paid'); status('This payment has not gone through. Nothing was charged.'); return; }
           if (j.account_ready) { root.setAttribute('data-checkout-state', 'ready'); status(''); return; }
           root.setAttribute('data-checkout-state', 'pending');

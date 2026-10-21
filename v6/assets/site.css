@@ -993,21 +993,51 @@ html[data-burn-checkout="stripe"] .promo{display:block}
 .rw-grid .t-gold{background:#F4ECE1}.rw-grid .t-gold2{background:#F1E6D6}.rw-grid .t-rose2{background:#EFE3E7}
 .rw-grid li.t-mauve{background:linear-gradient(135deg,#956C7D,#7E5A6A);color:#fff}
 .rw-grid li:nth-child(6) .rw-ic{display:none}
-/* mobile hero: closer crop, text below the photo, easy to read */
-@media (max-width:640px){
-  .hero{display:block;height:auto;max-height:none;min-height:0;background:var(--soft)}
-  .hero picture{position:relative;display:block;height:min(54svh,118vw);inset:auto}
-  @supports not (height:1svh){.hero picture{height:min(54vh,118vw)}}
-  .hero .hero-img{position:absolute;inset:0;left:0;width:100%;height:100%;object-position:50% 14%}
-  .hero picture::after{content:"";position:absolute;left:0;right:0;bottom:0;height:60px;background:linear-gradient(180deg,rgba(250,249,247,0),var(--soft))}
-  .hero::after{display:none}
-  .hero .copy{color:var(--ink);padding:6px 0 30px}
-  .hero .kick{color:var(--mauve)}
-  .hero h1{color:var(--ink)}
-  .hero .lede{color:var(--inkSoft);font-size:14.5px;line-height:1.6;margin-bottom:18px}
-  .hero .sub-cta{color:var(--inkSoft)}
-  .hero .sc-cancel{display:none}
-  .hero .quiz-link{color:var(--mauveDeep);text-decoration-color:var(--mauveSoft)}
-}
 @media (prefers-reduced-motion:reduce){.cy-dot{transition:none}.ai-b{transition:none}}
 .sec-head .why-h{max-width:none}
+
+/* ===== Round 4 (22 Oct) ===== */
+/* annual prices: room under the big number so .99 never touches "billed yearly" */
+.tier .price{margin-bottom:10px}
+.tier .amt{line-height:1.12}
+.tier .alt{margin-top:2px}
+.qz-res .price{margin-bottom:8px}
+.tier.feat .desc strong{color:var(--mauveDeep);font-weight:600}
+.plan-ult{font-family:var(--serif);font-style:italic;font-size:22px;color:#E6CFD8;margin:6px 0 0}
+/* quiz block: just the photo, the question and the button */
+.quiz3{grid-template-columns:180px 1fr}
+.quiz3 .qz2-copy h3{margin:0 0 16px}
+@media (max-width:640px){.quiz3{grid-template-columns:110px 1fr}.quiz3 .qz2-copy h3{font-size:22px;margin-bottom:12px}}
+.qz-plan{background:var(--rose);border-radius:12px;padding:10px 12px;font-size:14px;color:var(--mauveDeep);font-weight:500;margin:10px 0 0}
+/* nutrition, developed */
+.nut2{display:block;padding:28px 30px}
+.nut2-head{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start}
+.nut2-head h3{margin:4px 0 6px}
+.nut2-head p{margin:0}
+.nut2-head strong{color:var(--mauveDeep)}
+.nut2-list{list-style:none;padding:0;margin:20px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.nut2-list li{background:#fff;border-radius:14px;padding:12px 14px}
+.nut2-list b{display:block;font-weight:600;font-size:14.5px}
+.nut2-list span{font-size:13px;color:var(--inkSoft)}
+.nut2-how{list-style:none;padding:0;margin:16px 0 0;display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13.5px;color:var(--inkSoft)}
+.nut2-how li{display:flex;align-items:center;gap:8px}
+.nut2-how span{width:22px;height:22px;border-radius:50%;background:var(--mauve);color:#fff;display:grid;place-items:center;font-size:11.5px;font-weight:600}
+@media (max-width:640px){.nut2{padding:22px 18px}.nut2-head{grid-template-columns:1fr;gap:10px}.nut2-how{flex-direction:column}}
+/* community */
+.comm-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:56px;align-items:center;max-width:1040px}
+.comm-copy h2{margin:10px 0 12px}
+.comm-list{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:12px}
+.comm-list li{display:grid;grid-template-columns:42px 1fr;gap:14px;align-items:start}
+.comm-list .ci{width:42px;height:42px;border-radius:12px;background:var(--rose);color:var(--mauveDeep);display:grid;place-items:center}
+.comm-list .ci svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.comm-list b{display:block;font-weight:600}
+.comm-list b em{font-style:normal;font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--mauve);margin-left:6px}
+.comm-list span{font-size:14.5px;color:var(--inkSoft)}
+.comm-phone{max-width:270px;width:100%;margin:0 auto}
+@media (max-width:860px){.comm-grid{grid-template-columns:1fr;gap:30px}.comm-phone{max-width:230px}}
+/* checkout: change membership under the price */
+.tier-sum .change-plan{display:inline-block;margin-top:6px;font-size:13px}
+/* AI card: photo sits at the top */
+.ai2{align-items:start}
+.ai-photo{align-self:start}
+.ai-photo img{object-position:50% 12%}

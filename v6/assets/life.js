@@ -81,12 +81,13 @@
   /* 4. Plan builder: goal, days, time -> a SAMPLE DAY (real workout, recipe and mindset video) */
   var pb = document.querySelector('[data-plan-builder]');
   if (pb) {
-    var pick = { goal: 'strong', days: '3', time: '30' };
+    var pick = { stage: 'general', tri: '2', pp: '1', goal: 'strong', days: '3', time: '30' };
+    function whenRows() { pb.querySelectorAll('[data-pb-when]').forEach(function (r) { r.hidden = r.getAttribute('data-pb-when') !== pick.stage; }); }
     pb.querySelectorAll('[data-pb]').forEach(function (g) {
       g.addEventListener('click', function (e) {
         var b = e.target.closest('button'); if (!b) return;
         g.querySelectorAll('button').forEach(function (x) { var on = x === b; x.classList.toggle('on', on); x.setAttribute('aria-pressed', on ? 'true' : 'false'); });
-        pick[g.getAttribute('data-pb')] = b.getAttribute('data-v');
+        pick[g.getAttribute('data-pb')] = b.getAttribute('data-v'); if (g.getAttribute('data-pb') === 'stage') whenRows();
         if (DATA) build();
       });
     });
@@ -111,7 +112,15 @@
       var list = pool.filter(function (w) { return fits(w, T); }); var good = list.filter(function (w) { return score(w) > 0; }); if (good.length) list = good;
       if (!list.length) list = pool.slice().sort(function (a, b) { return Math.abs(a.m - T) - Math.abs(b.m - T); });
       list.sort(function (a, b) { return score(b) - score(a) || h(a.t + pick.goal + T + N) - h(b.t + pick.goal + T + N); });
-      var w = list[0];
+      var w = list[0], wMeta = w ? w.m + ' min workout' : '';
+      var L = DATA.luna || { pre: [], pp: [] }, TRI = { 1: '1st', 2: '2nd', 3: '3rd' }[pick.tri];
+      if (pick.stage === 'pregnant' || pick.stage === 'postpartum') {
+        var lp = pick.stage === 'pregnant'
+          ? L.pre.filter(function (x) { return x.tri.indexOf(+pick.tri) > -1; })
+          : L.pp.filter(function (x) { var a = +pick.pp; return a === 1 ? x.ph <= 3 : a === 4 ? (x.ph >= 4 && x.ph <= 6) : x.ph >= 7; });
+        lp = lp.slice().sort(function (a, b) { return Math.abs(a.m - T) - Math.abs(b.m - T) || h(a.t + N) - h(b.t + N); });
+        if (lp[0]) { w = { id: lp[0].id, t: lp[0].t, m: lp[0].m }; wMeta = lp[0].m + ' min · ' + (pick.stage === 'pregnant' ? TRI + ' trimester' : '12-month postpartum program'); }
+      }
       var recs = DATA.rec.slice();
       if (pick.goal === 'energy') recs.sort(function (a, b) { return (b.meal === 'Breakfast') - (a.meal === 'Breakfast') || a.m - b.m; });
       else if (pick.goal === 'habit') recs.sort(function (a, b) { return a.m - b.m || b.p - a.p; });
@@ -122,9 +131,10 @@
       var wk = pb.querySelector('[data-pb-week]'); wk.innerHTML = '';
       DAYS.forEach(function (d, k) { var li = el('li', on.indexOf(k) > -1 ? 'on' : null); li.appendChild(el('span', null, d)); li.setAttribute('aria-label', DAYN[k] + (on.indexOf(k) > -1 ? ': workout' : ': rest')); if (!reduced) li.style.animationDelay = (k * 50) + 'ms'; wk.appendChild(li); });
       pb.querySelector('[data-pb-badge]').textContent = N + ' days \u00b7 ' + T + ' min';
-      pb.querySelector('[data-pb-sum]').textContent = DAYN[on[0]] + ' \u00b7 ' + GOALN[pick.goal];
+      pb.querySelector('[data-pb-sum]').textContent = DAYN[on[0]] + ' \u00b7 ' + (pick.stage === 'pregnant' ? TRI + ' trimester' : pick.stage === 'postpartum' ? 'Postpartum' : GOALN[pick.goal]);
+      var cyc = pb.querySelector('.pc-cycle'); if (cyc) cyc.hidden = pick.stage !== 'general';
       var day = pb.querySelector('[data-pb-day]'); day.innerHTML = '';
-      day.appendChild(card('Morning', 'Workout', THUMB(w.id), w.t + ' workout with Rebecca', w.t, w.m + ' min workout'));
+      day.appendChild(card('Morning', pick.stage === 'pregnant' ? 'Pregnancy' : pick.stage === 'postpartum' ? 'Postpartum' : 'Workout', THUMB(w.id), w.t + ' workout with Rebecca', w.t, wMeta));
       day.appendChild(card(r.meal === 'Breakfast' ? 'Breakfast' : 'Lunch', 'Recipe', 'img/recipes/' + r.k + '.jpg', r.t, r.t, r.m + ' min \u00b7 ' + r.p + 'g protein'));
       day.appendChild(card('Evening', 'Mindset', THUMB(mv.id), mv.t + ' video', mv.t, mv.m + ' min video'));
       pb.querySelector('[data-pb-out]').hidden = false;
@@ -195,10 +205,16 @@
   var cards = document.querySelectorAll('.wcard');
   if (cards.length) {
     var dlg;
-    function openCat(name) {
+    function openCat(name, luna) {
       var tags = MAP[name.toLowerCase()] || [name.toLowerCase()];
       data().then(function () {
-        var ws = DATA.w.filter(function (w) { return w.g.some(function (t) { return tags.indexOf(t) > -1; }); }).slice(0, 6);
+        var ws;
+        if (luna && DATA.luna) {
+          var L = DATA.luna;
+          if (luna[0] === 't') { var tr = +luna[1]; ws = L.pre.filter(function (x) { return x.tri.indexOf(tr) > -1; }).map(function (x) { return { id: x.id, t: x.t, m: x.m, g: [] }; }); }
+          else { var a = +luna.slice(2); ws = L.pp.filter(function (x) { return a === 0 ? true : a === 1 ? x.ph <= 3 : a === 4 ? (x.ph >= 4 && x.ph <= 6) : x.ph >= 7; }).map(function (x) { return { id: x.id, t: x.t, m: x.m, g: [] }; }); }
+          ws = ws.slice(0, 6);
+        } else ws = DATA.w.filter(function (w) { return w.g.some(function (t) { return tags.indexOf(t) > -1; }); }).slice(0, 6);
         if (!dlg) {
           dlg = el('div', 'wsheet'); dlg.setAttribute('role', 'dialog'); dlg.setAttribute('aria-modal', 'true');
           dlg.innerHTML = '<div class="ws-back" data-ws-close></div><div class="ws-panel"><button type="button" class="ws-x" aria-label="Close" data-ws-close>&times;</button><h3></h3><div class="ws-list"></div><a class="btn block" href="join.html" data-chooser data-join="workout_sheet">Join BURN to start</a></div>';
@@ -217,8 +233,8 @@
     cards.forEach(function (c) {
       var name = (c.querySelector('h4') || {}).textContent; if (!name) return;
       c.setAttribute('role', 'button'); c.setAttribute('tabindex', '0'); c.setAttribute('aria-label', 'See ' + name + ' workouts');
-      c.addEventListener('click', function () { openCat(name.replace(/&amp;/g, '&')); });
-      c.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCat(name); } });
+      c.addEventListener('click', function () { openCat(name.replace(/&amp;/g, '&'), c.getAttribute('data-luna')); });
+      c.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCat(name, c.getAttribute('data-luna')); } });
     });
   }
 })();

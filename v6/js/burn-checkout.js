@@ -41,7 +41,7 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', showLive); else showLive();
 
   var QS = new URLSearchParams(location.search);
-  var TIERS = { burn: 'BURN', burnplus: 'BURN+', burncomplete: 'BURN COMPLETE' };
+  var TIERS = { burn: 'BURN', burnplus: 'BURN+', burncomplete: 'BURN Complete' };
   var page = (location.pathname.split('/').pop() || 'index.html').replace('.html', '');
 
   function here(file) { return new URL(file, location.href); }

@@ -824,3 +824,6 @@ html[data-burn-checkout="stripe"] .promo{display:block}
 .promo-msg{margin:8px 0 0;font-size:13.5px;color:var(--inkSoft)}
 .promo-msg.ok{color:var(--mauveDeep)}
 .promo-msg b{color:var(--ink)}
+.hero .lede-2{margin-top:10px}
+.hero .lede-2 strong{font-weight:600}
+.hero .lede-2 em{font-style:italic;color:var(--mauve)}

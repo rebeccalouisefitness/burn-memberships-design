@@ -975,7 +975,7 @@ html[data-burn-checkout="stripe"] .promo{display:block}
 .ai-try{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:18px;padding-top:16px;border-top:1px solid var(--lineSoft)}
 .ai-try-k{font-family:var(--serif);font-size:18px;font-weight:600;margin-right:4px}
 .ai-chip{background:var(--rose);color:var(--mauveDeep);border-radius:999px;padding:7px 12px;font-size:12.5px;font-weight:500}
-.ai-chip:first-of-type{background:var(--mauve);color:#fff}
+.ai-try .ai-chip:nth-child(2){background:var(--mauve);color:#fff}
 @media (max-width:760px){.ai2{grid-template-columns:1fr}.ai-photo{aspect-ratio:4/5;max-height:none;max-width:420px;width:100%;margin:0 auto}.ai-photo img{object-position:50% 20%}}
 /* bridge between AI and rewards */
 .cs-bridge{display:flex;align-items:center;gap:16px;justify-content:center;margin:6px 0;color:var(--mauveDeep)}

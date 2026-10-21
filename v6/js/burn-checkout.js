@@ -77,7 +77,7 @@
        is the last tap. The server still creates the account the same way and access is still switched on only
        by the webhook once Stripe says it is paid. If the server has no publishable key yet, nothing mounts and
        the hosted Stripe page (start() below) is used exactly as before. */
-    var EL = null, lastSub = null;
+    var EL = null, lastSub = null, PROMO = null;   /* PROMO = {code, trial_days, today_cents, then_cents, interval} once applied */
     var isDraftTest = /[?&]checkout=test\b/.test(location.search);
     var cents = function () {
       var P = window.BURN_PRICES && window.BURN_PRICES[tierNow()];
@@ -117,11 +117,49 @@
           }
           EL = { stripe: st, elements: els };
           root.setAttribute('data-pay-inline', 'on');
-          document.addEventListener('burn:billing', function () { var a = cents(); if (a) els.update({ amount: a }); });
+          document.addEventListener('burn:billing', function () { if (!PROMO) { var a = cents(); if (a) els.update({ amount: a }); } });
+          setupPromo();
         });
       }).catch(function () {});
     };
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mountInline); else mountInline();
+    /* Promo code (Rebecca 21 Oct): small "Have a promo code?" link. A valid code shows today / then; a free
+       trial switches the card form to "save card" (nothing charged today). Wording only appears after Apply. */
+    var money = function (c) { return '$' + (c / 100).toFixed(2); };
+    var setupPromo = function () {
+      var box = document.querySelector('[data-promo-box]'), tog = document.querySelector('[data-promo-toggle]');
+      var msg = document.querySelector('[data-promo-msg]'), applyB = document.querySelector('[data-promo-apply]');
+      if (!box || !tog || !applyB) return;
+      var input = box.querySelector('input');
+      tog.addEventListener('click', function () { box.hidden = !box.hidden; tog.setAttribute('aria-expanded', box.hidden ? 'false' : 'true'); if (!box.hidden) input.focus(); });
+      input.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); applyB.click(); } });
+      applyB.addEventListener('click', function () {
+        var code = (input.value || '').trim();
+        if (!code) { msg.className = 'promo-msg'; msg.textContent = 'Pop your code in first.'; return; }
+        applyB.disabled = true;
+        fetch(BASE + '/web-checkout/promo', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code: code, tier: tierNow(), billing: billingNow() }) })
+          .then(function (r) { return r.json().catch(function () { return {}; }); })
+          .then(function (j) {
+            applyB.disabled = false; lastSub = null;
+            if (!j || !j.ok) { PROMO = null; msg.className = 'promo-msg'; msg.textContent = (j && j.message) || 'That code didn’t work. Please check it and try again.'; restoreAmount(); return; }
+            PROMO = j;
+            var then = money(j.then_cents) + ' a ' + j.interval;
+            var d = new Date(); d.setDate(d.getDate() + (j.trial_days || 0));
+            var when = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            msg.className = 'promo-msg ok';
+            msg.innerHTML = '';
+            var b1 = document.createElement('b'); b1.textContent = 'Code applied!'; msg.appendChild(b1);
+            msg.appendChild(document.createTextNode(j.trial_days ? ' Today $0.00, then ' + then + ' from ' + when + '.' : ' ' + money(j.today_cents) + ' today, then ' + then + '.'));
+            if (EL) {
+              if (j.trial_days) EL.elements.update({ mode: 'setup', currency: 'usd' });
+              else EL.elements.update({ mode: 'subscription', amount: j.today_cents || 100, currency: 'usd' });
+            }
+          })
+          .catch(function () { applyB.disabled = false; msg.className = 'promo-msg'; msg.textContent = 'That didn’t work. Please try again.'; });
+      });
+      function restoreAmount() { if (EL) EL.elements.update({ mode: 'subscription', amount: cents() || 100, currency: 'usd' }); }
+    };
     var payInline = function (form, btn) {
       if (busy) return;
       var f = form.elements, d = details(f);
@@ -131,23 +169,24 @@
       if (window.burnTrack) window.burnTrack('payment_started', { tier: tier, billing: billing, flow: 'inline' });
       var label = btn ? btn.innerHTML : '';
       if (btn) { btn.setAttribute('data-state', 'loading'); btn.disabled = true; btn.textContent = 'Processing…'; }
-      var key = [tier, billing, d.email].join('|');
-      var a = cents(); if (a) EL.elements.update({ amount: a });
+      var key = [tier, billing, d.email, PROMO ? PROMO.code : ''].join('|');
+      if (!PROMO) { var a = cents(); if (a) EL.elements.update({ amount: a }); }
       EL.elements.submit().then(function (r) {
         if (r && r.error) throw { msg: r.error.message };
         if (lastSub && lastSub.key === key) return lastSub;   // retry after a declined card: same subscription
         return fetch(BASE + '/web-checkout/subscribe', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name: d.name, email: d.email, password: d.pw, tier: tier, billing: billing, lead_id: leadId() })
+          body: JSON.stringify({ name: d.name, email: d.email, password: d.pw, tier: tier, billing: billing, lead_id: leadId(), promo_code: PROMO ? PROMO.code : '' })
         }).then(function (x) { return x.json().catch(function () { return {}; }); }).then(function (j) {
           if (!j || !j.ok) throw { msg: (j && j.message) || 'Something went wrong. Please try again.', code: j && j.error };
-          lastSub = { key: key, id: j.subscription_id, secret: j.client_secret };
+          lastSub = { key: key, id: j.subscription_id, secret: j.client_secret, type: j.type || 'payment' };
           return lastSub;
         });
       }).then(function (s) {
         var ret = here('thank-you.html');
         ret.search = '?tier=' + tier + '&billing=' + billing + '&sub=' + encodeURIComponent(s.id) + (isDraftTest ? '&checkout=test' : '');
-        return EL.stripe.confirmPayment({ elements: EL.elements, clientSecret: s.secret, redirect: 'if_required',
+        var confirm = s.type === 'setup' ? EL.stripe.confirmSetup : EL.stripe.confirmPayment;   /* free trial: save the card, charge nothing today */
+        return confirm.call(EL.stripe, { elements: EL.elements, clientSecret: s.secret, redirect: 'if_required',
           confirmParams: { return_url: ret.href, payment_method_data: { billing_details: { email: d.email, name: d.name } } }
         }).then(function (res) {
           if (res && res.error) throw { msg: res.error.message, declined: true };

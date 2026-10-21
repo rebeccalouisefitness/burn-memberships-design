@@ -58,6 +58,11 @@
         <div class="pay-el" data-pay-element></div>
         <p class="pay-methods">Pay by card, Apple Pay or Google Pay. Your payment is handled securely by Stripe.</p>
       </div>
+      <div class="promo" data-promo>
+        <button type="button" class="textbtn promo-toggle" data-promo-toggle aria-expanded="false">Have a promo code?</button>
+        <div class="promo-box" data-promo-box hidden><input name="promo" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Promo code" placeholder="Promo code"><button type="button" class="btn ghost sm" data-promo-apply>Apply</button></div>
+        <p class="promo-msg" data-promo-msg aria-live="polite"></p>
+      </div>
       <p class="form-err" role="alert" data-form-err></p>
       <button class="btn block" type="submit" data-pay-submit>Complete My Membership</button>
       <p class="pay-terms pay-terms-bottom">Renews automatically until you cancel. By joining you agree to our <a href="terms.html" target="_blank" rel="noopener">Terms</a>.</p>

@@ -815,3 +815,12 @@ html.review .tphoto-slot{display:grid;place-items:center;width:64px;height:64px;
 .pay-terms-bottom{margin:14px 0 0;font-size:11.5px;color:var(--taupeDeep);text-align:center}
 .pay-terms-bottom a{color:inherit;text-decoration:underline}
 .switch-note h3{margin:0}
+/* promo code (only with real checkout on) */
+.promo{display:none;margin:4px 0 12px}
+html[data-burn-checkout="stripe"] .promo{display:block}
+.promo-toggle{font-size:13.5px;color:var(--inkSoft);text-decoration:underline}
+.promo-box{display:flex;gap:8px;margin-top:8px}
+.promo-box input{flex:1;min-height:44px;border:1px solid var(--line);border-radius:12px;padding:0 12px;font:500 15px var(--sans);text-transform:uppercase}
+.promo-msg{margin:8px 0 0;font-size:13.5px;color:var(--inkSoft)}
+.promo-msg.ok{color:var(--mauveDeep)}
+.promo-msg b{color:var(--ink)}

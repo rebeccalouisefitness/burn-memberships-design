@@ -11,7 +11,7 @@
 
   /* 1. Scroll-in reveal */
   if (!reduced && IO) {
-    var els = document.querySelectorAll('.sec-head, .pillar, .pillar2, .cphone, .faq-photo, .pb-out, .wcard, .ccard, .tier, .tour-video, .carousel, .pb, .cs-card, .chall-phone, .faq details, .final .copy, .meet-copy, .review-card');
+    var els = document.querySelectorAll('.sec-head, .pillar, .pillar2, .plan-copy, .plan-card, .quiz2, .ai2, .rw-card, .cphone, .faq-photo, .pb-out, .wcard, .ccard, .tier, .tour-video, .carousel, .pb, .cs-card, .chall-phone, .faq details, .final .copy, .meet-copy, .review-card');
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
@@ -87,7 +87,7 @@
         var b = e.target.closest('button'); if (!b) return;
         g.querySelectorAll('button').forEach(function (x) { var on = x === b; x.classList.toggle('on', on); x.setAttribute('aria-pressed', on ? 'true' : 'false'); });
         pick[g.getAttribute('data-pb')] = b.getAttribute('data-v');
-        if (!pb.querySelector('[data-pb-out]').hidden && DATA) build();
+        if (DATA) build();
       });
     });
     var GOAL = { strong: ['strength', 'weights', 'upper body', 'back', 'arms'], tone: ['sculpt', 'barre', 'glutes', 'core', 'legs', 'pilates', 'lower body'],
@@ -95,12 +95,16 @@
     var MIND = { strong: 'Raise Your Standards Mindset', tone: 'Vision And Goal Setting Mindset', energy: 'Clarity Mindset', habit: 'Showing Up Mindset' };
     function fits(w, T) { return T <= 10 ? (w.m >= 8 && w.m <= 15) : (w.m >= T - 8 && w.m <= T + 6); }
     function score(w) { if (pick.goal === 'habit' && (w.g.indexOf('advanced') > -1 || /advanced|extreme/i.test(w.t))) return -1; var gs = GOAL[pick.goal]; return w.g.filter(function (t) { return gs.indexOf(t) > -1; }).length; }
-    function card(kind, img, alt, title, meta) {
-      var c = el('article', 'pb-card'); var im = el('div', 'pb-img'); var i = new Image(); i.src = img; i.alt = alt; i.loading = 'lazy'; i.decoding = 'async'; im.appendChild(i);
-      im.appendChild(el('span', 'pb-kind', kind)); c.appendChild(im); var b = el('div', 'pb-body'); b.appendChild(el('h4', null, title)); b.appendChild(el('p', null, meta)); c.appendChild(b);
-      if (!reduced) c.style.animationDelay = (pb.querySelectorAll('.pb-card').length * 110) + 'ms';
+    function card(when, kind, img, alt, title, meta) {
+      var c = el('article', 'pc-row'); c.appendChild(el('span', 'pc-when', when));
+      var im = el('div', 'pc-thumb'); var i = new Image(); i.src = img; i.alt = alt; i.loading = 'lazy'; i.decoding = 'async'; im.appendChild(i); c.appendChild(im);
+      var b = el('div', 'pc-body'); b.appendChild(el('span', 'pc-kind', kind)); b.appendChild(el('h4', null, title)); b.appendChild(el('p', null, meta)); c.appendChild(b);
+      if (!reduced) c.style.animationDelay = (pb.querySelectorAll('.pc-row').length * 120) + 'ms';
       return c;
     }
+    var DAYS = ['M', 'T', 'W', 'T', 'F', 'S', 'S'], DAYN = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    var ON = { 2: [0, 3], 3: [0, 2, 4], 4: [0, 1, 3, 5], 5: [0, 1, 2, 3, 4] };
+    var GOALN = { strong: 'Get stronger', tone: 'Tone and sculpt', energy: 'More energy', habit: 'Build a habit' };
     function build() {
       var T = +pick.time, N = +pick.days;
       var pool = DATA.w.filter(function (w) { return !SKIP.test(w.t) && w.g.indexOf('stretch') < 0; });
@@ -114,17 +118,21 @@
       else recs.sort(function (a, b) { return b.p - a.p; });
       var r = recs[h(pick.goal + T) % Math.min(3, recs.length)];
       var mv = DATA.mind.filter(function (x) { return x.t === MIND[pick.goal]; })[0] || DATA.mind[0];
+      var on = ON[N] || ON[3];
+      var wk = pb.querySelector('[data-pb-week]'); wk.innerHTML = '';
+      DAYS.forEach(function (d, k) { var li = el('li', on.indexOf(k) > -1 ? 'on' : null); li.appendChild(el('span', null, d)); li.setAttribute('aria-label', DAYN[k] + (on.indexOf(k) > -1 ? ': workout' : ': rest')); if (!reduced) li.style.animationDelay = (k * 50) + 'ms'; wk.appendChild(li); });
+      pb.querySelector('[data-pb-badge]').textContent = N + ' days \u00b7 ' + T + ' min';
+      pb.querySelector('[data-pb-sum]').textContent = DAYN[on[0]] + ' \u00b7 ' + GOALN[pick.goal];
       var day = pb.querySelector('[data-pb-day]'); day.innerHTML = '';
-      day.appendChild(card('Workout', THUMB(w.id), w.t + ' workout with Rebecca', w.t, w.m + ' min workout'));
-      day.appendChild(card('Recipe', 'img/recipes/' + r.k + '.jpg', r.t, r.t, r.meal + ' · ' + r.m + ' min · ' + r.p + 'g protein'));
-      day.appendChild(card('Mindset', THUMB(mv.id), mv.t + ' video', mv.t, mv.m + ' min video'));
-      var sum = pb.querySelector('[data-pb-sum]'); if (!sum) { sum = el('p', 'pb-sum'); sum.setAttribute('data-pb-sum', ''); day.parentNode.insertBefore(sum, day); }
-      sum.textContent = N + ' days a week, about ' + T + ' minutes a day. Here’s what one of those days could look like:';
+      day.appendChild(card('Morning', 'Workout', THUMB(w.id), w.t + ' workout with Rebecca', w.t, w.m + ' min workout'));
+      day.appendChild(card(r.meal === 'Breakfast' ? 'Breakfast' : 'Lunch', 'Recipe', 'img/recipes/' + r.k + '.jpg', r.t, r.t, r.m + ' min \u00b7 ' + r.p + 'g protein'));
+      day.appendChild(card('Evening', 'Mindset', THUMB(mv.id), mv.t + ' video', mv.t, mv.m + ' min video'));
       pb.querySelector('[data-pb-out]').hidden = false;
     }
-    pb.querySelector('[data-pb-go]').addEventListener('click', function () {
-      data().then(build).catch(function () { var o = pb.querySelector('[data-pb-out]'); o.hidden = false; o.querySelector('[data-pb-day]').textContent = 'That didn’t work. Please try again.'; });
-    });
+    var outEl = pb.querySelector('[data-pb-out]');
+    function run(flash) { data().then(function () { build(); if (flash && !reduced) { outEl.classList.remove('flash'); void outEl.offsetWidth; outEl.classList.add('flash'); } }).catch(function () { outEl.querySelector('[data-pb-day]').textContent = 'That didn\u2019t work. Please try again.'; }); }
+    pb.querySelector('[data-pb-go]').addEventListener('click', function () { run(true); if (window.innerWidth < 900) outEl.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' }); });
+    if (IO) { var io2 = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { io2.disconnect(); run(false); } }, { rootMargin: '300px' }); io2.observe(pb); } else run(false);
   }
 
   /* 5. Ask BURN AI: a little live chat demo, built from real BURN content, plays when the card is on screen */

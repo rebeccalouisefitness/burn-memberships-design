@@ -1010,3 +1010,4 @@ html[data-burn-checkout="stripe"] .promo{display:block}
   .hero .quiz-link{color:var(--mauveDeep);text-decoration-color:var(--mauveSoft)}
 }
 @media (prefers-reduced-motion:reduce){.cy-dot{transition:none}.ai-b{transition:none}}
+.sec-head .why-h{max-width:none}

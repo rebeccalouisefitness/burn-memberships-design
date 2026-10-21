@@ -81,7 +81,7 @@
   /* 4. Plan builder: goal, days, time -> a SAMPLE DAY (real workout, recipe and mindset video) */
   var pb = document.querySelector('[data-plan-builder]');
   if (pb) {
-    var pick = { stage: 'general', tri: '2', pp: '1', goal: 'strong', days: '3', time: '30' };
+    var pick = { stage: 'general', tri: '2', pp: '1', goal: 'strong', days: '3', time: '30', diet: 'none' };
     function whenRows() { pb.querySelectorAll('[data-pb-when]').forEach(function (r) { r.hidden = r.getAttribute('data-pb-when') !== pick.stage; }); }
     pb.querySelectorAll('[data-pb]').forEach(function (g) {
       g.addEventListener('click', function (e) {
@@ -95,7 +95,7 @@
       energy: ['cardio', 'cardio & hiit', 'hiit', 'burn', 'full body', 'kickboxing'], habit: ['beginner', 'full body', 'no equipment', 'bodyweight'] };
     var MIND = { strong: 'Raise Your Standards Mindset', tone: 'Vision And Goal Setting Mindset', energy: 'Clarity Mindset', habit: 'Showing Up Mindset' };
     function fits(w, T) { return T <= 10 ? (w.m >= 8 && w.m <= 15) : (w.m >= T - 8 && w.m <= T + 6); }
-    function score(w) { if (pick.goal === 'habit' && (w.g.indexOf('advanced') > -1 || /advanced|extreme/i.test(w.t))) return -1; var gs = GOAL[pick.goal]; return w.g.filter(function (t) { return gs.indexOf(t) > -1; }).length; }
+    function score(w) { if (pick.stage === 'menopause') return w.g.filter(function (t) { return GOAL.strong.indexOf(t) > -1; }).length; if (pick.goal === 'habit' && (w.g.indexOf('advanced') > -1 || /advanced|extreme/i.test(w.t))) return -1; var gs = GOAL[pick.goal]; return w.g.filter(function (t) { return gs.indexOf(t) > -1; }).length; }
     function card(when, kind, img, alt, title, meta) {
       var c = el('article', 'pc-row'); c.appendChild(el('span', 'pc-when', when));
       var im = el('div', 'pc-thumb'); var i = new Image(); i.src = img; i.alt = alt; i.loading = 'lazy'; i.decoding = 'async'; im.appendChild(i); c.appendChild(im);
@@ -114,7 +114,9 @@
       list.sort(function (a, b) { return score(b) - score(a) || h(a.t + pick.goal + T + N) - h(b.t + pick.goal + T + N); });
       var w = list[0], wMeta = w ? w.m + ' min workout' : '';
       var L = DATA.luna || { pre: [], pp: [] }, TRI = { 1: '1st', 2: '2nd', 3: '3rd' }[pick.tri];
-      if (pick.stage === 'pregnant' || pick.stage === 'postpartum') {
+      if (pick.stage === 'menopause' && w) wMeta = w.m + ' min \u00b7 strength for menopause';
+      if (pick.stage === 'postpartum' && pick.pp === '13' && w) wMeta = w.m + ' min \u00b7 after the 12-month program';
+      if (pick.stage === 'pregnant' || (pick.stage === 'postpartum' && pick.pp !== '13')) {
         var lp = pick.stage === 'pregnant'
           ? L.pre.filter(function (x) { return x.tri.indexOf(+pick.tri) > -1; })
           : L.pp.filter(function (x) { var a = +pick.pp; return a === 1 ? x.ph <= 3 : a === 4 ? (x.ph >= 4 && x.ph <= 6) : x.ph >= 7; });
@@ -122,20 +124,22 @@
         if (lp[0]) { w = { id: lp[0].id, t: lp[0].t, m: lp[0].m }; wMeta = lp[0].m + ' min · ' + (pick.stage === 'pregnant' ? TRI + ' trimester' : '12-month postpartum program'); }
       }
       var recs = DATA.rec.slice();
+      if (pick.diet !== 'none' && pick.diet !== 'protein') { var dr = recs.filter(function (x) { return (x.tags || []).indexOf(pick.diet) > -1; }); if (dr.length) recs = dr; }
       if (pick.goal === 'energy') recs.sort(function (a, b) { return (b.meal === 'Breakfast') - (a.meal === 'Breakfast') || a.m - b.m; });
       else if (pick.goal === 'habit') recs.sort(function (a, b) { return a.m - b.m || b.p - a.p; });
       else recs.sort(function (a, b) { return b.p - a.p; });
-      var r = recs[h(pick.goal + T) % Math.min(3, recs.length)];
+      if (pick.diet === 'protein') recs.sort(function (a, b) { return b.p - a.p; });
+      var r = recs[pick.diet === 'protein' ? 0 : h(pick.goal + T) % Math.min(3, recs.length)];
       var mv = DATA.mind.filter(function (x) { return x.t === MIND[pick.goal]; })[0] || DATA.mind[0];
       var on = ON[N] || ON[3];
       var wk = pb.querySelector('[data-pb-week]'); wk.innerHTML = '';
       DAYS.forEach(function (d, k) { var li = el('li', on.indexOf(k) > -1 ? 'on' : null); li.appendChild(el('span', null, d)); li.setAttribute('aria-label', DAYN[k] + (on.indexOf(k) > -1 ? ': workout' : ': rest')); if (!reduced) li.style.animationDelay = (k * 50) + 'ms'; wk.appendChild(li); });
       pb.querySelector('[data-pb-badge]').textContent = N + ' days \u00b7 ' + T + ' min';
-      pb.querySelector('[data-pb-sum]').textContent = DAYN[on[0]] + ' \u00b7 ' + (pick.stage === 'pregnant' ? TRI + ' trimester' : pick.stage === 'postpartum' ? 'Postpartum' : GOALN[pick.goal]);
+      pb.querySelector('[data-pb-sum]').textContent = DAYN[on[0]] + ' \u00b7 ' + (pick.stage === 'pregnant' ? TRI + ' trimester' : pick.stage === 'postpartum' ? 'Postpartum' : pick.stage === 'menopause' ? 'Menopause' : GOALN[pick.goal]);
       var cyc = pb.querySelector('.pc-cycle'); if (cyc) cyc.hidden = pick.stage !== 'general';
       var day = pb.querySelector('[data-pb-day]'); day.innerHTML = '';
-      day.appendChild(card('Morning', pick.stage === 'pregnant' ? 'Pregnancy' : pick.stage === 'postpartum' ? 'Postpartum' : 'Workout', THUMB(w.id), w.t + ' workout with Rebecca', w.t, wMeta));
-      day.appendChild(card(r.meal === 'Breakfast' ? 'Breakfast' : 'Lunch', 'Recipe', 'img/recipes/' + r.k + '.jpg', r.t, r.t, r.m + ' min \u00b7 ' + r.p + 'g protein'));
+      day.appendChild(card('Morning', pick.stage === 'pregnant' ? 'Pregnancy' : pick.stage === 'postpartum' ? 'Postpartum' : pick.stage === 'menopause' ? 'Menopause' : 'Workout', THUMB(w.id), w.t + ' workout with Rebecca', w.t, wMeta));
+      day.appendChild(card(r.meal === 'Breakfast' ? 'Breakfast' : 'Lunch', 'Recipe', 'img/recipes/' + r.k + '.jpg', r.t, r.t, r.m + ' min \u00b7 ' + r.p + 'g protein' + (pick.diet !== 'none' && pick.diet !== 'protein' && (r.tags || []).indexOf(pick.diet) > -1 ? ' \u00b7 ' + (pick.diet === 'Gluten Free' ? 'gluten-free' : pick.diet.toLowerCase()) : '')));
       day.appendChild(card('Evening', 'Mindset', THUMB(mv.id), mv.t + ' video', mv.t, mv.m + ' min video'));
       pb.querySelector('[data-pb-out]').hidden = false;
     }
@@ -185,17 +189,38 @@
     if (IO && !reduced) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; if (visible) start(); }, { threshold: 0.4 }).observe(chat);
   }
 
-  /* 5b. Train with your cycle: the marker moves round the ring and the matching phase lights up */
+  /* 5b. Train with your cycle (Rebecca 22 Oct): every phase can be tapped; each shows its line and the workout the app picks.
+        The ring turns on its own until she taps, then it stays where she put it. */
   var ring = document.querySelector('[data-cycle-ring]');
   if (ring) {
-    var PH = [{ n: 'Menstrual', d: 3, a: 30 }, { n: 'Follicular', d: 9, a: 115 }, { n: 'Ovulatory', d: 15, a: 195 }, { n: 'Luteal', d: 22, a: 285 }];
-    var cards = document.querySelectorAll('.cy-phases li'), dot = ring.querySelector('.cy-dot'), dayEl = ring.querySelector('[data-cy-day]'), phEl = ring.querySelector('[data-cy-phase]');
-    var idx = 0, timer = null;
-    function show(i) { idx = i; var p = PH[i]; dot.style.transform = 'rotate(' + p.a + 'deg)'; dayEl.textContent = 'Day ' + p.d; phEl.textContent = p.n; cards.forEach(function (c, j) { c.classList.toggle('on', j === i); }); }
-    cards.forEach(function (c, j) { c.addEventListener('mouseenter', function () { show(j); }); c.addEventListener('click', function () { show(j); }); });
+    var PH = [
+      { n: 'Menstrual', d: 3, a: 30, line: '<b>Rest is training too.</b> Walking, mobility, gentle Pilates and lighter strength. <strong>Modify, don’t skip.</strong>', tags: ['stretch', 'yoga'], beg: true },
+      { n: 'Follicular', d: 9, a: 115, line: '<b>Build.</b> Your energy is often rising. Add more weight, try HIIT or learn new moves.', tags: ['cardio & hiit', 'hiit', 'cardio'] },
+      { n: 'Ovulation', d: 15, a: 195, line: '<b>Peak.</b> Often your strongest days. Go for it! Just warm up properly.', tags: ['strength', 'weights'] },
+      { n: 'Luteal', d: 22, a: 285, line: '<b>Keep it steady, then ease off.</b> Later on, go lighter and focus on rest and sleep.', tags: ['pilates', 'barre'] }
+    ];
+    var tabs = document.querySelectorAll('.cy-tabs [data-ph]'), dot = ring.querySelector('.cy-dot'), dayEl = ring.querySelector('[data-cy-day]'), phEl = ring.querySelector('[data-cy-phase]');
+    var lineEl = document.querySelector('[data-cy-line]'), rec = document.querySelector('[data-cy-rec]');
+    var idx = 0, timer = null, userTapped = false;
+    function pickFor(p) {
+      if (!DATA) return null;
+      var c = DATA.w.filter(function (w) { return w.m >= 10 && w.m <= 32 && w.g.some(function (t) { return p.tags.indexOf(t) > -1; }) && (!p.beg || (w.g.indexOf('advanced') < 0 && !/advanced/i.test(w.t))) && !/pain/i.test(w.t); });
+      return c[0] || null;
+    }
+    function show(i) {
+      idx = i; var p = PH[i];
+      dot.style.transform = 'rotate(' + p.a + 'deg)'; dayEl.textContent = 'Day ' + p.d; phEl.textContent = p.n;
+      tabs.forEach(function (t, j) { var on = j === i; t.classList.toggle('on', on); t.setAttribute('aria-selected', on ? 'true' : 'false'); });
+      if (lineEl) lineEl.innerHTML = p.line;
+      var w = pickFor(p);
+      if (rec && w) { rec.hidden = false; rec.querySelector('[data-cy-thumb]').src = THUMB(w.id); rec.querySelector('[data-cy-w]').textContent = w.t; rec.querySelector('[data-cy-m]').textContent = w.m + ' min · for your ' + p.n.toLowerCase() + ' phase'; }
+    }
+    tabs.forEach(function (t, j) { t.addEventListener('click', function () { userTapped = true; clearInterval(timer); timer = null; show(j); }); });
     show(0);
-    if (!reduced && IO) new IntersectionObserver(function (es) { if (es[0].isIntersecting) { if (!timer) timer = setInterval(function () { show((idx + 1) % PH.length); }, 3200); } else { clearInterval(timer); timer = null; } }, { threshold: 0.3 }).observe(ring);
+    data().then(function () { show(idx); }).catch(function () {});
+    if (!reduced && IO) new IntersectionObserver(function (es) { if (es[0].isIntersecting && !userTapped) { if (!timer) timer = setInterval(function () { show((idx + 1) % PH.length); }, 3600); } else { clearInterval(timer); timer = null; } }, { threshold: 0.3 }).observe(ring);
   }
+
 
   /* 6. "Find your perfect workout": tapping a category opens real BURN workouts in it */
   var MAP = { 'full body': ['full body'], legs: ['legs'], arms: ['arms'], core: ['core'], 'lower body': ['lower body'], glutes: ['glutes'], 'upper body': ['upper body'],

@@ -316,57 +316,68 @@
      ===================================================================== */
   /* Rebecca 22 Oct: same order as the app's onboarding - life stage FIRST, then a question that branches from it,
      then days and time, then how much guidance. Pregnant / postpartum / menopause -> BURN Complete (the life-stage programs). */
+  /* Rebecca 22 Oct: life stage first (like the app's onboarding), then a question for that stage, days and time, then for
+     general fitness two questions that really personalise it (cycle, how she likes to train, what keeps her going).
+     Pregnant / postpartum / menopause -> BURN Complete (that is where those programs live). */
   var Q_STAGE = { id: 'stage', q: 'What’s your life stage?', opts: [
-    { v: 'general', t: 'General fitness', s: 'I want to get fitter, stronger and feel great' }, { v: 'pregnant', t: 'Pregnant', s: 'Training through pregnancy' },
+    { v: 'general', t: 'General fitness', s: 'I want to get fitter, stronger and feel amazing' }, { v: 'pregnant', t: 'Pregnant', s: 'Training through pregnancy' },
     { v: 'postpartum', t: 'Postpartum', s: 'Rebuilding after birth' }, { v: 'menopause', t: 'Menopause', s: 'Perimenopause, menopause or post' }] };
   var Q_BRANCH = {
     general: { id: 'goal', q: 'What are you working toward?', sub: 'Pick the one that matters most right now.', opts: [{ v: 'weight', t: 'Lose weight' }, { v: 'tone', t: 'Tone up' }, { v: 'muscle', t: 'Build muscle' }] },
-    pregnant: { id: 'tri', q: 'How far along are you?', sub: 'So every workout we suggest is right for you now.', opts: [{ v: '1', t: '1st trimester', s: 'Weeks 1 to 13' }, { v: '2', t: '2nd trimester', s: 'Weeks 14 to 27' }, { v: '3', t: '3rd trimester', s: 'Week 28 onwards' }] },
-    postpartum: { id: 'pp', q: 'How long since you gave birth?', sub: 'So we start you in the right place in the 12-month program.', opts: [{ v: '0', t: '0 to 3 months' }, { v: '3', t: '3 to 6 months' }, { v: '6', t: '6 to 12 months' }] },
+    pregnant: { id: 'tri', q: 'How far along are you?', sub: 'So every workout is right for you now.', opts: [{ v: '1', t: '1st trimester', s: 'Weeks 1 to 13' }, { v: '2', t: '2nd trimester', s: 'Weeks 14 to 27' }, { v: '3', t: '3rd trimester', s: 'Week 28 onwards' }] },
+    postpartum: { id: 'pp', q: 'How long since you gave birth?', sub: 'So we start you in the right place.', opts: [{ v: '0', t: '0 to 3 months' }, { v: '3', t: '3 to 6 months' }, { v: '6', t: '6 to 12 months' }, { v: '12', t: '12+ months' }] },
     menopause: { id: 'meno', q: 'What are you most focused on?', opts: [{ v: 'strength', t: 'Strength & bone health' }, { v: 'energy', t: 'Energy levels' }, { v: 'weight', t: 'Weight changes' }, { v: 'sleep', t: 'Sleep & recovery' }, { v: 'tone', t: 'Tone up' }] }
   };
-  var Q_DAYS = { id: 'days', q: 'How many days a week can you work out?', opts: [{ v: '2', t: '2 days' }, { v: '3', t: '3 days' }, { v: '4', t: '4 days' }, { v: '5', t: '5 or more' }] };
+  var Q_DAYS = { id: 'days', q: 'How many days a week do you want to work out?', opts: [{ v: '2', t: '2 days' }, { v: '3', t: '3 days' }, { v: '4', t: '4 days' }, { v: '5', t: '5 or more' }] };
   var Q_TIME = { id: 'time', q: 'How much time do you have?', opts: [{ v: '10', t: '10 minutes' }, { v: '20', t: '20 minutes' }, { v: '30', t: '30 minutes' }, { v: '40', t: '40 minutes or more' }] };
-  var Q_GUIDE = { id: 'guide', q: 'How much guidance do you want?', opts: [
-    { v: 'self', t: 'I’ll follow along with everyone else', s: 'The monthly challenge, 40+ programs and the full library' },
-    { v: 'schedule', t: 'I want a bit more control', s: 'Train with your cycle, build my own workouts and join live classes', w: 'plus' },
-    { v: 'personal', t: 'I want the ultimate: a plan built around me', s: 'My BURN plan, built for you', w: 'complete' }] };
+  var Q_CYCLE = { id: 'cycle', q: 'Would you like your workouts to follow your cycle?', sub: 'Your energy can change through the month. We can match your workouts to it.', opts: [
+    { v: 'yes', t: 'Yes, I’d love that', w: 'plus' }, { v: 'no', t: 'Not right now' }] };
+  var Q_STYLE = { id: 'style', q: 'How do you like to train?', opts: [
+    { v: 'follow', t: 'Press play and follow along', s: 'The monthly challenge and 40+ programs' },
+    { v: 'mix', t: 'Mix it up my way', s: 'Build my own workouts, plan my week and join live classes', w: 'plus' },
+    { v: 'plan', t: 'Tell me exactly what to do', s: 'A plan made just for me, and someone to ask any time', w: 'complete' }] };
+  var Q_KEEP = { id: 'keep', q: 'What keeps you going?', opts: [
+    { v: 'community', t: 'Doing it with other women', s: 'The community and the monthly challenge' },
+    { v: 'progress', t: 'Seeing my progress', s: 'Streaks, stats and achievements', w: 'plus' },
+    { v: 'rewards', t: 'Being rewarded for showing up', s: 'Points you can spend in the rewards store', w: 'complete' }] };
   function quizQs(a) {
     var st = a.stage || 'general', list = [Q_STAGE, Q_BRANCH[st] || Q_BRANCH.general, Q_DAYS, Q_TIME];
-    if (st === 'general') list.push(Q_GUIDE);
+    if (st === 'general') list.push(Q_CYCLE, Q_STYLE, Q_KEEP);
     return list;
   }
   var QUIZ = quizQs({});
-  var GOAL_TXT = { weight: 'losing weight', tone: 'toning up', muscle: 'building muscle' };
   function quizResult(a) {
-    if (a.stage === 'pregnant' || a.stage === 'postpartum' || a.stage === 'menopause' || a.guide === 'personal') return 'burncomplete';
-    if (a.guide === 'schedule') return 'burnplus';
+    if (a.stage === 'pregnant' || a.stage === 'postpartum' || a.stage === 'menopause' || a.style === 'plan' || a.keep === 'rewards') return 'burncomplete';
+    if (a.cycle === 'yes' || a.style === 'mix' || a.keep === 'progress') return 'burnplus';
     return 'burn';
   }
   window.burnQuizResult = quizResult; // exposed for testing all paths
+  /* "This is too much for me": Complete -> BURN+ -> BURN. Not offered when pregnant or postpartum (those programs are only in Complete). */
   var QUIZ_DOWN = { burncomplete: 'burnplus', burnplus: 'burn' };
-  function planLine(a) {
-    var d = a.days ? (a.days === '5' ? '5 or more days' : a.days + ' days') + ' a week' : '', t = a.time ? ', about ' + a.time + ' minutes a day' : '';
-    if (a.stage === 'pregnant') return 'Your plan: ' + ({ 1: '1st', 2: '2nd', 3: '3rd' }[a.tri] || '') + ' trimester workouts, ' + d + t + '.';
-    if (a.stage === 'postpartum') return 'Your plan: the 12-month postpartum program, starting ' + ({ 0: 'at the beginning', 3: 'around month 3', 6: 'around month 6' }[a.pp] || 'where you are') + ', ' + d + t + '.';
-    if (a.stage === 'menopause') return 'Your plan: Strong Through Menopause, ' + d + t + '.';
-    return d ? 'Your plan: ' + d + t + (GOAL_TXT[a.goal] ? ', focused on ' + GOAL_TXT[a.goal] : '') + '.' : '';
+  var GOAL_TXT = { weight: 'lose weight', tone: 'tone up', muscle: 'build muscle' };
+  var MENO_TXT = { strength: 'strength and bone health', energy: 'your energy', weight: 'weight changes', sleep: 'sleep and recovery', tone: 'toning up' };
+  function whyYou(a) {
+    var d = a.days ? (a.days === '5' ? '5 or more days' : a.days + ' days') + ' a week' : '', t = a.time ? (a.time === '40' ? '40 minutes or more' : 'about ' + a.time + ' minutes') : '';
+    var wk = d && t ? d + ', ' + t + ' at a time' : d || t;
+    if (a.stage === 'pregnant') return 'You’re in your ' + ({ 1: '1st', 2: '2nd', 3: '3rd' }[a.tri] || '') + ' trimester and want to train ' + wk + '. I’ve got you, with workouts made for every week of your pregnancy.';
+    if (a.stage === 'postpartum') return a.pp === '12' ? 'You’re 12+ months postpartum and ready to train ' + wk + '. Let’s keep rebuilding your strength, at your pace.' : 'You’re rebuilding after birth and want to train ' + wk + '. My 12-month postpartum program starts you exactly where you are.';
+    if (a.stage === 'menopause') return 'You want to focus on ' + (MENO_TXT[a.meno] || 'feeling strong') + ' and train ' + wk + '. Strong Through Menopause was made for exactly this.';
+    return 'You want to ' + (GOAL_TXT[a.goal] || 'feel amazing') + ' and train ' + wk + (a.cycle === 'yes' ? ', with workouts that follow your cycle' : '') + '.';
   }
-  function quizWhy(tier, a, dropped) {
-    if (tier === 'burncomplete') {
-      if (!dropped && a.stage === 'pregnant') return 'Your pregnancy workouts by trimester are part of BURN Complete, with My BURN plan and everything in BURN+.';
-      if (!dropped && a.stage === 'postpartum') return 'The 12-month postpartum program is part of BURN Complete, with My BURN plan and everything in BURN+.';
-      if (!dropped && a.stage === 'menopause') return 'Strong Through Menopause and menopause tracking are part of BURN Complete, with My BURN plan and everything in BURN+.';
-      return 'BURN Complete is your ultimate personalised membership: My BURN plan built around you, Ask BURN AI and points for the store, plus everything in BURN+.';
+  function quizFeats(T, a) {
+    var cyc = a.cycle === 'yes' || a.stage === 'menopause';
+    if (T === 'burncomplete') {
+      var f = ['🗓️ My BURN plan, made just for you'];
+      if (a.stage === 'pregnant') f.push('🤰 Pregnancy workouts for your trimester');
+      if (a.stage === 'postpartum') f.push('👶 My 12-month postpartum program');
+      if (a.stage === 'menopause') f.push('🌿 Strong Through Menopause, plus tracking how you feel');
+      if (a.cycle === 'yes') f.push('🌙 Workouts picked for your cycle');
+      f.push('💬 Ask BURN AI anything, 24/7', '🎁 Points and rewards for showing up', '🔥 A new challenge every month, with the community', '🥗 Recipes for the way you eat');
+      return f;
     }
-    if (tier === 'burnplus') return 'BURN+ gives you more control: train with your cycle, build your own workouts, schedule your week and join live classes.';
-    return 'BURN gives you 40+ programs, a new challenge every month, recipes and the community. Follow along with everyone else.';
+    if (T === 'burnplus') return [cyc ? '🌙 Workouts that follow your cycle' : '🌙 Training that can follow your cycle', '🎥 Live classes with everyone', '🛠️ Build your own workouts and plan your week', '📈 Your streaks, stats and achievements', '📖 The Daily Read and your gratitude journal', '🔥 A new challenge every month, with the community'];
+    return ['🔥 A new challenge every month', '💪 40+ programs, from 10 to 40 minutes', '🥗 Recipes for the way you eat', '💜 The BURN community, cheering you on', '❤️ Save your favourite workouts and recipes'];
   }
-  var QUIZ_FEATS = {
-    burn: ['Monthly challenges', '40+ workout programs', 'Recipes for the way you eat', 'The BURN community', 'Save your favourites'],
-    burnplus: ['Everything in BURN', 'Train with your cycle', 'Join live classes', 'Build your own workouts & schedule your week', 'Daily Read, gratitude journal and your stats'],
-    burncomplete: ['Everything in BURN+', 'My BURN plan, built for you', 'Pregnancy by trimester & the 12-month postpartum program', 'Strong Through Menopause & menopause tracking', 'Ask BURN AI and points for the store']
-  };
   var dlg = null, step = 0, answers = {}, quizEntry = 'unknown', resultTier = null, offerTier = null;
   function el(tag, attrs, html) { var x = document.createElement(tag); if (attrs) Object.keys(attrs).forEach(function (k) { x.setAttribute(k, attrs[k]); }); if (html != null) x.innerHTML = html; return x; }
   function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
@@ -381,7 +392,7 @@
       if (e.target === dlg) { closeQuiz(); return; }               // backdrop click
       if (e.target.closest('[data-qz-close]')) { closeQuiz(); return; }
       var o = e.target.closest('[data-qz-opt]');
-      if (o) { var qid = QUIZ[step].id; answers[qid] = o.getAttribute('data-qz-opt'); if (qid === 'stage') { delete answers.goal; delete answers.tri; delete answers.pp; delete answers.meno; delete answers.guide; } QUIZ = quizQs(answers); step++; renderStep(); return; }
+      if (o) { var qid = QUIZ[step].id; answers[qid] = o.getAttribute('data-qz-opt'); if (qid === 'stage') { ['goal', 'tri', 'pp', 'meno', 'cycle', 'style', 'keep'].forEach(function (k) { delete answers[k]; }); } QUIZ = quizQs(answers); step++; renderStep(); return; }
       if (e.target.closest('[data-qz-back]')) { if (step >= QUIZ.length && offerTier && offerTier !== resultTier) { offerTier = resultTier; renderStep(); return; } if (step > 0) { step--; offerTier = null; renderStep(); } return; }
       if (e.target.closest('[data-qz-down]')) { if (QUIZ_DOWN[offerTier]) { offerTier = QUIZ_DOWN[offerTier]; renderStep(); } return; }
       if (e.target.closest('[data-qz-restart]')) { answers = {}; QUIZ = quizQs({}); step = 0; resultTier = null; offerTier = null; renderStep(); return; }
@@ -401,34 +412,36 @@
     if (step < QUIZ.length) {
       var Q = QUIZ[step];
       bar.style.width = Math.round((step / QUIZ.length) * 100) + '%';
-      var h = '<div class="muted" style="font-size:13px">Question ' + (step + 1) + ' of ' + QUIZ.length + '</div>' +
+      var h = '<div class="qz-nav qz-nav-top">' + (step > 0 ? '<button type="button" class="textbtn" data-qz-back>&larr; Back</button>' : '<span></span>') +
+        '<span class="muted" style="font-size:13px">Question ' + (step + 1) + ' of ' + QUIZ.length + '</span></div>' +
         '<h2 tabindex="-1" data-qz-h>' + esc(Q.q) + '</h2>' + (Q.sub ? '<p class="sub">' + esc(Q.sub) + '</p>' : '') +
         '<div class="qz-opts" role="group" aria-label="' + esc(Q.q) + '">';
       Q.opts.forEach(function (o) {
         h += '<button type="button" class="qz-opt" data-qz-opt="' + o.v + '" aria-pressed="' + (answers[Q.id] === o.v ? 'true' : 'false') + '">' + esc(o.t) + (o.s ? '<small>' + esc(o.s) + '</small>' : '') + '</button>';
       });
-      h += '</div><div class="qz-nav">' + (step > 0 ? '<button type="button" class="textbtn" data-qz-back>&larr; Back</button>' : '<span></span>') +
-        '<span class="muted" style="font-size:13px">About 30 seconds</span></div>';
+      h += '</div><p class="muted qz-time">About 30 seconds</p>';
       body.innerHTML = h;
     } else {
       bar.style.width = '100%';
       var first = resultTier === null;
       resultTier = quizResult(answers);
       if (!offerTier) offerTier = resultTier;
-      var T = offerTier, P = PRICES[T], dropped = T !== resultTier, down = QUIZ_DOWN[T];
-      var lis = QUIZ_FEATS[T].map(function (f) { return '<li>' + esc(f) + '</li>'; }).join('');
-      body.innerHTML = '<div class="muted" style="font-size:13px">' + (dropped ? 'Here’s the next one down' : 'Your result') + '</div>' +
-        '<h2 tabindex="-1" data-qz-h>' + (dropped ? 'How about ' + esc(P.name) + '?' : esc(P.name) + ' is the membership for you') + '</h2>' +
+      var T = offerTier, P = PRICES[T], dropped = T !== resultTier;
+      var lockStage = answers.stage === 'pregnant' || answers.stage === 'postpartum';
+      var down = lockStage ? null : QUIZ_DOWN[T];
+      var lis = quizFeats(T, answers).map(function (f) { return '<li>' + esc(f) + '</li>'; }).join('');
+      var title = dropped ? esc(P.name) + ' is also a really great one for you' : esc(P.name) + ' is perfect for you';
+      var lead = dropped ? 'Totally fine! ' + esc(P.name) + ' still gives you so much:' : esc(whyYou(answers)) + ' Here’s what you get:';
+      body.innerHTML = '<div class="qz-nav qz-nav-top"><button type="button" class="textbtn" data-qz-back>&larr; Back</button><button type="button" class="textbtn" data-qz-restart>Start again</button></div>' +
+        '<div class="muted" style="font-size:13px">' + (dropped ? 'Another great fit' : 'Your result') + '</div>' +
+        '<h2 tabindex="-1" data-qz-h>' + title + '</h2>' +
         '<div class="qz-res">' +
-        '<div class="price"><span class="amt">' + money(shownAmt(T, billing)) + '</span><span class="per">' + perTxt(billing) + '</span>' +
-        (billing === 'annual' ? '<span class="save">Save ' + P.save + '%</span>' : '') + '</div>' +
-        (billing === 'annual' ? '<div class="muted" style="font-size:13px" data-qz-billed>' + money(P.annual) + ' billed yearly</div>' : '') +
-        '<div class="billing" role="group" aria-label="Billing period"><button type="button" data-bill="monthly">Monthly</button><button type="button" data-bill="annual">Annual</button></div>' +
-        (planLine(answers) && !dropped ? '<p class="qz-plan">' + esc(planLine(answers)) + '</p>' : '') + '<p class="why">' + esc(quizWhy(T, answers, dropped)) + '</p><ul>' + lis + '</ul>' +
-        '<p class="qz-ask">Does this work for you?</p>' +
-        '<div class="qz-yesno"><a class="btn block" href="' + joinUrl(T, 'quiz_result') + '" data-qz-join data-join="quiz_result" data-tier="' + T + '">Yes, this is me</a>' +
-        (down ? '<button type="button" class="btn ghost block" data-qz-down>Too much for me</button>' : '') + '</div></div>' +
-        '<div class="qz-nav"><button type="button" class="textbtn" data-qz-back>&larr; Back</button><button type="button" class="textbtn" data-qz-restart>Start again</button></div>';
+        '<p class="why">' + lead + '</p><ul class="qz-feats">' + lis + '</ul>' +
+        '<div class="qz-price"><div class="price"><span class="amt">' + money(shownAmt(T, billing)) + '</span><span class="per">' + perTxt(billing) + '</span></div>' +
+        (billing === 'annual' ? '<div class="muted" style="font-size:13px" data-qz-billed>' + money(P.annual) + ' billed yearly</div>' : '<div class="muted" style="font-size:13px">or ' + money(P.annual) + ' a year</div>') +
+        '<div class="billing" role="group" aria-label="Billing period"><button type="button" data-bill="monthly">Monthly</button><button type="button" data-bill="annual">Annual</button></div></div>' +
+        '<div class="qz-yesno"><a class="btn block" href="' + joinUrl(T, 'quiz_result') + '" data-qz-join data-join="quiz_result" data-tier="' + T + '">Yes, it’s for me!</a>' +
+        (down ? '<button type="button" class="btn ghost block" data-qz-down>This is too much for me</button>' : '') + '</div></div>';
       renderBilling();
       if (first) track('quiz_complete', { tier: resultTier, billing: billing, stage: answers.stage || '', goal: answers.goal || '' });
     }

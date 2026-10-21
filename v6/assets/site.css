@@ -1041,3 +1041,48 @@ html[data-burn-checkout="stripe"] .promo{display:block}
 .ai2{align-items:start}
 .ai-photo{align-self:start}
 .ai-photo img{object-position:50% 12%}
+
+/* ===== Round 5 (22 Oct) ===== */
+/* cycle: tappable phases + the app's pick */
+.cy-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 12px}
+.cy-tabs button{appearance:none;display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:9px 16px;min-height:44px;font:600 14px var(--sans);color:var(--ink);cursor:pointer;transition:border-color .2s,box-shadow .2s,background .2s}
+.cy-tabs button i{width:10px;height:10px;border-radius:50%;background:var(--c)}
+.cy-tabs button:nth-child(1){--c:#956C7D}.cy-tabs button:nth-child(2){--c:#CBB4BB}.cy-tabs button:nth-child(3){--c:#C9AE8C}.cy-tabs button:nth-child(4){--c:#B9AA9C}
+.cy-tabs button.on{border-color:var(--c);background:#fff;box-shadow:0 8px 20px -14px rgba(111,76,91,.55)}
+.cy-tabs button:hover{border-color:var(--c)}
+.cy-panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 18px;margin:0 0 16px}
+.cy-line{margin:0;font-size:15px;color:var(--inkSoft)}
+.cy-line b{color:var(--ink)}.cy-line strong{color:var(--mauveDeep)}
+.cy-rec{margin-top:14px;padding-top:14px;border-top:1px solid var(--lineSoft)}
+.cy-rec-k{display:inline-block;background:var(--rose);color:var(--mauveDeep);border-radius:999px;padding:3px 10px;font-size:11.5px;font-weight:600;margin-bottom:10px}
+.cy-rec-card{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:center}
+.cy-rec-card img{width:96px;height:60px;object-fit:cover;border-radius:10px;background:var(--cream)}
+.cy-rec-card b{display:block;font-family:var(--serif);font-size:19px;font-weight:600;line-height:1.2}
+.cy-rec-card span{font-size:13px;color:var(--taupeDeep)}
+/* rewards: plain earn rows, six tiles */
+.rw-earn li{grid-template-columns:38px 1fr}
+.rw-earn b{font-weight:500}
+.rw-grid{grid-template-columns:repeat(3,1fr)}
+.rw-grid li:nth-child(6),.rw-grid li:nth-child(7){grid-column:auto}
+@media (max-width:860px){.rw-grid{grid-template-columns:repeat(2,1fr)}}
+/* nutrition: photos + icons, less text */
+.nut3{display:grid;grid-template-columns:.9fr 1.1fr;gap:28px;align-items:center;padding:20px;overflow:hidden}
+.nut3-photos{display:grid;grid-template-columns:1.2fr 1fr;grid-template-rows:1fr 1fr;gap:8px;height:100%;min-height:260px}
+.nut3-photos img{width:100%;height:100%;object-fit:cover;border-radius:16px;display:block}
+.nut3-photos img:first-child{grid-row:span 2}
+.nut3-body h3{margin:4px 0 8px}
+.nut3-lede{margin:0 0 14px;font-size:15.5px;color:var(--inkSoft)}
+.nut3-lede strong{color:var(--mauveDeep)}
+.nut3-list{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.nut3-list li{display:flex;align-items:center;gap:10px;background:#fff;border-radius:14px;padding:9px 12px}
+.nut3-list b{font-weight:500;font-size:14px}
+.n3-ic{flex:0 0 34px;height:34px;border-radius:10px;background:var(--rose);color:var(--mauveDeep);display:grid;place-items:center}
+.n3-ic svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:760px){.nut3{grid-template-columns:1fr;padding:16px}.nut3-photos{min-height:200px}.nut3-list{grid-template-columns:1fr}}
+/* quiz: Back at the top, results with emoji bullets then price */
+.qz-nav-top{display:flex;justify-content:space-between;align-items:center;margin:0 0 6px}
+.qz-time{font-size:13px;margin:14px 0 0;text-align:center}
+.qz-feats{list-style:none;padding:0;margin:4px 0 16px;display:grid;gap:8px}
+.qz-feats li{background:var(--rose);border-radius:12px;padding:9px 12px;font-size:14.5px;border:0}
+.qz-price{border-top:1px solid var(--lineSoft);padding-top:14px;margin-bottom:14px}
+.qz-yesno{display:grid;gap:8px}

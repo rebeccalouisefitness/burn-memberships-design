@@ -38,7 +38,11 @@
      annual / 12, rounded to cents. BURN 83.99 -> 7.00, BURN+ 167.99 -> 14.00, COMPLETE 224.99 -> 18.75.
      The amount actually charged (and sent to analytics) is still the annual price. */
   var r2 = function (v) { return Math.round((v + 1e-9) * 100) / 100; };
-  Object.keys(PRICES).forEach(function (k) { PRICES[k].annualMonthly = r2(PRICES[k].annual / 12); });
+  /* Rebecca 21 Oct: annual is SHOWCASED as $6.99 / $13.99 / $18.99 a month ("even though it's not exact, this is what
+     we're going to showcase"). Display only: the yearly amount actually billed stays 83.99 / 167.99 / 224.99 and is
+     always shown underneath. */
+  var ANNUAL_SHOWCASE = { burn: 6.99, burnplus: 13.99, burncomplete: 18.99 };
+  Object.keys(PRICES).forEach(function (k) { PRICES[k].annualMonthly = ANNUAL_SHOWCASE[k] || r2(PRICES[k].annual / 12); });
   window.BURN_PRICES = PRICES;
   var money = function (v) { return '$' + v.toFixed(2); };
   /* Brief 19 Oct (item 1): show the ACTUAL annual price (Stripe burn*_annual lookup keys, checked 20 Oct: 83.99 / 167.99 / 224.99 = the LIVE Stripe prices, Rebecca 20 Oct: 'Do the one that is in Stripe'), no derived per-month figure. */

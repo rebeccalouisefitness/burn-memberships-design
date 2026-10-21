@@ -42,11 +42,12 @@
   window.BURN_PRICES = PRICES;
   var money = function (v) { return '$' + v.toFixed(2); };
   /* Brief 19 Oct (item 1): show the ACTUAL annual price (Stripe burn*_annual lookup keys, checked 20 Oct: 83.99 / 167.99 / 224.99 = the LIVE Stripe prices, Rebecca 20 Oct: 'Do the one that is in Stripe'), no derived per-month figure. */
-  var perTxt = function (b) { return b === 'annual' ? '/ year' : '/ month'; };
+  /* Rebecca 21 Oct: always lead with the MONTHLY figure; annual shows its monthly equivalent with the yearly total under it. */
+  var perTxt = function (b) { return '/ month'; };
   /* headline per-month figure for the current billing */
-  var shownAmt = function (t, b) { return b === 'annual' ? PRICES[t].annual : PRICES[t].monthly; };
-  var priceTxt = function (t, b) { return money(shownAmt(t, b)) + (b === 'annual' ? '/year' : '/month'); };
-  var billedTxt = function (t, b) { return b === 'annual' ? 'One payment a year' : 'Billed monthly'; };
+  var shownAmt = function (t, b) { return b === 'annual' ? PRICES[t].annualMonthly : PRICES[t].monthly; };
+  var priceTxt = function (t, b) { return money(shownAmt(t, b)) + '/month'; };
+  var billedTxt = function (t, b) { return b === 'annual' ? money(PRICES[t].annual) + ' billed yearly' : 'or ' + money(PRICES[t].annual) + ' a year'; };
 
   /* ---------------- ANALYTICS: GA4 + Meta Pixel, host-gated ----------------
      IDs below are not BURN's real IDs yet. Tags load ONLY on the production host AND only once both IDs
@@ -158,19 +159,19 @@
     document.querySelectorAll('[data-amt]').forEach(function (el) { var t = el.getAttribute('data-amt'); if (PRICES[t]) el.textContent = money(shownAmt(t, billing)); });
     document.querySelectorAll('[data-per]').forEach(function (el) { el.textContent = perTxt(billing); });
     document.querySelectorAll('[data-pricetxt]').forEach(function (el) { var t = el.getAttribute('data-pricetxt'); if (PRICES[t]) el.textContent = priceTxt(t, billing); });
-    document.querySelectorAll('[data-billedtxt]').forEach(function (el) { var t = el.getAttribute('data-billedtxt'); if (PRICES[t]) el.textContent = billing === 'annual' ? 'One payment a year' : ''; });
+    document.querySelectorAll('[data-billedtxt]').forEach(function (el) { var t = el.getAttribute('data-billedtxt'); if (PRICES[t]) el.textContent = billedTxt(t, billing); });
     document.querySelectorAll('[data-save]').forEach(function (el) {
       var t = el.getAttribute('data-save'); el.textContent = 'Save ' + PRICES[t].save + '%'; el.hidden = billing !== 'annual';
     });
     document.querySelectorAll('[data-alt]').forEach(function (el) {
       var t = el.getAttribute('data-alt'), P = PRICES[t];
-      el.textContent = billing === 'annual' ? 'One payment a year' : 'or ' + money(P.annual) + ' a year';
+      el.textContent = billing === 'annual' ? money(P.annual) + ' billed yearly' : 'or ' + money(P.annual) + ' a year';
     });
     document.querySelectorAll('[data-from]').forEach(function (el) {
-      el.textContent = billing === 'annual' ? 'From ' + money(PRICES.burn.annual) + ' a year' : 'From ' + money(PRICES.burn.monthly) + ' a month';
+      el.textContent = 'From ' + money(PRICES.burn.monthly) + ' a month';
     });
     document.querySelectorAll('[data-sticky-from]').forEach(function (el) {
-      el.textContent = billing === 'annual' ? 'from ' + money(PRICES.burn.annual) + ' a year.' : 'from ' + money(PRICES.burn.monthly) + ' a month.';
+      el.textContent = 'from ' + money(PRICES.burn.monthly) + ' a month.';
     });
   }
   function setBilling(b) {
@@ -338,7 +339,7 @@
     var g = !dropped && GOAL_TXT[a.goal] ? 'For ' + GOAL_TXT[a.goal] + ': ' : '';
     if (tier === 'burncomplete') {
       if (a.stage === 'pregnant' || a.stage === 'postpartum') return g + 'Rebecca’s Luna Bloom pregnancy and postpartum programs are part of BURN COMPLETE, with My BURN plan and everything in BURN+.';
-      return g + 'BURN COMPLETE is the ultimate: My BURN plan built around you, Ask BURN AI and points for the store (coming soon), plus everything in BURN+.';
+      return g + 'BURN COMPLETE is the ultimate: My BURN plan built around you, Ask BURN AI and points for the store, plus everything in BURN+.';
     }
     if (tier === 'burnplus') return g + 'BURN+ gives you more control: build your own workouts, schedule your week and join live classes, with the Daily Read, your gratitude journal and your progress.';
     return g + 'BURN gives you 40+ programs, a new challenge every month, recipes and the community. Follow along with everyone else.';
@@ -346,7 +347,7 @@
   var QUIZ_FEATS = {
     burn: ['Monthly challenges', '40+ workout programs', 'Recipes and the Thrive library', 'Favourites and community chat', 'Daily quote and progress photos'],
     burnplus: ['Everything in BURN', 'Build your own workouts & schedule your week', 'Join live classes', 'Daily Read and gratitude journal', 'Your progress, stats and achievements'],
-    burncomplete: ['Everything in BURN+', 'My BURN plan, built for you (coming soon)', 'Ask BURN AI (coming soon)', 'Points for the store (coming soon)', 'Luna Bloom pregnancy & postpartum']
+    burncomplete: ['Everything in BURN+', 'My BURN plan, built for you', 'Ask BURN AI', 'Points for the store', 'Luna Bloom pregnancy & postpartum']
   };
   var dlg = null, step = 0, answers = {}, quizEntry = 'unknown', resultTier = null, offerTier = null;
   function el(tag, attrs, html) { var x = document.createElement(tag); if (attrs) Object.keys(attrs).forEach(function (k) { x.setAttribute(k, attrs[k]); }); if (html != null) x.innerHTML = html; return x; }
@@ -403,7 +404,7 @@
         '<div class="qz-res">' +
         '<div class="price"><span class="amt">' + money(shownAmt(T, billing)) + '</span><span class="per">' + perTxt(billing) + '</span>' +
         (billing === 'annual' ? '<span class="save">Save ' + P.save + '%</span>' : '') + '</div>' +
-        (billing === 'annual' ? '<div class="muted" style="font-size:13px" data-qz-billed>One payment a year</div>' : '') +
+        (billing === 'annual' ? '<div class="muted" style="font-size:13px" data-qz-billed>' + money(P.annual) + ' billed yearly</div>' : '') +
         '<div class="billing" role="group" aria-label="Billing period"><button type="button" data-bill="monthly">Monthly</button><button type="button" data-bill="annual">Annual</button></div>' +
         '<p class="why">' + esc(quizWhy(T, answers, dropped)) + '</p><ul>' + lis + '</ul>' +
         '<p class="qz-ask">Does this work for you?</p>' +
@@ -513,7 +514,8 @@
       var f = form.elements, first = (f.name.value || '').trim(), email = (f.email.value || '').trim(), err = '';
       if (!first) err = 'Please add your first name.';
       else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) err = 'Please enter a valid email address.';
-      if (!quiet) { errEl.textContent = err; if (err) try { (first ? f.email : f.name).focus(); } catch (x) {} }
+      else if ((f.password.value || '').length < 8) err = 'Your password needs at least 8 characters.';   /* Rebecca 21 Oct: password on this step */
+      if (!quiet) { errEl.textContent = err; if (err) try { (!first ? f.name : err.indexOf('email') > -1 ? f.email : f.password).focus(); } catch (x) {} }
       return !err;
     };
     var setSub = function (sub, push) {
@@ -561,7 +563,6 @@
       track('details_submitted', { tier: pageTierKey, billing: billing });
       document.dispatchEvent(new CustomEvent('burn:details', { detail: { first: (f.name.value || '').trim(), email: (f.email.value || '').trim(), tier: pageTierKey, billing: billing, marketing_opt_in: !!(f.marketing_opt_in && f.marketing_opt_in.checked) } }));
       setSub('pay', true);
-      try { f.password.focus({ preventScroll: true }); } catch (x) {}
     };
     var contBtn = document.querySelector('[data-details-continue]');
     if (contBtn) contBtn.addEventListener('click', goPay);

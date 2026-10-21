@@ -11,7 +11,7 @@
 
   /* 1. Scroll-in reveal */
   if (!reduced && IO) {
-    var els = document.querySelectorAll('.sec-head, .pillar, .wcard, .ccard, .tier, .tour-video, .carousel, .pb, .cs-card, .chall-phone, .faq details, .final .copy, .meet-copy, .review-card');
+    var els = document.querySelectorAll('.sec-head, .pillar, .pillar2, .cphone, .faq-photo, .pb-out, .wcard, .ccard, .tier, .tour-video, .carousel, .pb, .cs-card, .chall-phone, .faq details, .final .copy, .meet-copy, .review-card');
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
@@ -70,52 +70,125 @@
     }, 3500);
   });
 
-  /* 4. Plan builder: pick goal, days and time, then see a sample week made of real BURN workouts */
+  /* Shared data: real BURN workouts, recipes and mindset videos (from the app). Loaded once, on demand. */
+  var DATA = null, dataP = null;
+  function data() { return dataP || (dataP = fetch('assets/plan-workouts.json').then(function (r) { return r.json(); }).then(function (j) { DATA = j; return j; })); }
+  var THUMB = function (id) { return 'https://cdn.jwplayer.com/v2/media/' + id + '/poster.jpg?width=480'; };
+  function el(tag, cls, txt) { var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
+  function h(str) { var x = 7; for (var i = 0; i < str.length; i++) x = (x * 31 + str.charCodeAt(i)) % 100003; return x; }
+  var SKIP = /pain|stretch|yoga|meditat|mobility|cool ?down|warm ?up/i;
+
+  /* 4. Plan builder: goal, days, time -> a SAMPLE DAY (real workout, recipe and mindset video) */
   var pb = document.querySelector('[data-plan-builder]');
   if (pb) {
-    var pick = { goal: 'strong', days: '3', time: '30' }, data = null;
+    var pick = { goal: 'strong', days: '3', time: '30' };
     pb.querySelectorAll('[data-pb]').forEach(function (g) {
       g.addEventListener('click', function (e) {
         var b = e.target.closest('button'); if (!b) return;
         g.querySelectorAll('button').forEach(function (x) { var on = x === b; x.classList.toggle('on', on); x.setAttribute('aria-pressed', on ? 'true' : 'false'); });
         pick[g.getAttribute('data-pb')] = b.getAttribute('data-v');
-        if (!pb.querySelector('[data-pb-out]').hidden) build();
+        if (!pb.querySelector('[data-pb-out]').hidden && DATA) build();
       });
     });
     var GOAL = { strong: ['strength', 'weights', 'upper body', 'back', 'arms'], tone: ['sculpt', 'barre', 'glutes', 'core', 'legs', 'pilates', 'lower body'],
       energy: ['cardio', 'cardio & hiit', 'hiit', 'burn', 'full body', 'kickboxing'], habit: ['beginner', 'full body', 'no equipment', 'bodyweight'] };
-    var DAYS = { 2: ['Mon', 'Thu'], 3: ['Mon', 'Wed', 'Fri'], 4: ['Mon', 'Tue', 'Thu', 'Sat'], 5: ['Mon', 'Tue', 'Wed', 'Fri', 'Sat'] };
-    var FOCUS = ['legs', 'arms', 'core', 'glutes', 'full body', 'upper body', 'lower body', 'back'];
+    var MIND = { strong: 'Raise Your Standards Mindset', tone: 'Vision And Goal Setting Mindset', energy: 'Clarity Mindset', habit: 'Showing Up Mindset' };
     function fits(w, T) { return T <= 10 ? (w.m >= 8 && w.m <= 15) : (w.m >= T - 8 && w.m <= T + 6); }
-    function h(str) { var x = 7; for (var i = 0; i < str.length; i++) x = (x * 31 + str.charCodeAt(i)) % 100003; return x; }
-    var SKIP = /pain|stretch|yoga|meditat|mobility|cool ?down|warm ?up/i;
     function score(w) { if (pick.goal === 'habit' && (w.g.indexOf('advanced') > -1 || /advanced|extreme/i.test(w.t))) return -1; var gs = GOAL[pick.goal]; return w.g.filter(function (t) { return gs.indexOf(t) > -1; }).length; }
+    function card(kind, img, alt, title, meta) {
+      var c = el('article', 'pb-card'); var im = el('div', 'pb-img'); var i = new Image(); i.src = img; i.alt = alt; i.loading = 'lazy'; i.decoding = 'async'; im.appendChild(i);
+      im.appendChild(el('span', 'pb-kind', kind)); c.appendChild(im); var b = el('div', 'pb-body'); b.appendChild(el('h4', null, title)); b.appendChild(el('p', null, meta)); c.appendChild(b);
+      if (!reduced) c.style.animationDelay = (pb.querySelectorAll('.pb-card').length * 110) + 'ms';
+      return c;
+    }
     function build() {
-      var T = +pick.time, N = +pick.days, pool = data.filter(function (w) { return !SKIP.test(w.t) && w.g.indexOf('stretch') < 0; }), list = pool.filter(function (w) { return fits(w, T); });
-      var good = list.filter(function (w) { return score(w) > 0; }); if (good.length >= N) list = good;
-      if (list.length < N) list = pool.slice().sort(function (a, b) { return Math.abs(a.m - T) - Math.abs(b.m - T); }).slice(0, 20);
-      list.sort(function (a, b) { return score(b) - score(a) || h(a.t + pick.goal + T) - h(b.t + pick.goal + T); });
-      var chosen = [], used = {};
-      for (var i = 0; i < list.length && chosen.length < N; i++) {      /* vary the focus day to day */
-        var f = FOCUS.filter(function (x) { return list[i].g.indexOf(x) > -1; })[0] || 'other';
-        if (used[f] && i < list.length - (N - chosen.length)) continue;
-        used[f] = 1; chosen.push(list[i]);
-      }
-      for (i = 0; chosen.length < N && i < list.length; i++) if (chosen.indexOf(list[i]) < 0) chosen.push(list[i]);
-      var ol = pb.querySelector('[data-pb-week]'); ol.innerHTML = '';
-      chosen.forEach(function (w, k) {
-        var li = document.createElement('li');
-        li.innerHTML = '<span class="d"></span><span class="w"></span><span class="m"></span>';
-        li.children[0].textContent = DAYS[N][k]; li.children[1].textContent = w.t; li.children[2].textContent = w.m + ' min';
-        if (!reduced) li.style.animationDelay = k * 90 + 'ms';
-        ol.appendChild(li);
-      });
-      var out = pb.querySelector('[data-pb-out]'); out.hidden = false;
+      var T = +pick.time, N = +pick.days;
+      var pool = DATA.w.filter(function (w) { return !SKIP.test(w.t) && w.g.indexOf('stretch') < 0; });
+      var list = pool.filter(function (w) { return fits(w, T); }); var good = list.filter(function (w) { return score(w) > 0; }); if (good.length) list = good;
+      if (!list.length) list = pool.slice().sort(function (a, b) { return Math.abs(a.m - T) - Math.abs(b.m - T); });
+      list.sort(function (a, b) { return score(b) - score(a) || h(a.t + pick.goal + T + N) - h(b.t + pick.goal + T + N); });
+      var w = list[0];
+      var recs = DATA.rec.slice();
+      if (pick.goal === 'energy') recs.sort(function (a, b) { return (b.meal === 'Breakfast') - (a.meal === 'Breakfast') || a.m - b.m; });
+      else if (pick.goal === 'habit') recs.sort(function (a, b) { return a.m - b.m || b.p - a.p; });
+      else recs.sort(function (a, b) { return b.p - a.p; });
+      var r = recs[h(pick.goal + T) % Math.min(3, recs.length)];
+      var mv = DATA.mind.filter(function (x) { return x.t === MIND[pick.goal]; })[0] || DATA.mind[0];
+      var day = pb.querySelector('[data-pb-day]'); day.innerHTML = '';
+      day.appendChild(card('Workout', THUMB(w.id), w.t + ' workout with Rebecca', w.t, w.m + ' min workout'));
+      day.appendChild(card('Recipe', 'img/recipes/' + r.k + '.jpg', r.t, r.t, r.meal + ' · ' + r.m + ' min · ' + r.p + 'g protein'));
+      day.appendChild(card('Mindset', THUMB(mv.id), mv.t + ' video', mv.t, mv.m + ' min video'));
+      var sum = pb.querySelector('[data-pb-sum]'); if (!sum) { sum = el('p', 'pb-sum'); sum.setAttribute('data-pb-sum', ''); day.parentNode.insertBefore(sum, day); }
+      sum.textContent = N + ' days a week, about ' + T + ' minutes a day. Here’s what one of those days could look like:';
+      pb.querySelector('[data-pb-out]').hidden = false;
     }
     pb.querySelector('[data-pb-go]').addEventListener('click', function () {
-      if (data) return build();
-      fetch('assets/plan-workouts.json').then(function (r) { return r.json(); }).then(function (j) { data = j; build(); })
-        .catch(function () { var o = pb.querySelector('[data-pb-out]'); o.hidden = false; o.querySelector('[data-pb-week]').innerHTML = '<li>That didn&rsquo;t work. Please try again.</li>'; });
+      data().then(build).catch(function () { var o = pb.querySelector('[data-pb-out]'); o.hidden = false; o.querySelector('[data-pb-day]').textContent = 'That didn’t work. Please try again.'; });
+    });
+  }
+
+  /* 5. Ask BURN AI: a little live chat demo, built from real BURN content, plays when the card is on screen */
+  var chat = document.querySelector('[data-ai-chat]');
+  if (chat) {
+    var running = false;
+    function bubble(cls, txt) { var b = el('div', 'ai-b ' + cls); b.textContent = txt || ''; chat.appendChild(b); while (chat.children.length > 4) chat.removeChild(chat.firstChild); return b; }
+    function typeInto(b, txt, done) { if (reduced) { b.textContent = txt; return done(); } var i = 0; (function step() { b.textContent = txt.slice(0, ++i); if (i < txt.length) setTimeout(step, 18); else done(); })(); }
+    function convo() {
+      if (!DATA) return;
+      var w = DATA.w.filter(function (x) { return x.g.indexOf('no equipment') > -1 && x.m >= 15 && x.m <= 24 && !SKIP.test(x.t); })[0] || DATA.w[0];
+      var r = DATA.rec.slice().sort(function (a, b) { return b.p - a.p; })[0];
+      var script = [
+        ['me', 'I’ve only got 20 minutes and no equipment today. What should I do?'],
+        ['ai', 'Try ' + w.t + '. It’s ' + w.m + ' minutes and you don’t need any equipment. Want me to add it to today?'],
+        ['me', 'Yes please! What should I eat after?'],
+        ['ai', r.t + ' is a great one: ' + r.p + 'g of protein, ready in ' + r.m + ' minutes.']
+      ];
+      var k = 0; chat.innerHTML = '';
+      (function next() {
+        if (k >= script.length) { setTimeout(function () { running = false; if (visible) start(); }, 6000); return; }
+        var line = script[k++];
+        if (line[0] === 'me') { bubble('me', line[1]); setTimeout(next, 700); }
+        else { var t = bubble('ai typing'); t.innerHTML = '<i></i><i></i><i></i>'; setTimeout(function () { t.className = 'ai-b ai'; typeInto(t, line[1], function () { setTimeout(next, 900); }); }, reduced ? 0 : 1100); }
+      })();
+    }
+    var visible = false;
+    function start() { if (running) return; running = true; data().then(convo).catch(function () { running = false; }); }
+    if (IO) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; if (visible) start(); }, { threshold: 0.4 }).observe(chat);
+    else start();
+  }
+
+  /* 6. "Find your perfect workout": tapping a category opens real BURN workouts in it */
+  var MAP = { 'full body': ['full body'], legs: ['legs'], arms: ['arms'], core: ['core'], 'lower body': ['lower body'], glutes: ['glutes'], 'upper body': ['upper body'],
+    'back & shoulders': ['back', 'shoulders'], strength: ['strength'], weights: ['weights'], 'cardio & hiit': ['cardio', 'cardio & hiit', 'hiit'], stretch: ['stretch'],
+    sculpt: ['sculpt'], barre: ['barre'], kickboxing: ['kickboxing'], pilates: ['pilates', 'mat'], yoga: ['yoga'], 'resistance bands': ['bands', 'resistance bands'],
+    bands: ['bands', 'resistance bands'], kettlebell: ['kettlebell'], sliders: ['sliders'], beginners: ['beginner'], 'no equipment': ['no equipment', 'bodyweight'] };
+  var cards = document.querySelectorAll('.wcard');
+  if (cards.length) {
+    var dlg;
+    function openCat(name) {
+      var tags = MAP[name.toLowerCase()] || [name.toLowerCase()];
+      data().then(function () {
+        var ws = DATA.w.filter(function (w) { return w.g.some(function (t) { return tags.indexOf(t) > -1; }); }).slice(0, 6);
+        if (!dlg) {
+          dlg = el('div', 'wsheet'); dlg.setAttribute('role', 'dialog'); dlg.setAttribute('aria-modal', 'true');
+          dlg.innerHTML = '<div class="ws-back" data-ws-close></div><div class="ws-panel"><button type="button" class="ws-x" aria-label="Close" data-ws-close>&times;</button><h3></h3><div class="ws-list"></div><a class="btn block" href="join.html" data-chooser data-join="workout_sheet">Join BURN to start</a></div>';
+          document.body.appendChild(dlg);
+          dlg.addEventListener('click', function (e) { if (e.target.closest('[data-ws-close]')) close(); });
+          document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && dlg.classList.contains('on')) close(); });
+        }
+        dlg.querySelector('h3').textContent = name + ' workouts';
+        var L = dlg.querySelector('.ws-list'); L.innerHTML = '';
+        if (!ws.length) L.appendChild(el('p', 'muted', 'New ' + name.toLowerCase() + ' workouts are on their way.'));
+        ws.forEach(function (w) { var r = el('div', 'ws-row'); var i = new Image(); i.src = THUMB(w.id); i.alt = ''; i.loading = 'lazy'; r.appendChild(i); var t = el('div'); t.appendChild(el('b', null, w.t)); t.appendChild(el('span', null, w.m + ' min')); r.appendChild(t); L.appendChild(r); });
+        dlg.classList.add('on'); document.documentElement.style.overflow = 'hidden'; dlg.querySelector('.ws-x').focus();
+      });
+    }
+    function close() { dlg.classList.remove('on'); document.documentElement.style.overflow = ''; }
+    cards.forEach(function (c) {
+      var name = (c.querySelector('h4') || {}).textContent; if (!name) return;
+      c.setAttribute('role', 'button'); c.setAttribute('tabindex', '0'); c.setAttribute('aria-label', 'See ' + name + ' workouts');
+      c.addEventListener('click', function () { openCat(name.replace(/&amp;/g, '&')); });
+      c.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCat(name); } });
     });
   }
 })();

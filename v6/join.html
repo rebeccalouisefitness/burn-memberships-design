@@ -15,12 +15,12 @@
     <a class="logo" href="index.html" aria-label="BURN by Rebecca Louise, home"><img src="img/burn-logo.png" alt="BURN by Rebecca Louise" height="22"></a>
     <nav class="main" aria-label="Main"><a href="index.html">Home</a><a href="workouts.html">Workouts</a><a href="membership.html">Memberships</a><a href="about.html">About</a></nav>
     <div class="hdr-right">
-      <a class="member-link top" href="download.html">Already a member? Open the app</a>
+      <a class="member-link top" href="download.html">Member login</a>
       <a class="btn sm" href="join.html" data-chooser data-join="nav">Join Now</a>
       <button class="burger" aria-label="Menu" aria-expanded="false"><span></span></button>
     </div>
   </div>
-  <div class="mnav"><a href="index.html">Home</a><a href="workouts.html">Workouts</a><a href="membership.html">Memberships</a><a href="about.html">About</a><a class="member-link" href="download.html">Already a member? Open the app</a></div>
+  <div class="mnav"><a href="index.html">Home</a><a href="workouts.html">Workouts</a><a href="membership.html">Memberships</a><a href="about.html">About</a><a class="member-link" href="download.html">Member login</a></div>
 </header>
 <main><div class="centre" style="max-width:560px">
   <button type="button" class="textbtn join-back" data-join-back>&larr; Back</button>
@@ -40,38 +40,30 @@
   <section data-join-step="pay" data-sub="details" hidden style="padding:0">
     <div class="kick" data-only="details">Join <span data-ty-tier>BURN+</span></div>
     <h1 data-only="details" style="margin:10px 0 0;font-size:clamp(36px,5.4vw,54px)">Let&rsquo;s Get You Started!</h1>
-    <p data-only="details" class="lede" style="margin:12px auto 24px;max-width:460px">Just your first name and email, then we&rsquo;ll take you to checkout.</p>
+    <p data-only="details" class="lede" style="margin:12px auto 24px;max-width:460px" data-new-copy="Just your first name and email, then we&rsquo;ll take you to checkout.">Create your BURN login. It only takes a minute.</p>
     <div class="kick" data-only="pay">Secure checkout</div>
     <h1 data-only="pay" style="margin:10px 0 0;font-size:clamp(36px,5.4vw,54px)">Join <span data-ty-tier>BURN+</span></h1>
-    <p data-only="pay" class="lede" style="margin:12px auto 24px;max-width:460px">Create your account and you&rsquo;re in.</p>
+    <div data-only="pay" style="height:18px"></div>
     <form class="box" data-checkout-form novalidate style="text-align:left">
-      <div class="tier-sum"><div><div class="muted" style="font-size:12.5px">Your membership</div><div class="nm" data-ty-tier>BURN+</div></div><div style="text-align:right"><div style="font-weight:600" data-ty-price>$17.99 / month</div><div class="muted" style="font-size:12.5px" data-ty-billed>Billed monthly</div><a class="link" href="join.html" data-change-plan>Change membership</a></div></div>
-      <div class="bill-switch" role="group" aria-label="Billing period"><button type="button" data-bill="monthly" aria-pressed="true" class="on">Monthly<small data-ty-bill-m>$17.99 / month</small></button><button type="button" data-bill="annual" aria-pressed="false"><span class="burst" data-burst aria-hidden="true">Save 22%</span>Annual<small data-ty-bill-a>$167.99/year &middot; save 22%</small></button></div>
+      <div class="tier-sum"><div><div class="muted" style="font-size:12.5px">Your membership</div><div class="nm" data-ty-tier>BURN+</div></div><div style="text-align:right"><div style="font-weight:600" data-ty-price>$17.99 / month</div><div class="muted" style="font-size:12.5px" data-ty-billed>Billed monthly</div><a class="link" href="join.html" data-change-plan hidden>Change membership</a></div></div>
       <div data-sub-details>
       <label class="fld"><span>First name</span><input name="name" autocomplete="given-name" autocapitalize="words" required></label>
-      <label class="fld"><span>Email address</span><input name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required><small>You&rsquo;ll sign in to the BURN app with this email.</small></label>
-      <label class="optin"><input type="checkbox" name="marketing_opt_in" value="yes"> <span>Send me workout tips, new challenges and offers by email. <small>(Optional)</small></span></label>
+      <label class="fld"><span>Email address</span><input name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required></label>
+      <div class="fld"><label for="ck-pw"><span>Password</span></label><span class="pw-wrap"><input id="ck-pw" name="password" type="password" autocomplete="new-password" minlength="8" required><button type="button" class="pw-toggle" data-pw-toggle aria-controls="ck-pw" aria-pressed="false">Show</button></span></div>
       <button type="button" class="btn block" data-details-continue>Continue to Checkout</button>
-      <p class="privacy-note">We&rsquo;ll use your email for your BURN account and your receipts. <a href="privacy.html" target="_blank" rel="noopener">Privacy policy</a></p>
       </div>
-      <p class="who" data-only="pay"><span data-who></span> <button type="button" class="textbtn" data-edit-details>Edit</button></p>
-      <div class="fld"><label for="ck-pw"><span>Create a password</span></label><span class="pw-wrap"><input id="ck-pw" name="password" type="password" autocomplete="new-password" minlength="8" required aria-describedby="ck-pw-help"><button type="button" class="pw-toggle" data-pw-toggle aria-controls="ck-pw" aria-pressed="false">Show</button></span><small id="ck-pw-help">At least 8 characters. You&rsquo;ll use this to sign in to the new BURN app. Heads up: this is a brand-new app, so your old BURN login won&rsquo;t work here.</small></div>
       <div class="pay-sec" id="pay" aria-label="Payment" data-mock-payment>
         <div class="pay-h">Payment <span class="card-brands" aria-hidden="true"><i>VISA</i><i>MC</i><i>AMEX</i><i>DISC</i></span></div>
         <div class="xpay-el" data-express-element></div>
         <div class="pay-el" data-pay-element></div>
         <p class="pay-methods">Pay by card, Apple Pay or Google Pay. Your payment is handled securely by Stripe.</p>
       </div>
-      <div class="pay-card" style="margin-bottom:14px"><div class="row"><span class="muted">Due today</span><b data-ty-due>$17.99</b></div><div class="row"><span class="muted">Renews</span><span data-ty-then>$17.99 every month</span></div><p class="tax-note">Renews automatically until you cancel. Cancel any time and keep access until the end of the month or year you&rsquo;ve paid for.</p></div>
       <p class="form-err" role="alert" data-form-err></p>
-      <p class="pay-terms">By tapping Complete My Membership, you agree to our <a href="terms.html" target="_blank" rel="noopener">Terms</a> and let BURN by Rebecca charge your card today, then <span data-ty-then>$17.99 every month</span> until you cancel.</p>
       <button class="btn block" type="submit" data-pay-submit>Complete My Membership</button>
-      <p class="pay-fine" data-mock-payment>Secure payment by Stripe. Cancel any time. </p>
-      <p class="pay-fine" data-live-only hidden>Secure payment by Stripe. Cancel any time.</p>
+      <p class="pay-terms pay-terms-bottom">Renews automatically until you cancel. By joining you agree to our <a href="terms.html" target="_blank" rel="noopener">Terms</a>.</p>
       <p class="pay-fine" data-test-only hidden style="opacity:.7">Test mode &middot; no real charges</p>
     </form>
   </section>
-  <p class="join-help">Need help? Email us at <a href="mailto:customerservice@rebecca-louise.com">customerservice@rebecca-louise.com</a> &middot; <a href="terms.html" target="_blank" rel="noopener">Terms</a> &middot; <a href="privacy.html" target="_blank" rel="noopener">Privacy policy</a></p>
 </div></main>
 <script src="js/burn-config.js?v=4"></script>
 <script src="js/burn-checkout.js?v=4"></script>

@@ -919,3 +919,8 @@ html[data-burn-checkout="stripe"] .promo{display:block}
 .qz2-steps span{width:24px;height:24px;border-radius:50%;background:var(--mauve);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:600}
 @media (max-width:640px){.quiz2{grid-template-columns:120px 1fr;gap:16px;padding:14px;border-radius:22px}.qz2-copy h3{font-size:24px;margin-bottom:10px}.qz2-steps{display:none}.quiz2 .btn{width:100%;padding-left:10px;padding-right:10px;font-size:14px}}
 @media (prefers-reduced-motion:reduce){.pc-week li,.pc-row,.plan-card.flash{animation:none}.rw-grid li{transition:none}}
+.why-h{font-size:clamp(34px,4.6vw,64px)}
+.rw-card{grid-template-columns:1fr 1.4fr}
+.rw-grid{grid-template-columns:repeat(4,1fr)}
+@media (max-width:860px){.rw-card{grid-template-columns:1fr}.rw-grid{grid-template-columns:repeat(2,1fr)}.rw-grid li:nth-child(7){grid-column:auto}}
+@media (max-width:860px){.rw-grid{grid-auto-flow:dense}}

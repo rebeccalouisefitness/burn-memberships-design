@@ -1086,3 +1086,24 @@ html[data-burn-checkout="stripe"] .promo{display:block}
 .qz-feats li{background:var(--rose);border-radius:12px;padding:9px 12px;font-size:14.5px;border:0}
 .qz-price{border-top:1px solid var(--lineSoft);padding-top:14px;margin-bottom:14px}
 .qz-yesno{display:grid;gap:8px}
+
+/* ===== Round 6 (22 Oct) ===== */
+/* community: group photo with the chat phone tucked in front */
+.comm-grid{grid-template-columns:1.05fr .95fr}
+.comm-visual{position:relative;max-width:460px;width:100%;margin:0 auto;padding:0 0 40px 40px}
+.comm-photo{margin:0;border-radius:24px;overflow:hidden;aspect-ratio:4/5;box-shadow:var(--shadow)}
+.comm-photo img{width:100%;height:100%;object-fit:cover;object-position:40% 50%;display:block}
+.comm-visual .comm-phone{position:absolute;left:0;bottom:0;width:40%;max-width:170px;margin:0;filter:drop-shadow(0 18px 30px rgba(41,41,41,.25))}
+@media (max-width:860px){.comm-visual{max-width:360px;padding:0 0 30px 30px}.comm-visual .comm-phone{width:38%}}
+/* nutrition: one tidy row of three photos, then the words and icons */
+.nut3{display:block;padding:0;overflow:hidden}
+.nut3-photos{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:none;gap:0;height:auto;min-height:0}
+.nut3-photos img{aspect-ratio:4/3;height:auto;border-radius:0}
+.nut3-photos img:first-child{grid-row:auto}
+.nut3-body{padding:22px 26px 26px}
+.nut3-list{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+@media (max-width:640px){.nut3-photos img{aspect-ratio:1/1}.nut3-body{padding:18px}}
+/* annual pill on the Monthly / Annual toggle */
+.billing button .sv2{display:inline-block;margin-left:8px;padding:3px 9px;border-radius:999px;background:var(--rose);color:var(--mauveDeep);font:700 10.5px/1.3 var(--sans);letter-spacing:.04em;text-transform:uppercase;vertical-align:1px;white-space:nowrap}
+.billing button.on .sv2,.billing button[aria-pressed="true"] .sv2{background:#fff;color:var(--mauveDeep)}
+.tier .alt:empty,.ch-opt .bl:empty{display:none}

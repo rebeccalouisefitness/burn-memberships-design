@@ -51,7 +51,10 @@
   /* headline per-month figure for the current billing */
   var shownAmt = function (t, b) { return b === 'annual' ? PRICES[t].annualMonthly : PRICES[t].monthly; };
   var priceTxt = function (t, b) { return money(shownAmt(t, b)) + '/month'; };
-  var billedTxt = function (t, b) { return b === 'annual' ? money(PRICES[t].annual) + ' billed yearly' : 'or ' + money(PRICES[t].annual) + ' a year'; };
+  var billedTxt = function (t, b) { return b === 'annual' ? money(PRICES[t].annual) + ' billed yearly' : ''; };   /* Rebecca 22 Oct: nothing about a year on Monthly */
+  /* Annual pill: the biggest real saving across the tiers (BURN 12%, BURN+ 22%, BURN Complete 33%). */
+  var SAVE_MAX = Math.max.apply(null, Object.keys(PRICES).map(function (k) { return Math.round((1 - PRICES[k].annual / (PRICES[k].monthly * 12)) * 100); }));
+  document.querySelectorAll('[data-save-max]').forEach(function (x) { x.textContent = 'Save up to ' + SAVE_MAX + '%'; });
 
   /* ---------------- ANALYTICS: GA4 + Meta Pixel, host-gated ----------------
      IDs below are not BURN's real IDs yet. Tags load ONLY on the production host AND only once both IDs
@@ -169,7 +172,7 @@
     });
     document.querySelectorAll('[data-alt]').forEach(function (el) {
       var t = el.getAttribute('data-alt'), P = PRICES[t];
-      el.textContent = billing === 'annual' ? money(P.annual) + ' billed yearly' : 'or ' + money(P.annual) + ' a year';
+      el.textContent = billing === 'annual' ? money(P.annual) + ' billed yearly' : '';
     });
     document.querySelectorAll('[data-from]').forEach(function (el) {
       el.textContent = 'From ' + money(PRICES.burn.monthly) + ' a month';
@@ -438,8 +441,8 @@
         '<div class="qz-res">' +
         '<p class="why">' + lead + '</p><ul class="qz-feats">' + lis + '</ul>' +
         '<div class="qz-price"><div class="price"><span class="amt">' + money(shownAmt(T, billing)) + '</span><span class="per">' + perTxt(billing) + '</span></div>' +
-        (billing === 'annual' ? '<div class="muted" style="font-size:13px" data-qz-billed>' + money(P.annual) + ' billed yearly</div>' : '<div class="muted" style="font-size:13px">or ' + money(P.annual) + ' a year</div>') +
-        '<div class="billing" role="group" aria-label="Billing period"><button type="button" data-bill="monthly">Monthly</button><button type="button" data-bill="annual">Annual</button></div></div>' +
+        (billing === 'annual' ? '<div class="muted" style="font-size:13px" data-qz-billed>' + money(P.annual) + ' billed yearly</div>' : '') +
+        '<div class="billing" role="group" aria-label="Billing period"><button type="button" data-bill="monthly">Monthly</button><button type="button" data-bill="annual">Annual<span class="sv2">Save up to ' + SAVE_MAX + '%</span></button></div></div>' +
         '<div class="qz-yesno"><a class="btn block" href="' + joinUrl(T, 'quiz_result') + '" data-qz-join data-join="quiz_result" data-tier="' + T + '">Yes, it’s for me!</a>' +
         (down ? '<button type="button" class="btn ghost block" data-qz-down>This is too much for me</button>' : '') + '</div></div>';
       renderBilling();

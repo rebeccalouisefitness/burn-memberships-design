@@ -1111,3 +1111,11 @@ html[data-burn-checkout="stripe"] .promo{display:block}
 .stores-pending{background:var(--rose);border-radius:16px;padding:16px 18px;margin:14px auto;max-width:520px;text-align:left;font-size:15px;color:var(--inkSoft);display:grid;gap:6px}
 .stores-pending b{color:var(--ink)}
 .stores-pending[hidden]{display:none}
+/* Rebecca 22 Oct: no yellow behind autofilled fields (iPhone Safari + Chrome). Paint the field white with the normal text colour. */
+input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus,input:-webkit-autofill:active,
+textarea:-webkit-autofill,select:-webkit-autofill{
+  -webkit-box-shadow:0 0 0 1000px #fff inset!important;box-shadow:0 0 0 1000px #fff inset!important;
+  -webkit-text-fill-color:var(--ink)!important;caret-color:var(--ink);
+  transition:background-color 600000s ease-in-out 0s,color 600000s ease-in-out 0s;
+}
+input:autofill{box-shadow:0 0 0 1000px #fff inset!important;-webkit-text-fill-color:var(--ink)!important}

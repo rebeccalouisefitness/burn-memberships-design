@@ -652,6 +652,14 @@
   var iosLink = STORE_LINKS.ios || STORE_LINKS.testflight;
   document.querySelectorAll('[data-store=ios]').forEach(function (a) { if (iosLink) a.href = iosLink; });
   document.querySelectorAll('[data-store=android]').forEach(function (a) { if (STORE_LINKS.android) a.href = STORE_LINKS.android; });
+  /* Until the new app is in the stores (links above are null), never send her round in a loop to this page:
+     hide the store badges + QR and show the honest 'coming very soon, we'll email you' note instead. */
+  if (!iosLink && !STORE_LINKS.android) {
+    document.querySelectorAll('.stores,[data-qr-card]').forEach(function (x) { if (!x.closest('footer')) x.hidden = true; });
+    document.querySelectorAll('[data-stores-pending],[data-store-soon]').forEach(function (x) { x.hidden = false; });
+    document.querySelectorAll('[data-store-live]').forEach(function (x) { x.hidden = true; });
+    document.querySelectorAll('footer .stores').forEach(function (x) { x.hidden = true; });
+  }
   if (PAGE === 'download') {
     showEmail(QS.get('email'));
     var target = isIOS ? iosLink : isAndroid ? STORE_LINKS.android : null;

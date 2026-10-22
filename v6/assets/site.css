@@ -1107,3 +1107,7 @@ html[data-burn-checkout="stripe"] .promo{display:block}
 .billing button .sv2{display:inline-block;margin-left:8px;padding:3px 9px;border-radius:999px;background:var(--rose);color:var(--mauveDeep);font:700 10.5px/1.3 var(--sans);letter-spacing:.04em;text-transform:uppercase;vertical-align:1px;white-space:nowrap}
 .billing button.on .sv2,.billing button[aria-pressed="true"] .sv2{background:#fff;color:var(--mauveDeep)}
 .tier .alt:empty,.ch-opt .bl:empty{display:none}
+/* app not in the stores yet */
+.stores-pending{background:var(--rose);border-radius:16px;padding:16px 18px;margin:14px auto;max-width:520px;text-align:left;font-size:15px;color:var(--inkSoft);display:grid;gap:6px}
+.stores-pending b{color:var(--ink)}
+.stores-pending[hidden]{display:none}
